@@ -49,6 +49,8 @@ public class DetailsAppointmentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Appointment sel = AppointmentController.selectedAppointment;
+        sel.getAppointmentId();
         dateColumn.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
         startColumn.setCellValueFactory(cellData -> cellData.getValue().startProperty());
         endColumn.setCellValueFactory(cellData -> cellData.getValue().endProperty());
@@ -57,7 +59,7 @@ public class DetailsAppointmentController implements Initializable {
         titleColumn.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
         typeColumn.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
         descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
-        detailsTableView.setItems(AccessDB.allAppointments());
+        detailsTableView.setItems(AccessDB.selectedAppointment(sel));
     }    
 
     @FXML

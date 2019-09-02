@@ -114,6 +114,7 @@ public class AppointmentController implements Initializable {
 
     @FXML
     private void detailsHandler(ActionEvent event) {
+        selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
     }
     
 }
