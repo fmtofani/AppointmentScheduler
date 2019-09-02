@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.AddClientController">
+   <children>
+      <Label text="Acme Appointment Scheduler" />
+      <Label layoutX="247.0" layoutY="44.0" text="Add Client">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="addClientButton" layoutX="383.0" layoutY="242.0" mnemonicParsing="false" onAction="#addClientHandler" prefHeight="25.0" prefWidth="52.0" text="Add" />
+      <Button fx:id="cancelAddClientButton" layoutX="383.0" layoutY="300.0" mnemonicParsing="false" onAction="#cancelAddClientHandler" text="Cancel" />
+      <Button fx:id="clearAddClientButton" layoutX="383.0" layoutY="180.0" mnemonicParsing="false" onAction="#clearAddClientHandler" prefHeight="25.0" prefWidth="52.0" text="Clear" />
+      <Label layoutX="87.0" layoutY="103.0" prefHeight="17.0" prefWidth="52.0" text="Name" />
+      <Label layoutX="87.0" layoutY="138.0" prefHeight="17.0" prefWidth="52.0" text="Address" />
+      <Label layoutX="87.0" layoutY="208.0" prefHeight="17.0" prefWidth="52.0" text="Phone" />
+      <Label layoutX="87.0" layoutY="246.0" prefHeight="17.0" prefWidth="52.0" text="City" />
+      <Label layoutX="87.0" layoutY="280.0" prefHeight="17.0" prefWidth="52.0" text="Country" />
+      <Label layoutX="87.0" layoutY="175.0" text="Address 2" />
+      <TextField fx:id="nameTextField" layoutX="151.0" layoutY="99.0" />
+      <TextField fx:id="addressTextField" layoutX="151.0" layoutY="134.0" />
+      <TextField fx:id="address2TextField" layoutX="151.0" layoutY="171.0" />
+      <TextField fx:id="phoneTextField" layoutX="151.0" layoutY="204.0" />
+      <TextField fx:id="cityTextField" layoutX="151.0" layoutY="242.0" />
+      <TextField fx:id="countryTextField" layoutX="151.0" layoutY="276.0" />
+      <TextField fx:id="zipcodeTextField" layoutX="151.0" layoutY="308.0" />
+      <Label layoutX="87.0" layoutY="312.0" prefHeight="17.0" prefWidth="59.0" text="Postalcode" />
+   </children>
+</AnchorPane>

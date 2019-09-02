@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.EditAppointmentController">
+   <children>
+      <Label text="Acme Appointment Scheduler" />
+      <Label layoutX="230.0" layoutY="58.0" text="Edit Appointment">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="modifyEditAppointmentButton" layoutX="380.0" layoutY="316.0" mnemonicParsing="false" onAction="#modifyEditAppointmentHandler" text="Modify" />
+      <Button fx:id="cancelEditAppointmentButton" layoutX="457.0" layoutY="316.0" mnemonicParsing="false" onAction="#cancelEditAppointmentHandler" text="Cancel" />
+      <Button fx:id="deleteEditAppointmentButton" layoutX="307.0" layoutY="316.0" mnemonicParsing="false" onAction="#deleteEditAppointmentHandler" text="Delete" />
+   </children>
+</AnchorPane>
