@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ClientController">
+   <children>
+      <Label text="Acme Appointment Scheduler" />
+      <Label layoutX="240.0" layoutY="17.0" text="Client List">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="exitClientButton" layoutX="718.0" layoutY="404.0" mnemonicParsing="false" onAction="#exitClientHandler" prefHeight="25.0" prefWidth="54.0" text="Exit" />
+      <AnchorPane layoutX="6.0" layoutY="41.0" prefHeight="312.0" prefWidth="783.0" style="-fx-border-radius: 10; -fx-border-color: blue;">
+         <children>
+            <TableView fx:id="clientTableView" layoutX="14.0" layoutY="7.0" prefHeight="297.0" prefWidth="680.0">
+              <columns>
+                <TableColumn fx:id="clientNameColumn" prefWidth="149.0" text="Name" />
+                  <TableColumn fx:id="clientPhoneColumn" prefWidth="88.5" text="Phone" />
+                  <TableColumn fx:id="clientAddressColumn" prefWidth="90.0" text="Address" />
+                  <TableColumn fx:id="clientAddress2Column" prefWidth="78.5" text="Address 2" />
+                  <TableColumn fx:id="clientZipcodeColumn" prefWidth="53.0" text="Zipcode" />
+                  <TableColumn fx:id="clientCityColumn" prefWidth="115.0" text="City" />
+                  <TableColumn fx:id="clientCountryColumn" prefWidth="105.0" text="Country" />
+              </columns>
+            </TableView>
+            <Button fx:id="modifyClientButton" layoutX="709.0" layoutY="91.0" mnemonicParsing="false" onAction="#modifyClientHandler" text="Modify" />
+            <Button fx:id="addClientButton" layoutX="709.0" layoutY="54.0" mnemonicParsing="false" onAction="#addClientHandler" prefHeight="25.0" prefWidth="54.0" text="Add" />
+            <Button fx:id="deleteClientButton" layoutX="710.0" layoutY="131.0" mnemonicParsing="false" onAction="#deleteClientHandler" text="Delete" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

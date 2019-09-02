@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.UserController">
+   <children>
+      <Label text="Acme Appointment Scheduler" />
+      <Label layoutX="253.0" layoutY="17.0" text="User List">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="exitUserButton" layoutX="518.0" layoutY="353.0" mnemonicParsing="false" onAction="#exitUserHandler" prefHeight="25.0" prefWidth="54.0" text="Exit" />
+      <AnchorPane fx:id="userTable" layoutX="33.0" layoutY="43.0" prefHeight="299.0" prefWidth="546.0" style="-fx-border-radius: 10; -fx-border-color: blue;">
+         <children>
+            <TableView fx:id="userTableView" layoutX="14.0" layoutY="4.0" prefHeight="293.0" prefWidth="424.0">
+              <columns>
+                <TableColumn fx:id="userNameColumn" prefWidth="178.0" text="User Name" />
+                <TableColumn fx:id="passwordColumn" minWidth="9.5" prefWidth="159.0" text="Password" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <Button fx:id="modifyUserButton" layoutX="499.0" layoutY="95.0" mnemonicParsing="false" onAction="#modifyUserHandler" text="Modify" />
+      <Button fx:id="deleteUserButton" layoutX="500.0" layoutY="175.0" mnemonicParsing="false" onAction="#deleteUserHandler" text="Delete" />
+      <Button fx:id="addUserButton" layoutX="500.0" layoutY="135.0" mnemonicParsing="false" onAction="#addUserHandler" prefHeight="25.0" prefWidth="51.0" text="Add" />
+   </children>
+</AnchorPane>

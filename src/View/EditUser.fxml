@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.EditUserController">
+   <children>
+      <Label text="Acme Appointment Scheduler" />
+      <Label fx:id="addUserPassword" layoutX="66.0" layoutY="192.0" text="Password" />
+      <Label layoutX="66.0" layoutY="153.0" text="User Name" />      
+      <Label layoutX="265.0" layoutY="94.0" text="Edit User">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="modifyUserButton" layoutX="367.0" layoutY="332.0" mnemonicParsing="false" onAction="#modifyUserHandler" text="Modify" />
+      <Button fx:id="cancelModifyUserButton" layoutX="467.0" layoutY="332.0" mnemonicParsing="false" onAction="#cancelModifyUserHandler" text="Cancel" />
+      <TextField fx:id="editPasswordTextField" layoutX="202.0" layoutY="180.0" />
+      <TextField fx:id="editUserNameTextField" layoutX="202.0" layoutY="141.0" />
+   </children>
+</AnchorPane>
