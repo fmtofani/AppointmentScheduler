@@ -34,7 +34,7 @@
       <TableView fx:id="clientTableView" layoutX="284.0" layoutY="63.0" prefHeight="216.0" prefWidth="149.0">
         <columns>
           <TableColumn minWidth="0.0" prefWidth="0.0" />
-          <TableColumn prefWidth="150.0" text="Client Name" />
+          <TableColumn fx:id="clientColumn" prefWidth="150.0" text="Client Name" />
         </columns>
       </TableView>
       <TextField fx:id="searchTF" layoutX="437.0" layoutY="65.0" prefHeight="25.0" prefWidth="136.0" />

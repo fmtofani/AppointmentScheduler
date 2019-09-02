@@ -26,6 +26,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -70,13 +71,15 @@ public class AddAppointmentController implements Initializable {
     private RadioButton amRadioButton;
     @FXML
     private RadioButton pmRadioButton;
+    @FXML
+    private TableColumn<Customer, String> clientColumn;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        clientColumn.setCellValueFactory(cellData -> cellData.getValue().customerNameProperty());
     }    
 
     @FXML

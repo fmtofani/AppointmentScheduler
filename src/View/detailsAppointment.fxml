@@ -18,13 +18,14 @@
       <Button fx:id="exitButton" layoutX="371.0" layoutY="330.0" mnemonicParsing="false" onAction="#exitHandler" prefHeight="25.0" prefWidth="62.0" text="OK" />
       <TableView fx:id="detailsTableView" layoutX="13.0" layoutY="94.0" prefHeight="200.0" prefWidth="777.0">
         <columns>
-          <TableColumn fx:id="dateColumn" prefWidth="65.5" text="Date" />
-          <TableColumn fx:id="startColumn" prefWidth="59.0" text="Start" />
-            <TableColumn fx:id="endColumn" prefWidth="83.5" text="End" />
-            <TableColumn fx:id="clientColumn" prefWidth="89.5" text="Client" />
-            <TableColumn fx:id="locationColumn" prefWidth="95.5" text="Location" />
-            <TableColumn fx:id="typeColumn" prefWidth="103.0" text="Type" />
-            <TableColumn fx:id="descriptionColumn" prefWidth="280.0" text="Description" />
+          <TableColumn fx:id="dateColumn" prefWidth="51.5" text="Date" />
+          <TableColumn fx:id="startColumn" prefWidth="50.5" text="Start" />
+            <TableColumn fx:id="endColumn" prefWidth="50.0" text="End" />
+            <TableColumn fx:id="clientColumn" prefWidth="92.5" text="Client" />
+            <TableColumn fx:id="locationColumn" prefWidth="93.0" text="Location" />
+            <TableColumn fx:id="titleColumn" prefWidth="96.0" text="Title" />
+            <TableColumn fx:id="typeColumn" prefWidth="63.0" text="Type" />
+            <TableColumn fx:id="descriptionColumn" prefWidth="354.5" text="Description" />
         </columns>
       </TableView>
    </children>

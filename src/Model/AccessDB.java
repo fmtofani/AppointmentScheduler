@@ -344,6 +344,9 @@ public class AccessDB {
                                                        " WHERE appointment.customerId = customer.customerId AND appointment.userId = user.userId;");
             while(results.next()) {
                 Appointment a = new Appointment();
+                    String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
+                    String startTime = TimeUtil.stringToString(results.getString("appointment.start"), "time");
+                    String endTime = TimeUtil.stringToString(results.getString("appointment.end"), "time"); 
                     a.setAppointmentId(results.getInt("appointment.appointmentId"));
                     a.setCustomerId(results.getInt("appointment.customerId"));
                     a.setCustomerName(results.getString("customer.customerName"));
@@ -355,8 +358,9 @@ public class AccessDB {
                     a.setContact(results.getString("appointment.contact"));
                     a.setType(results.getString("appointment.type"));
                     a.setUrl(results.getString("appointment.url"));
-                    a.setStart(results.getString("appointment.start"));
-                    a.setEnd(results.getString("appointment.end"));
+                    a.setDate(date);
+                    a.setStart(startTime);
+                    a.setEnd(endTime);
                     allAppointments.add(a);
             }
             statement.close();

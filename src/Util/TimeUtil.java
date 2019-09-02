@@ -86,6 +86,35 @@ public class TimeUtil {
         String strDate = simpleDateFormat.format(date);
         return strDate;        
     }
+    
+    public static String stringToString(String dat, String option) {
+        String year = dat.substring(0,4);
+        String month = dat.substring(5,7);
+        String day = dat.substring(8,10);
+        String date = dat.substring(0,10);
+        String hour = dat.substring(12,14);
+        String min = dat.substring(16,18);
+        String time = dat.substring(012,18);
+        switch (option) {
+            case "year":
+                return year;
+            case "month":
+                return month;
+            case "day":
+                return day;
+            case "date":
+                return date;
+            case "hour":
+                return hour;
+            case "min":
+                return min;
+            case "time":
+                return time;
+            default:
+                return "-1";
+        }
+    }    
         
+
 //End Class        
 }

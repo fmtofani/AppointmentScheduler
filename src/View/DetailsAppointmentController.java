@@ -5,6 +5,8 @@
  */
 package View;
 
+import Model.AccessDB;
+import Model.Appointment;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -24,28 +26,38 @@ public class DetailsAppointmentController implements Initializable {
     @FXML
     private Button exitButton;
     @FXML
-    private TableView<?> detailsTableView;
+    private TableView<Appointment> detailsTableView;
     @FXML
-    private TableColumn<?, ?> dateColumn;
+    private TableColumn<Appointment, String> dateColumn;
     @FXML
-    private TableColumn<?, ?> clientColumn;
+    private TableColumn<Appointment, String> clientColumn;
     @FXML
-    private TableColumn<?, ?> locationColumn;
+    private TableColumn<Appointment, String> locationColumn;
     @FXML
-    private TableColumn<?, ?> typeColumn;
+    private TableColumn<Appointment, String> typeColumn;
     @FXML
-    private TableColumn<?, ?> descriptionColumn;
+    private TableColumn<Appointment, String> descriptionColumn;
     @FXML
-    private TableColumn<?, ?> startColumn;
+    private TableColumn<Appointment, String> startColumn;
     @FXML
-    private TableColumn<?, ?> endColumn;
+    private TableColumn<Appointment, String> endColumn;
+    @FXML
+    private TableColumn<Appointment, String> titleColumn;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        dateColumn.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
+        startColumn.setCellValueFactory(cellData -> cellData.getValue().startProperty());
+        endColumn.setCellValueFactory(cellData -> cellData.getValue().endProperty());
+        clientColumn.setCellValueFactory(cellData -> cellData.getValue().customerNameProperty());
+        locationColumn.setCellValueFactory(cellData -> cellData.getValue().locationProperty());
+        titleColumn.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
+        typeColumn.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
+        descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
+        detailsTableView.setItems(AccessDB.allAppointments());
     }    
 
     @FXML

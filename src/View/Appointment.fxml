@@ -15,26 +15,26 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="711.0" layoutY="403.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Exit" />
+      <Button fx:id="exitButton" layoutX="711.0" layoutY="403.0" mnemonicParsing="false" onAction="#exitHandler" prefHeight="25.0" prefWidth="57.0" text="Exit" />
       <AnchorPane layoutX="14.0" layoutY="58.0" prefHeight="320.0" prefWidth="771.0" style="-fx-border-color: blue; -fx-border-radius: 10;">
          <children>
-            <TableView layoutX="14.0" layoutY="14.0" prefHeight="278.0" prefWidth="656.0">
+            <TableView fx:id="appointmentTableView" layoutX="14.0" layoutY="14.0" prefHeight="278.0" prefWidth="656.0">
               <columns>
                   <TableColumn fx:id="dateColumn" prefWidth="89.0" text="Date" />
-                <TableColumn prefWidth="61.0" text="Start" />
-                <TableColumn prefWidth="66.5" text="End" />
-                  <TableColumn prefWidth="165.0" text="Client" />
-                  <TableColumn prefWidth="91.0" text="Location" />
-                  <TableColumn minWidth="0.0" prefWidth="113.0" text="Title" />
-                  <TableColumn prefWidth="69.5" text="Type" />
+                <TableColumn fx:id="startColumn" prefWidth="61.0" text="Start" />
+                <TableColumn fx:id="endColumn" prefWidth="66.5" text="End" />
+                  <TableColumn fx:id="clientColumn" prefWidth="165.0" text="Client" />
+                  <TableColumn fx:id="locationColumn" prefWidth="91.0" text="Location" />
+                  <TableColumn fx:id="titleColumn" minWidth="0.0" prefWidth="113.0" text="Title" />
+                  <TableColumn fx:id="typeColumn" prefWidth="69.5" text="Type" />
               </columns>
             </TableView>
-            <Button layoutX="691.0" layoutY="171.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Add" />
-            <Button layoutX="691.0" layoutY="205.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Edit" />
-            <Button layoutX="691.0" layoutY="243.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Delete" />
-            <Button layoutX="691.0" layoutY="39.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Month" />
-            <Button layoutX="691.0" layoutY="78.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Week" />
-            <Button layoutX="694.0" layoutY="139.0" mnemonicParsing="false" text="Details" />
+            <Button fx:id="addButton" layoutX="691.0" layoutY="171.0" mnemonicParsing="false" onAction="#addHandler" prefHeight="25.0" prefWidth="57.0" text="Add" />
+            <Button fx:id="editButton" layoutX="691.0" layoutY="205.0" mnemonicParsing="false" onAction="#editHandler" prefHeight="25.0" prefWidth="57.0" text="Edit" />
+            <Button fx:id="deleteButton" layoutX="691.0" layoutY="243.0" mnemonicParsing="false" onAction="#deleteHandler" prefHeight="25.0" prefWidth="57.0" text="Delete" />
+            <Button fx:id="monthButton" layoutX="691.0" layoutY="39.0" mnemonicParsing="false" onAction="#monthHandler" prefHeight="25.0" prefWidth="57.0" text="Month" />
+            <Button fx:id="weekButton" layoutX="691.0" layoutY="78.0" mnemonicParsing="false" onAction="#weekHandler" prefHeight="25.0" prefWidth="57.0" text="Week" />
+            <Button fx:id="detailsButton" layoutX="694.0" layoutY="139.0" mnemonicParsing="false" onAction="#detailsHandler" text="Details" />
          </children>
       </AnchorPane>
       <Button fx:id="backButton" layoutX="35.0" layoutY="403.0" mnemonicParsing="false" onAction="#backHandler" prefHeight="25.0" prefWidth="59.0" text="&lt;&lt;" />
