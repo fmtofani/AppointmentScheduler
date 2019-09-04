@@ -1,0 +1,34 @@
+Add method to make sure getSelected() is not null
+
+Add method to make sure Users are unique
+
+Add 2 lambdas
+
+Exception controls
+ -- Schedule appointment outside business hours
+ -- Overlapping appointments
+done -- Invalid customer data
+done -- Incorrect user/pass
+
+**** Finish these classes ****
+AddAppointment.java
+--
+
+Appointment.java
+--
+
+EditAppointment.java
+-- HOPEFULY DELETE THIS
+
+Reports.java
+-- Number of appointment types by month
+-- Schedule of each consultant
+-- MY CHOICE
+
+Login.java
+-- Method to warn if appointment is in 15 minutes
+-- Variable to store Local Timezone and get the offset
+
+SELECT appointment.appointmentId, appointment.customerId, customer.customerName, appointment.userId, user.userName, appointment.title, appointment.description, appointment.location, appointment.contact, appointment.type, appointment.url, appointment.start, appointment.end
+                                                        FROM appointment, customer, user
+                                                        WHERE appointment.customerId = customer.customerId AND appointment.userId = user.userId AND appointment.appointmentId= apptId;

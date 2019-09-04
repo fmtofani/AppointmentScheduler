@@ -12,6 +12,7 @@ import Model.AccessDB;
 import Model.Appointment;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,7 +20,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -70,6 +73,7 @@ public class AppointmentController implements Initializable {
     private TableView<Appointment> appointmentTableView;
 
     public static Appointment selectedAppointment;
+    public static String versionAdd;
 
     /**
      * Initializes the controller class.
@@ -94,6 +98,39 @@ public class AppointmentController implements Initializable {
     private void forwardHandler(ActionEvent event) {
     }
 
+    @FXML
+    private void deleteHandler(ActionEvent event) {
+        selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert (Alert.AlertType.CONFIRMATION);
+        alert.setTitle("CONFIRMATION");
+        alert.setHeaderText("DELETE APPOINTMENT");
+        alert.setContentText("Are you sure that you want to delete this appointment? ");
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.get() == ButtonType.OK) {
+              AccessDB.deleteAppointment(selectedAppointment);
+              appointmentTableView.setItems(AccessDB.allAppointments());
+        }
+    }
+
+    @FXML
+    private void monthHandler(ActionEvent event) {
+    }
+
+    @FXML
+    private void weekHandler(ActionEvent event) {
+    }
+
+    @FXML
+    private void detailsHandler(ActionEvent event) throws IOException {
+       selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
+       Stage stage; 
+       Parent root;
+       stage=(Stage) editButton.getScene().getWindow();
+       root = FXMLLoader.load(getClass().getResource("detailsAppointment.fxml"));
+       Scene scene = new Scene(root);
+       stage.setScene(scene);
+       stage.show();      
+    }    
     @FXML
     private void exitHandler(ActionEvent event) throws IOException {
        Stage stage; 
@@ -120,37 +157,15 @@ public class AppointmentController implements Initializable {
 
     @FXML
     private void editHandler(ActionEvent event) throws IOException {
+       versionAdd = "edit";
        Stage stage; 
        Parent root;
        stage=(Stage) editButton.getScene().getWindow();
-       root = FXMLLoader.load(getClass().getResource("EditAppointment.fxml"));
+       root = FXMLLoader.load(getClass().getResource("AddAppointment.fxml"));
        Scene scene = new Scene(root);
        stage.setScene(scene);
        stage.show();             
-
     }
-
-    @FXML
-    private void deleteHandler(ActionEvent event) {
-    }
-
-    @FXML
-    private void monthHandler(ActionEvent event) {
-    }
-
-    @FXML
-    private void weekHandler(ActionEvent event) {
-    }
-
-    @FXML
-    private void detailsHandler(ActionEvent event) throws IOException {
-       selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
-       Stage stage; 
-       Parent root;
-       stage=(Stage) editButton.getScene().getWindow();
-       root = FXMLLoader.load(getClass().getResource("detailsAppointment.fxml"));
-       Scene scene = new Scene(root);
-       stage.setScene(scene);
-       stage.show();      
-    }    
+    
+//End Class
 }

@@ -24,6 +24,7 @@ import javafx.collections.ObservableList;
  */
 public class AccessDB {
     private static ObservableList<User> allUsers = FXCollections.observableArrayList();
+    private static ObservableList<Customer> searchClient = FXCollections.observableArrayList();
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
     private static ObservableList<City> allCities = FXCollections.observableArrayList();
     private static ObservableList<Country> allCountries = FXCollections.observableArrayList();
@@ -138,6 +139,7 @@ public class AccessDB {
     
     
     
+    
     /*
     *
     *
@@ -170,6 +172,25 @@ public class AccessDB {
             return allCustomers;
         } catch (SQLException ex) {
             System.out.println("Error building Customer List \n Error: " + ex.getMessage());
+            return null;
+        }
+    }
+
+    public static ObservableList<Customer> searchClient(Customer client) {
+        try {
+            searchClient.clear();
+            Statement statement = DatabaseConnect.getDbConnection().createStatement();
+            ResultSet results = statement.executeQuery("SELECT customerName FROM customer WHERE customerName='" + client.getCustomerName() + "';");
+            while (results.next()) {
+                Customer c = new Customer();
+                c.setCustomerId(results.getInt("customerId"));
+                c.setCustomerName(results.getString("customerName"));
+                searchClient.add(c);
+            }
+            statement.close();
+            return searchClient;
+        } catch (SQLException ex) {
+            System.out.println("Error finding client \n Error:" + ex.getMessage());
             return null;
         }
     }
@@ -413,7 +434,9 @@ public class AccessDB {
             System.out.println("Error building Appointment List \n Error: " + ex.getMessage());
             return null;
         }
-    }    public static void deleteAppointment(Appointment a) {
+    }    
+    
+    public static void deleteAppointment(Appointment a) {
         try {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
             statement.executeUpdate("DELETE FROM appointment WHERE appointmentId= '" + a.getAppointmentId() + "'"); 
@@ -422,8 +445,6 @@ public class AccessDB {
             System.out.println("Delete appointment failed \n Error: " + ex.getMessage());
         }
     }
-
-
 
     
 //End Class

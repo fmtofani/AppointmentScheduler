@@ -9,11 +9,14 @@
 package View;
 
 import Model.AccessDB;
+import Model.Appointment;
 import Model.Customer;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -63,11 +66,11 @@ public class AddAppointmentController implements Initializable {
     @FXML
     private DatePicker datePicker;
     @FXML
-    private ComboBox<?> locationComboBox;
+    private ComboBox locationComboBox;
     @FXML
-    private ComboBox<?> typeComboBox;
+    private ComboBox typeComboBox;
     @FXML
-    private ComboBox<?> durationComboBox;
+    private ComboBox durationComboBox;
     @FXML
     private RadioButton amRadioButton;
     @FXML
@@ -75,12 +78,50 @@ public class AddAppointmentController implements Initializable {
     @FXML
     private TableColumn<Customer, String> clientColumn;
 
+    /*
+    To get the selected item write: 
+?
+1
+String selectedChoice = choiceBox.getSelectionModel().getSelectedItem();
+
+To set the selected item write: 
+?
+1
+choiceBox.getSelectionModel().setSelectedItem("oranges");
+*/
+    
+    private final ObservableList<String>  locationList = FXCollections.observableArrayList("Phoenix", "New York", "London");
+    private final ObservableList<String> typeList = FXCollections.observableArrayList("FILL");
+    private final ObservableList<String> durationList = FXCollections.observableArrayList("30 minutes", "60 minutes", "90 minutes", "120 minutes");
+    private boolean isAM;
+    @FXML
+    private TableColumn<?, ?> phoneColumn;
+    @FXML
+    private Button searchButton;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         clientColumn.setCellValueFactory(cellData -> cellData.getValue().customerNameProperty());
+        locationComboBox.setItems(locationList);
+        typeComboBox.setItems(typeList);
+        durationComboBox.setItems(durationList); 
+ 
+        if(AppointmentController.versionAdd.equals("edit")) {
+        Appointment sel = AppointmentController.selectedAppointment;
+        startTF.setText(sel.getStart());
+        clientTF.setText(sel.getCustomerName());
+        descriptionTF.setText(sel.getDescription());
+        locationComboBox.getSelectionModel().select("New York");
+        typeComboBox.getSelectionModel().select("New York");
+        durationComboBox.getSelectionModel().select("30 minutes");
+//If statement to see if am or pm        
+        amRadioButton.setSelected(true);
+        pmRadioButton.setSelected(false);
+        }
+
     }    
 
     @FXML
@@ -88,8 +129,21 @@ public class AddAppointmentController implements Initializable {
     
     }
 
- 
-    //The purpose of this method is to add the selected client to the appointment client field
+    @FXML
+    private void amHandler(ActionEvent event) {
+        isAM = true;
+        pmRadioButton.setSelected(false);
+    }
+
+    @FXML
+    private void pmHandler(ActionEvent event) {
+        isAM = false;
+        amRadioButton.setSelected(false);
+    }
+     
+    
+
+//The purpose of this method is to add the selected client to the appointment client field
     @FXML
     private void addClientHandler(ActionEvent event) throws IOException {
        AccessDB.comeFrom = "Appointment.fxml";
@@ -140,5 +194,11 @@ public class AddAppointmentController implements Initializable {
         }
         
     }
+
     
+//End Class  
+
+    @FXML
+    private void searchHandler(ActionEvent event) {
+    }
 }

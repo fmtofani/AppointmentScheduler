@@ -33,8 +33,8 @@
       <TextField fx:id="descriptionTF" layoutX="93.0" layoutY="292.0" prefHeight="25.0" prefWidth="463.0" />
       <TableView fx:id="clientTableView" layoutX="284.0" layoutY="63.0" prefHeight="216.0" prefWidth="149.0">
         <columns>
-          <TableColumn minWidth="0.0" prefWidth="0.0" />
-          <TableColumn fx:id="clientColumn" prefWidth="150.0" text="Client Name" />
+          <TableColumn fx:id="clientColumn" prefWidth="88.5" text="Client Name" />
+            <TableColumn fx:id="phoneColumn" prefWidth="136.5" text="Phone" />
         </columns>
       </TableView>
       <TextField fx:id="searchTF" layoutX="437.0" layoutY="65.0" prefHeight="25.0" prefWidth="136.0" />
@@ -44,10 +44,10 @@
       <DatePicker fx:id="datePicker" layoutX="93.0" layoutY="65.0" />
       <ComboBox fx:id="locationComboBox" layoutX="93.0" layoutY="218.0" prefWidth="150.0" />
       <ComboBox fx:id="typeComboBox" layoutX="93.0" layoutY="257.0" prefWidth="150.0" />
-      <Button layoutX="472.0" layoutY="95.0" mnemonicParsing="false" text="Search" />
+      <Button fx:id="searchButton" layoutX="472.0" layoutY="95.0" mnemonicParsing="false" onAction="#searchHandler" text="Search" />
       <Button layoutX="154.0" layoutY="334.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="Clear" />
       <ComboBox fx:id="durationComboBox" layoutX="92.0" layoutY="138.0" prefWidth="150.0" />
-      <RadioButton fx:id="amRadioButton" layoutX="180.0" layoutY="107.0" mnemonicParsing="false" text="AM" />
-      <RadioButton fx:id="pmRadioButton" layoutX="224.0" layoutY="107.0" mnemonicParsing="false" text="PM" />
+      <RadioButton fx:id="amRadioButton" layoutX="180.0" layoutY="107.0" mnemonicParsing="false" onAction="#amHandler" text="AM" />
+      <RadioButton fx:id="pmRadioButton" layoutX="224.0" layoutY="107.0" mnemonicParsing="false" onAction="#pmHandler" text="PM" />
    </children>
 </AnchorPane>
