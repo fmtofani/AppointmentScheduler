@@ -8,6 +8,7 @@
 
 package View;
 
+import Model.AccessDB;
 import Model.Customer;
 import java.io.IOException;
 import java.net.URL;
@@ -90,7 +91,16 @@ public class AddAppointmentController implements Initializable {
  
     //The purpose of this method is to add the selected client to the appointment client field
     @FXML
-    private void addClientHandler(ActionEvent event) {
+    private void addClientHandler(ActionEvent event) throws IOException {
+       AccessDB.comeFrom = "Appointment.fxml";
+       Stage stage; 
+       Parent root;
+       stage=(Stage) addAppointmentButton.getScene().getWindow();
+       root = FXMLLoader.load(getClass().getResource("AddClient.fxml"));
+       Scene scene = new Scene(root);
+       stage.setScene(scene);
+       stage.show();             
+
     }
 
     //Redundant method to get back to the main schedule stage. I included it so that users would not be confused when they decided to not save the information that they entered

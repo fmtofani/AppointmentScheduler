@@ -123,6 +123,7 @@ public class ClientController implements Initializable {
 
     @FXML
     private void addClientHandler(ActionEvent event) throws IOException {
+        AccessDB.comeFrom = "Client.fxml";
         System.out.println("adding client");
         Stage stage; 
         Parent root;

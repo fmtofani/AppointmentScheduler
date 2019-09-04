@@ -70,6 +70,9 @@ public class AccessDB {
         }
     }
 
+    //This String is used to go back to the proper module when adding a client
+    public static String comeFrom;
+
     
     /*
     *

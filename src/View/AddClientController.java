@@ -66,20 +66,15 @@ public class AddClientController implements Initializable {
 
     @FXML
     private void cancelAddClientHandler(ActionEvent event) throws IOException {
-        Alert alert = new Alert (Alert.AlertType.CONFIRMATION);
-        alert.setTitle("CONFIRMATION");
-        alert.setHeaderText("CANCEL");
-        alert.setContentText("Are you sure that you want to cancel?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if(result.get() == ButtonType.OK) {      
-            Stage stage; 
-            Parent root;
-            stage=(Stage) addClientButton.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("Client.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();        
-        }
+        String whereTo = AccessDB.comeFrom;
+        Stage stage; 
+        Parent root;
+        stage=(Stage) addClientButton.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource(whereTo));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();        
+        
         
     }
 
