@@ -10,6 +10,7 @@ package Model;
 
 import Util.DatabaseConnect;
 import Util.TimeUtil;
+import View.AppointmentController;
 import View.LoginController;
 import java.sql.Statement;
 import java.sql.ResultSet;
@@ -27,6 +28,7 @@ public class AccessDB {
     private static ObservableList<City> allCities = FXCollections.observableArrayList();
     private static ObservableList<Country> allCountries = FXCollections.observableArrayList();
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+    private static ObservableList<Appointment> selectedAppointment = FXCollections.observableArrayList();
 
     //This will be used to make sure that doubles are not added to the database. I realize that it doesn't need to be observable. It was just easy to implement.
     public static ObservableList<City> allCities() {
@@ -374,14 +376,16 @@ public class AccessDB {
         }
     }
 
-   public static ObservableList<Appointment> selectedAppointment(int apptId) {
-        selectedAppointment(apptId).clear();
+    public static ObservableList<Appointment> selectedAppointment() {
+        selectedAppointment.clear();
+        int apptId = AppointmentController.selectedAppointment.getAppointmentId();
         try {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
             ResultSet results = statement.executeQuery("SELECT appointment.appointmentId, appointment.customerId, customer.customerName, appointment.userId, user.userName, appointment.title, appointment.description, appointment.location," +
                                                        " appointment.contact, appointment.type, appointment.url, appointment.start, appointment.end" +
                                                        " FROM appointment, customer, user" +
                                                        " WHERE appointment.customerId = customer.customerId AND appointment.userId = user.userId AND appointment.appointmentId=" + apptId +";");
+     System.out.println(apptId);
             while(results.next()) {
                 Appointment a = new Appointment();
                     String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
@@ -401,10 +405,10 @@ public class AccessDB {
                     a.setDate(date);
                     a.setStart(startTime);
                     a.setEnd(endTime);
-                    allAppointments.add(a);
+                    selectedAppointment.add(a);
             }
             statement.close();
-            return allAppointments;
+            return selectedAppointment;
         } catch (SQLException ex) {
             System.out.println("Error building Appointment List \n Error: " + ex.getMessage());
             return null;

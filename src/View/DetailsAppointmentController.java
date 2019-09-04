@@ -1,8 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+ *
+ *********** Appointment Scheduler **********
+ ************ Frank Michael Tofani ***********
+ ************* WGU Class C195 Final ***********
+ *
+*/
+
 package View;
 
 import Model.AccessDB;
@@ -53,9 +56,7 @@ public class DetailsAppointmentController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        Appointment ap = AppointmentController.selectedAppointment;
-        int sel = ap.getAppointmentId();
+    public void initialize(URL url, ResourceBundle rb) {   
         dateColumn.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
         startColumn.setCellValueFactory(cellData -> cellData.getValue().startProperty());
         endColumn.setCellValueFactory(cellData -> cellData.getValue().endProperty());
@@ -64,7 +65,7 @@ public class DetailsAppointmentController implements Initializable {
         titleColumn.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
         typeColumn.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
         descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
-        detailsTableView.setItems(AccessDB.selectedAppointment(sel));
+        detailsTableView.setItems(AccessDB.selectedAppointment());
     }    
 
     @FXML
@@ -78,5 +79,5 @@ public class DetailsAppointmentController implements Initializable {
        stage.show();             
 
     }
-  
+    
 }

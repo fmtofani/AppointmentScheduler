@@ -70,6 +70,7 @@ public class AppointmentController implements Initializable {
     private TableView<Appointment> appointmentTableView;
 
     public static Appointment selectedAppointment;
+
     /**
      * Initializes the controller class.
      */
@@ -146,12 +147,10 @@ public class AppointmentController implements Initializable {
        selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
        Stage stage; 
        Parent root;
-       stage=(Stage) detailsButton.getScene().getWindow();
+       stage=(Stage) editButton.getScene().getWindow();
        root = FXMLLoader.load(getClass().getResource("detailsAppointment.fxml"));
        Scene scene = new Scene(root);
        stage.setScene(scene);
-       stage.show();             
-
-    }
-    
+       stage.show();      
+    }    
 }
