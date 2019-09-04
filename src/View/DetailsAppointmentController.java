@@ -49,8 +49,8 @@ public class DetailsAppointmentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Appointment sel = AppointmentController.selectedAppointment;
-        sel.getAppointmentId();
+        Appointment ap = AppointmentController.selectedAppointment;
+        int sel = ap.getAppointmentId();
         dateColumn.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
         startColumn.setCellValueFactory(cellData -> cellData.getValue().startProperty());
         endColumn.setCellValueFactory(cellData -> cellData.getValue().endProperty());
