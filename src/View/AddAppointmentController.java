@@ -119,20 +119,32 @@ choiceBox.getSelectionModel().setSelectedItem("oranges");
         locationComboBox.setItems(locationList);
         typeComboBox.setItems(typeList);
         durationComboBox.setItems(durationList); 
-        if(AppointmentController.versionAdd.equals("edit")) {
+        if(AppointmentController.versionAdd.equals("edit")) {          
             Appointment sel = AppointmentController.selectedAppointment;
-            System.out.println(sel.customerNameProperty());
-/////Mod this!!!!
-            datePicker.setValue(LocalDate.of(2014, 10, 8));
-            startTF.setText(sel.getStart());
+            //break down date to parse to datepicker
+            String str = sel.getDate();
+            int year = Integer.parseInt(str.substring(0,4));
+            int month = Integer.parseInt(str.substring(5,7));
+            int day = Integer.parseInt(str.substring(8,10));
+            datePicker.setValue(LocalDate.of(year, month, day));
             clientTF.setText(sel.getCustomerName());
             descriptionTF.setText(sel.getDescription());
             locationComboBox.getSelectionModel().select(sel.getLocation());
             typeComboBox.getSelectionModel().select(sel.getType());
             durationComboBox.getSelectionModel().select("2");
-//If statement to see if am or pm        
+            //change military time to am/pm
+            String hour = String.format("%02d", Integer.parseInt(sel.getStart().substring(0,2)));
+            String min = String.format("%02d", Integer.parseInt(sel.getStart().substring(3,5)));
+            System.out.println(hour + ", " + min);
+            int h = Integer.parseInt(hour); 
+            if(h <= 12) {
                 amRadioButton.setSelected(true);
                 pmRadioButton.setSelected(false);
+            } else {
+                amRadioButton.setSelected(false);
+                pmRadioButton.setSelected(true);
+            }
+            startTF.setText(hour + ":" + min);
         } else {
             locationComboBox.getSelectionModel().select(0);
             typeComboBox.getSelectionModel().select(0);

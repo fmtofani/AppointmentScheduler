@@ -94,7 +94,7 @@ public class TimeUtil {
         String date = dat.substring(0,10);
         String hour = dat.substring(12,14);
         String min = dat.substring(16,18);
-        String time = dat.substring(012,18);
+        String time = dat.substring(11,19);
         switch (option) {
             case "year":
                 return year;
@@ -114,7 +114,8 @@ public class TimeUtil {
                 return "-1";
         }
     }    
-     
+ //    StringBuilder sb = new StringBuilder;
+ //    sb.append(stringToString(d))
         
 
 //End Class        
