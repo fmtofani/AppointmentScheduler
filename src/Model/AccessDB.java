@@ -15,6 +15,8 @@ import View.LoginController;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -30,6 +32,8 @@ public class AccessDB {
     private static ObservableList<Country> allCountries = FXCollections.observableArrayList();
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> selectedAppointment = FXCollections.observableArrayList();
+    private static ObservableList<Appointment> weekAppointments = FXCollections.observableArrayList();
+    private static ObservableList<Appointment> monthAppointments = FXCollections.observableArrayList();
     private static ObservableList<Customer> addClientAppointment = FXCollections.observableArrayList();
 
     //This will be used to make sure that doubles are not added to the database. I realize that it doesn't need to be observable. It was just easy to implement.
@@ -360,8 +364,75 @@ public class AccessDB {
     *
     */
         
+    private int daysLeft(String option) {   
+    LocalDate dateNow = LocalDate.now();
+    DayOfWeek dayOfWeek = DayOfWeek.from(dateNow);    
+         switch (option) {
+            case "Monday":
+               return 5;
+            case "Tuesday":
+                return 4;
+            case "Wednesday":
+                return 3;
+            case "Thursday":
+                return 2;
+            case "Friday":
+                return 1;
+         }
+         return -1;
+    }
 
-    public static ObservableList<Appointment> allAppointments() {
+    public static void addAppointment(Appointment a) throws SQLException {
+        try {
+            Statement statement = DatabaseConnect.getDbConnection().createStatement();
+            statement.executeUpdate("INSERT INTO appointment VALUES (null, + '" + a.getCustomerId() + "','" + a.getUserId() + 
+                                    "','" + a.getTitle() + "','" + a.getDescription() + "','" + a.getLocation() + "', 'not needed' " + 
+                                    a.getType() + "', 'not needed '" + a.getStart() + "','" + a.getEnd() + "','" + TimeUtil.getUTCTime() +
+                                    "','" + LoginController.getCurrentUser() + "','" + TimeUtil.getUTCTime() + "','" + LoginController.getCurrentUser() + "';");
+            statement.close();
+        } catch (SQLException ex) {
+            System.out.println("Error adding appointment \n Error: " + ex.getMessage());
+        }
+    }
+    
+    public static ObservableList<Appointment> weekAppointments() {
+        weekAppointments.clear();
+        try {
+            Statement statement = DatabaseConnect.getDbConnection().createStatement();
+            ResultSet results = statement.executeQuery("SELECT appointment.appointmentId, appointment.customerId, customer.customerName, appointment.userId, user.userName, appointment.title, appointment.description, appointment.location," +
+                                                       " appointment.contact, appointment.type, appointment.url, appointment.start, appointment.end" +
+                                                       " FROM appointment, customer, user" +
+                                                       " WHERE appointment.customerId = customer.customerId AND appointment.userId = user.userId;");
+            while(results.next()) {
+                Appointment a = new Appointment();
+                    String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
+                    String startTime = TimeUtil.stringToString(results.getString("appointment.start"), "time");
+                    String endTime = TimeUtil.stringToString(results.getString("appointment.end"), "time"); 
+                    a.setAppointmentId(results.getInt("appointment.appointmentId"));
+                    a.setCustomerId(results.getInt("appointment.customerId"));
+                    a.setCustomerName(results.getString("customer.customerName"));
+                    a.setUserId(results.getInt("appointment.userId"));
+                    a.setUserName(results.getString("user.userName"));
+                    a.setTitle(results.getString("appointment.title"));
+                    a.setDescription(results.getString("appointment.description"));
+                    a.setLocation(results.getString("appointment.location"));
+                    a.setContact(results.getString("appointment.contact"));
+                    a.setType(results.getString("appointment.type"));
+                    a.setUrl(results.getString("appointment.url"));
+                    a.setDate(date);
+                    a.setStart(startTime);
+                    a.setEnd(endTime);
+                    weekAppointments.add(a);
+            }
+            statement.close();
+            return weekAppointments;
+        } catch (SQLException ex) {
+            System.out.println("Error building Appointment List \n Error: " + ex.getMessage());
+            return null;
+        }
+    }
+    
+        public static ObservableList<Appointment> allAppointments() {
         allAppointments.clear();
         try {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
@@ -392,6 +463,44 @@ public class AccessDB {
             }
             statement.close();
             return allAppointments;
+        } catch (SQLException ex) {
+            System.out.println("Error building Appointment List \n Error: " + ex.getMessage());
+            return null;
+        }
+    }
+
+
+    public static ObservableList<Appointment> monthAppointments() {
+        monthAppointments.clear();
+        try {
+            Statement statement = DatabaseConnect.getDbConnection().createStatement();
+            ResultSet results = statement.executeQuery("SELECT appointment.appointmentId, appointment.customerId, customer.customerName, appointment.userId, user.userName, appointment.title, appointment.description, appointment.location," +
+                                                       " appointment.contact, appointment.type, appointment.url, appointment.start, appointment.end" +
+                                                       " FROM appointment, customer, user" +
+                                                       " WHERE appointment.customerId = customer.customerId AND appointment.userId = user.userId;");
+            while(results.next()) {
+                Appointment a = new Appointment();
+                    String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
+                    String startTime = TimeUtil.stringToString(results.getString("appointment.start"), "time");
+                    String endTime = TimeUtil.stringToString(results.getString("appointment.end"), "time"); 
+                    a.setAppointmentId(results.getInt("appointment.appointmentId"));
+                    a.setCustomerId(results.getInt("appointment.customerId"));
+                    a.setCustomerName(results.getString("customer.customerName"));
+                    a.setUserId(results.getInt("appointment.userId"));
+                    a.setUserName(results.getString("user.userName"));
+                    a.setTitle(results.getString("appointment.title"));
+                    a.setDescription(results.getString("appointment.description"));
+                    a.setLocation(results.getString("appointment.location"));
+                    a.setContact(results.getString("appointment.contact"));
+                    a.setType(results.getString("appointment.type"));
+                    a.setUrl(results.getString("appointment.url"));
+                    a.setDate(date);
+                    a.setStart(startTime);
+                    a.setEnd(endTime);
+                    monthAppointments.add(a);
+            }
+            statement.close();
+            return monthAppointments;
         } catch (SQLException ex) {
             System.out.println("Error building Appointment List \n Error: " + ex.getMessage());
             return null;

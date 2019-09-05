@@ -102,7 +102,6 @@ choiceBox.getSelectionModel().setSelectedItem("oranges");
     private final ObservableList<String>  locationList = FXCollections.observableArrayList("Phoenix", "New York", "London");
     private final ObservableList<String> typeList = FXCollections.observableArrayList("Status", "Information", "Decision", "Problem", "Innovation", "Team");
     private final ObservableList<String> durationList = FXCollections.observableArrayList("30 minutes", "60 minutes", "90 minutes", "120 minutes");
-    private boolean isAM;
     
     /**
      * Initializes the controller class.
@@ -119,7 +118,7 @@ choiceBox.getSelectionModel().setSelectedItem("oranges");
         locationComboBox.setItems(locationList);
         typeComboBox.setItems(typeList);
         durationComboBox.setItems(durationList); 
-        if(AppointmentController.versionAdd.equals("edit")) {          
+        if(AppointmentController.versionAdd.equals("edit")) {      
             Appointment sel = AppointmentController.selectedAppointment;
             //break down date to parse to datepicker
             String str = sel.getDate();
@@ -159,13 +158,11 @@ choiceBox.getSelectionModel().setSelectedItem("oranges");
 
     @FXML
     private void amHandler(ActionEvent event) {
-        isAM = true;
         pmRadioButton.setSelected(false);
     }
 
     @FXML
     private void pmHandler(ActionEvent event) {
-        isAM = false;
         amRadioButton.setSelected(false);
     }
      

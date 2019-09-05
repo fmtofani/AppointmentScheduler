@@ -15,10 +15,13 @@ AddAppointment.java
 --
 
 Appointment.java
---
+--forwardHandler
+--backHandler
+--monthHandler
+--weekHandler
 
-EditAppointment.java
--- HOPEFULY DELETE THIS
+AddAppointment.java
+-- see why not blank populate after editing
 
 Reports.java
 -- Number of appointment types by month

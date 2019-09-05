@@ -12,6 +12,9 @@ import Model.AccessDB;
 import Model.Appointment;
 import java.io.IOException;
 import java.net.URL;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -75,7 +78,8 @@ public class AppointmentController implements Initializable {
 
     public static Appointment selectedAppointment;
     public static String versionAdd = "";
-
+    
+    
     /**
      * Initializes the controller class.
      */
@@ -95,7 +99,7 @@ public class AppointmentController implements Initializable {
 
     @FXML
     private void backHandler(ActionEvent event) {
-        //Use radio controls instead of buttons
+    
     }
 
     @FXML
@@ -151,6 +155,7 @@ public class AppointmentController implements Initializable {
 
     @FXML
     private void addHandler(ActionEvent event) throws IOException {
+       versionAdd.equals("");
        Stage stage; 
        Parent root;
        stage=(Stage) addButton.getScene().getWindow();
