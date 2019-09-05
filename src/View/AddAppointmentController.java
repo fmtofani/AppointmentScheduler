@@ -14,6 +14,7 @@ import Model.Appointment;
 import Model.Customer;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -112,32 +113,31 @@ choiceBox.getSelectionModel().setSelectedItem("oranges");
         clientColumn.setCellValueFactory(cellData -> cellData.getValue().customerNameProperty());
         phoneColumn.setCellValueFactory(cellData -> cellData.getValue().customerPhoneProperty());
         clientTableView.setItems(AccessDB.addClientAppointment());
+        clientPhoneTF.setVisible(false);
+        clientTF.setDisable(true);
         //Fill Combo Boxes
         locationComboBox.setItems(locationList);
         typeComboBox.setItems(typeList);
         durationComboBox.setItems(durationList); 
-        locationComboBox.getSelectionModel().select(0);
-        typeComboBox.getSelectionModel().select(0);
-        durationComboBox.getSelectionModel().select(0);
-        clientPhoneTF.setVisible(false);
-        clientTF.setDisable(true);
-        
-        /*
         if(AppointmentController.versionAdd.equals("edit")) {
-        Appointment sel = AppointmentController.selectedAppointment;
-        startTF.setText(sel.getStart());
-        clientTF.setText(sel.getCustomerName());
-        descriptionTF.setText(sel.getDescription());
-        locationComboBox.getSelectionModel().select("New York");
-        typeComboBox.getSelectionModel().select("New York");
-        durationComboBox.getSelectionModel().select("30 minutes");
+            Appointment sel = AppointmentController.selectedAppointment;
+            System.out.println(sel.customerNameProperty());
+/////Mod this!!!!
+            datePicker.setValue(LocalDate.of(2014, 10, 8));
+            startTF.setText(sel.getStart());
+            clientTF.setText(sel.getCustomerName());
+            descriptionTF.setText(sel.getDescription());
+            locationComboBox.getSelectionModel().select(sel.getLocation());
+            typeComboBox.getSelectionModel().select(sel.getType());
+            durationComboBox.getSelectionModel().select("2");
 //If statement to see if am or pm        
-        amRadioButton.setSelected(true);
-        pmRadioButton.setSelected(false);
-        }
- */
-        
-
+                amRadioButton.setSelected(true);
+                pmRadioButton.setSelected(false);
+        } else {
+            locationComboBox.getSelectionModel().select(0);
+            typeComboBox.getSelectionModel().select(0);
+            durationComboBox.getSelectionModel().select(0);
+        }    
     }    
 
     @FXML

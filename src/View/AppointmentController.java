@@ -74,7 +74,7 @@ public class AppointmentController implements Initializable {
     private TableView<Appointment> appointmentTableView;
 
     public static Appointment selectedAppointment;
-    public static String versionAdd;
+    public static String versionAdd = "";
 
     /**
      * Initializes the controller class.
@@ -162,6 +162,7 @@ public class AppointmentController implements Initializable {
 
     @FXML
     private void editHandler(ActionEvent event) throws IOException {
+       selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
        versionAdd = "edit";
        Stage stage; 
        Parent root;
