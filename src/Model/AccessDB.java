@@ -30,6 +30,7 @@ public class AccessDB {
     private static ObservableList<Country> allCountries = FXCollections.observableArrayList();
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> selectedAppointment = FXCollections.observableArrayList();
+    private static ObservableList<Customer> addClientAppointment = FXCollections.observableArrayList();
 
     //This will be used to make sure that doubles are not added to the database. I realize that it doesn't need to be observable. It was just easy to implement.
     public static ObservableList<City> allCities() {
@@ -446,6 +447,51 @@ public class AccessDB {
         }
     }
 
+/*
+*
+***** Try with resources used here for third type of exemption controls *****
+*
+*/
+    public static ObservableList<Customer> addClientAppointment() {
+        addClientAppointment.clear();
+        try (Statement statement = DatabaseConnect.getDbConnection().createStatement()) {
+            ResultSet results = statement.executeQuery("SELECT customer.customerName, address.phone FROM customer, address " +
+                                    "WHERE customer.addressId = address.addressId;");
+            while(results.next()) {
+                Customer c = new Customer();
+                 //    c.setCustomerId(results.getInt("customerId"));
+                     c.setCustomerName(results.getString("customerName"));
+                     c.setCustomerPhone(results.getString("phone"));
+                addClientAppointment.add(c);
+            }
+            statement.close();
+            return addClientAppointment;
+        } catch (SQLException ex) {
+            System.out.println("Select client failed \n Error: " + ex.getMessage());
+            return null;
+        }
+    }
+    
+    //Overloaded method to search
+    public static ObservableList<Customer> addClientAppointment(String str) {
+        addClientAppointment.clear();
+        try (Statement statement = DatabaseConnect.getDbConnection().createStatement()) {
+            ResultSet results = statement.executeQuery("SELECT customer.customerName, address.phone FROM customer, address " +
+                                    "WHERE customer.addressId = address.addressId AND customer.customerName = " + str + ";");
+            while(results.next()) {
+                Customer c = new Customer();
+                 //    c.setCustomerId(results.getInt("customerId"));
+                     c.setCustomerName(results.getString("customerName"));
+                     c.setCustomerPhone(results.getString("phone"));
+                addClientAppointment.add(c);
+            }
+            statement.close();
+            return addClientAppointment;
+        } catch (SQLException ex) {
+            System.out.println("Select client failed \n Error: " + ex.getMessage());
+            return null;
+        }
+    }
     
 //End Class
 }

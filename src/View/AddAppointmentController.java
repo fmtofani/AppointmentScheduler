@@ -9,6 +9,7 @@
 package View;
 
 import Model.AccessDB;
+import Model.Address;
 import Model.Appointment;
 import Model.Customer;
 import java.io.IOException;
@@ -33,14 +34,10 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-//3 specific locations
-/**
- * FXML Controller class
- *
- * @author micha
- */
+
 public class AddAppointmentController implements Initializable {
 
     @FXML
@@ -76,8 +73,19 @@ public class AddAppointmentController implements Initializable {
     @FXML
     private RadioButton pmRadioButton;
     @FXML
+    private TableColumn<Customer, Integer> customerIdColumn;
+    @FXML
     private TableColumn<Customer, String> clientColumn;
+    @FXML
+    private TableColumn<Customer, String> phoneColumn;
+    @FXML
+    private Button searchButton;
+    @FXML
+    private Button resetButton;
+    @FXML
+    private TextField clientPhoneTF;
 
+    public static Customer selectedClient;
     /*
     To get the selected item write: 
 ?
@@ -91,24 +99,30 @@ choiceBox.getSelectionModel().setSelectedItem("oranges");
 */
     
     private final ObservableList<String>  locationList = FXCollections.observableArrayList("Phoenix", "New York", "London");
-    private final ObservableList<String> typeList = FXCollections.observableArrayList("FILL");
+    private final ObservableList<String> typeList = FXCollections.observableArrayList("Status", "Information", "Decision", "Problem", "Innovation", "Team");
     private final ObservableList<String> durationList = FXCollections.observableArrayList("30 minutes", "60 minutes", "90 minutes", "120 minutes");
     private boolean isAM;
-    @FXML
-    private TableColumn<?, ?> phoneColumn;
-    @FXML
-    private Button searchButton;
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //Fill Table
         clientColumn.setCellValueFactory(cellData -> cellData.getValue().customerNameProperty());
+        phoneColumn.setCellValueFactory(cellData -> cellData.getValue().customerPhoneProperty());
+        clientTableView.setItems(AccessDB.addClientAppointment());
+        //Fill Combo Boxes
         locationComboBox.setItems(locationList);
         typeComboBox.setItems(typeList);
         durationComboBox.setItems(durationList); 
- 
+        locationComboBox.getSelectionModel().select(0);
+        typeComboBox.getSelectionModel().select(0);
+        durationComboBox.getSelectionModel().select(0);
+        clientPhoneTF.setVisible(false);
+        clientTF.setDisable(true);
+        
+        /*
         if(AppointmentController.versionAdd.equals("edit")) {
         Appointment sel = AppointmentController.selectedAppointment;
         startTF.setText(sel.getStart());
@@ -121,6 +135,8 @@ choiceBox.getSelectionModel().setSelectedItem("oranges");
         amRadioButton.setSelected(true);
         pmRadioButton.setSelected(false);
         }
+ */
+        
 
     }    
 
@@ -141,8 +157,6 @@ choiceBox.getSelectionModel().setSelectedItem("oranges");
         amRadioButton.setSelected(false);
     }
      
-    
-
 //The purpose of this method is to add the selected client to the appointment client field
     @FXML
     private void addClientHandler(ActionEvent event) throws IOException {
@@ -154,9 +168,9 @@ choiceBox.getSelectionModel().setSelectedItem("oranges");
        Scene scene = new Scene(root);
        stage.setScene(scene);
        stage.show();             
-
     }
 
+    
     //Redundant method to get back to the main schedule stage. I included it so that users would not be confused when they decided to not save the information that they entered
     @FXML
     private void cancelAddAppointmentHandler(ActionEvent event) throws IOException {
@@ -191,14 +205,34 @@ choiceBox.getSelectionModel().setSelectedItem("oranges");
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();        
+        }   
+    }
+    
+    @FXML
+    private void searchHandler(ActionEvent event) throws IOException {
+        String str = searchTF.getText();  
+        clientColumn.setCellValueFactory(cellData -> cellData.getValue().customerNameProperty());
+        phoneColumn.setCellValueFactory(cellData -> cellData.getValue().customerPhoneProperty());
+        AccessDB.addClientAppointment(str);
+    }
+
+    @FXML
+    private void resetHandler(ActionEvent event) {
+        clientColumn.setCellValueFactory(cellData -> cellData.getValue().customerNameProperty());
+        phoneColumn.setCellValueFactory(cellData -> cellData.getValue().customerPhoneProperty());
+        AccessDB.addClientAppointment();
+    }
+
+    @FXML
+    private void addClientToApptHandler(MouseEvent event) {
+        if (event.getClickCount() == 2) {
+            Customer addClientToAppt =  clientTableView.getSelectionModel().getSelectedItem();
+            clientTF.setText(addClientToAppt.getCustomerName());
+            clientPhoneTF.setText(addClientToAppt.getCustomerName());
         }
-        
+            
     }
 
     
-//End Class  
-
-    @FXML
-    private void searchHandler(ActionEvent event) {
-    }
+//End Class
 }

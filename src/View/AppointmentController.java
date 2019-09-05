@@ -24,6 +24,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
@@ -50,11 +51,11 @@ public class AppointmentController implements Initializable {
     @FXML
     private Button deleteButton;
     @FXML
-    private Button monthButton;
-    @FXML
-    private Button weekButton;
-    @FXML
     private Button detailsButton;
+    @FXML
+    private RadioButton monthRB;
+    @FXML
+    private RadioButton weekRB;
     @FXML
     private TableColumn<Appointment, String> dateColumn;
     @FXML
@@ -88,14 +89,28 @@ public class AppointmentController implements Initializable {
         titleColumn.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
         typeColumn.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
         appointmentTableView.setItems(AccessDB.allAppointments());
+        weekRB.setSelected(true);
+        monthRB.setSelected(false);
     }    
 
     @FXML
     private void backHandler(ActionEvent event) {
+        //Use radio controls instead of buttons
     }
 
     @FXML
     private void forwardHandler(ActionEvent event) {
+        //Use radio controls instead of buttons
+    }
+
+    @FXML
+    private void monthHandler(ActionEvent event) {
+        weekRB.setSelected(false);
+    }
+
+    @FXML
+    private void weekHandler(ActionEvent event) {
+        monthRB.setSelected(false);
     }
 
     @FXML
@@ -110,14 +125,6 @@ public class AppointmentController implements Initializable {
               AccessDB.deleteAppointment(selectedAppointment);
               appointmentTableView.setItems(AccessDB.allAppointments());
         }
-    }
-
-    @FXML
-    private void monthHandler(ActionEvent event) {
-    }
-
-    @FXML
-    private void weekHandler(ActionEvent event) {
     }
 
     @FXML
@@ -140,7 +147,6 @@ public class AppointmentController implements Initializable {
        Scene scene = new Scene(root);
        stage.setScene(scene);
        stage.show();             
-        
     }
 
     @FXML
@@ -152,7 +158,6 @@ public class AppointmentController implements Initializable {
        Scene scene = new Scene(root);
        stage.setScene(scene);
        stage.show();             
-
     }
 
     @FXML
