@@ -117,6 +117,8 @@ public class AddAppointmentController implements Initializable {
         durationComboBox.setItems(durationList); 
         amRadioButton.setSelected(true);
         if(AppointmentController.versionAdd.equals("edit")) {      
+            addAppointmentButton.setText("Modify");
+            //change this after mod
             Appointment sel = AppointmentController.selectedAppointment;
             //break down date to parse to datepicker
             String str = sel.getDate();
@@ -125,6 +127,7 @@ public class AddAppointmentController implements Initializable {
             int day = Integer.parseInt(str.substring(8,10));
             datePicker.setValue(LocalDate.of(year, month, day));
             clientTF.setText(sel.getCustomerName());
+            clientId = sel.getCustomerId();
             descriptionTF.setText(sel.getDescription());
             locationComboBox.getSelectionModel().select(sel.getLocation());
             typeComboBox.getSelectionModel().select(sel.getType());
@@ -208,8 +211,15 @@ public class AddAppointmentController implements Initializable {
         a.setType(String.valueOf(typeComboBox.getSelectionModel().getSelectedItem()));
         a.setStart(start);
         a.setEnd(end);
+        //Delete the old appointment if being edited
+        //Had I implemented a management user I would edit the LastUpdatedBy field in the Database
+        //Since only the user can edit their own appointments, I didn't deem it necessary to update the LastUpdatedBy field
+        if(AppointmentController.isEdit) {
+            AccessDB.deleteAppointment(AppointmentController.selectedAppointment);
+            addAppointmentButton.setText("Add");
+        }
+        AppointmentController.isEdit = false;
         AccessDB.addAppointment(a);
-
         //Let User know the appointment has been added
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("INFORMATION");

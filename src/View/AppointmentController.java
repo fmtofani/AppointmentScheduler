@@ -77,6 +77,7 @@ public class AppointmentController implements Initializable {
     private TableView<Appointment> appointmentTableView;
 
     public static Appointment selectedAppointment;
+    public static boolean isEdit = false;
     public static String versionAdd = "";
     
     
@@ -95,6 +96,7 @@ public class AppointmentController implements Initializable {
         appointmentTableView.setItems(AccessDB.allAppointments());
         weekRB.setSelected(true);
         monthRB.setSelected(false);
+        }
     }    
 
     @FXML
@@ -169,6 +171,7 @@ public class AppointmentController implements Initializable {
     private void editHandler(ActionEvent event) throws IOException {
        selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
        versionAdd = "edit";
+       isEdit = true;
        Stage stage; 
        Parent root;
        stage=(Stage) editButton.getScene().getWindow();
