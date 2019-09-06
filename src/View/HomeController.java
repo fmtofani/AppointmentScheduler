@@ -109,7 +109,7 @@ public class HomeController implements Initializable {
 
     @FXML
     private void deleteAppointmentHandler(ActionEvent event) {
-        AppointmentController.selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
+        selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
         Alert alert = new Alert (Alert.AlertType.CONFIRMATION);
         alert.setTitle("CONFIRMATION");
         alert.setHeaderText("DELETE Appointment");

@@ -11,7 +11,6 @@ package View;
 import Model.AccessDB;
 import Model.Appointment;
 import Model.Customer;
-import Util.TimeUtil;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -90,6 +89,8 @@ public class AddAppointmentController implements Initializable {
     private Button resetButton;
     @FXML
     private TextField clientIdTF;
+    @FXML
+    private Button clearButton;
 
     //Variables I need to pass to other class methods
     public static Customer selectedClient;    
@@ -114,6 +115,7 @@ public class AddAppointmentController implements Initializable {
         locationComboBox.setItems(locationList);
         typeComboBox.setItems(typeList);
         durationComboBox.setItems(durationList); 
+        amRadioButton.setSelected(true);
         if(AppointmentController.versionAdd.equals("edit")) {      
             Appointment sel = AppointmentController.selectedAppointment;
             //break down date to parse to datepicker
@@ -146,6 +148,23 @@ public class AddAppointmentController implements Initializable {
             durationComboBox.getSelectionModel().select(0);
         }    
     }    
+    
+    @FXML
+    private void clearHandler(ActionEvent event) {
+        //Clears the data entry objects
+ 
+        datePicker.setValue(null);
+        startTF.setText("");
+        amRadioButton.setSelected(true);
+        pmRadioButton.setSelected(false);
+        durationComboBox.getSelectionModel().select(0);
+        clientTF.setText("");
+        locationComboBox.getSelectionModel().select(0);
+        typeComboBox.getSelectionModel().select(0);
+        titleTF.setText("");
+        descriptionTF.setText("");
+    }
+    
     //needed for addAppointmentHandler
     private int parseDuration(int num) {
         switch (num) {
@@ -293,8 +312,7 @@ public class AddAppointmentController implements Initializable {
             clientTF.setText(addClientToAppt.getCustomerName());
             clientId = addClientToAppt.getCustomerId();
             clientIdTF.setText(Integer.toString(addClientToAppt.getCustomerId()));
-        }
-            
+        } 
     }
 
     
