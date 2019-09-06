@@ -11,6 +11,7 @@ package Util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Clock;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -81,7 +82,7 @@ public class TimeUtil {
         return date;
     }
     
-    public static String dateToString(Date date) {
+    public static String dateToString(LocalDate date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String strDate = simpleDateFormat.format(date);
         return strDate;        
@@ -114,9 +115,7 @@ public class TimeUtil {
                 return "-1";
         }
     }    
- //    StringBuilder sb = new StringBuilder;
- //    sb.append(stringToString(d))
-        
+ 
 
 //End Class        
 }

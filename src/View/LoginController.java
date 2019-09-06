@@ -8,6 +8,7 @@
 
 package View;
 
+import Model.User;
 import Util.DatabaseConnect;
 import Util.LoggerUtil;
 import java.io.IOException;
@@ -65,6 +66,15 @@ public class LoginController implements Initializable {
     public static String getCurrentUser() {
         return currentUser;
     }
+    
+    //References current userId
+    private static int currentUserId;
+    public static int getcurrentUserId() {
+        return currentUserId;
+    }
+    
+    
+    
     /**
      * Initializes the controller class.
      */
@@ -91,11 +101,14 @@ public class LoginController implements Initializable {
                 Statement statement = DatabaseConnect.getDbConnection().createStatement();
                 ResultSet results = statement.executeQuery("SELECT * FROM user WHERE userName='" + user + "' AND password='" + pass + "'");
                 if(results.next()) {
-//Log success   
-                    LoggerUtil.addEntry(user, true);
-                return true;
+                User u = new User();
+                u.setUserId(results.getInt("user.userId"));
+                currentUserId = u.getUserId();
+                //Log success   
+                LoggerUtil.addEntry(user, true);
+                return true; 
                 } else {
-//Log failure    
+                    //Log failure    
                     LoggerUtil.addEntry(user, false);
                     return false;
                 }
@@ -103,8 +116,6 @@ public class LoginController implements Initializable {
                 System.out.println("There has been an SQL error \n Error: " + ex.getMessage());
                 return false;
             }
-        
-
     }
     
        @FXML

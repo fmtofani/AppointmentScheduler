@@ -9,12 +9,14 @@
 package View;
 
 import Model.AccessDB;
-import Model.Address;
 import Model.Appointment;
 import Model.Customer;
+import Util.TimeUtil;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -54,6 +56,8 @@ public class AddAppointmentController implements Initializable {
     @FXML
     private TextField descriptionTF;
     @FXML
+    private TextField titleTF;
+    @FXML
     private TableView<Customer> clientTableView;
     @FXML
     private TextField searchTF;
@@ -86,26 +90,16 @@ public class AddAppointmentController implements Initializable {
     @FXML
     private TextField clientPhoneTF;
 
-    public static Customer selectedClient;
-    /*
-    To get the selected item write: 
-?
-1
-String selectedChoice = choiceBox.getSelectionModel().getSelectedItem();
-
-To set the selected item write: 
-?
-1
-choiceBox.getSelectionModel().setSelectedItem("oranges");
-*/
+    //Variables I need to pass to other class methods
+    public static Customer selectedClient;    
+    private int addClientId;
     
+    //Values for comboboxes
     private final ObservableList<String>  locationList = FXCollections.observableArrayList("Phoenix", "New York", "London");
     private final ObservableList<String> typeList = FXCollections.observableArrayList("Status", "Information", "Decision", "Problem", "Innovation", "Team");
     private final ObservableList<String> durationList = FXCollections.observableArrayList("30 minutes", "60 minutes", "90 minutes", "120 minutes");
+
     
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Fill Table
@@ -150,10 +144,66 @@ choiceBox.getSelectionModel().setSelectedItem("oranges");
             durationComboBox.getSelectionModel().select(0);
         }    
     }    
+    //needed for addAppointmentHandler
+    private int parseDuration(int num) {
+        switch (num) {
+            case 0:
+                return 30;
+            case 1:
+                return 60;
+            case 2:
+                return 90;
+            case 3:
+                return 120;
+        }
+            return 0;
+    }
 
     @FXML
-    private void addAppointmentHandler(ActionEvent event) {
-    
+    private void addAppointmentHandler(ActionEvent event) throws SQLException, IOException {
+        //Add military time
+        int add12 = 0;
+        if(pmRadioButton.isSelected()) add12 = 12;
+        //Construct Start time
+        LocalTime lt = LocalTime.of(Integer.parseInt(startTF.getText().substring(0,2)), Integer.parseInt(startTF.getText().substring(3,5)));
+        //Construct End Time
+        lt.plusMinutes(parseDuration(durationComboBox.getSelectionModel().getSelectedIndex()));
+        //Parse LocalTime into String
+        String hour = String.format(Integer.toString(lt.getHour()));
+        String min = Integer.toString(lt.getMinute());
+        //Finally the finished product
+        String start = TimeUtil.dateToString(datePicker.getValue()).concat(" ").concat(Integer.toString(Integer.parseInt(startTF.getText().substring(0,2)) + add12));
+        String end = TimeUtil.dateToString(datePicker.getValue()).concat(" ").concat(hour).concat(":").concat(min);
+        
+        
+        //Construct an appointment and add it to DB
+        Appointment a = new Appointment();
+        a.setCustomerId(addClientId);
+        a.setUserId(LoginController.getcurrentUserId());
+        a.setTitle(titleTF.getText());
+        a.setDescription(descriptionTF.getText());
+        a.setLocation(String.valueOf(locationComboBox.getSelectionModel().getSelectedItem()));
+        a.setType(String.valueOf(typeComboBox.getSelectionModel().getSelectedItem()));
+        a.setStart(start);
+        a.setEnd(end);
+        AccessDB.addAppointment(a);
+        //Let User know the appointment has been added
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("INFORMATION");
+        alert.setHeaderText("Add Appointment");
+        alert.setContentText("Appointment Has Been Added");
+        alert.showAndWait();
+        //Go back to Appointment Screen
+        Stage stage; 
+        Parent root;
+        stage=(Stage) addAppointmentButton.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource("Appointment.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();        
+
+                 
+        
     }
 
     @FXML
@@ -238,6 +288,7 @@ choiceBox.getSelectionModel().setSelectedItem("oranges");
             Customer addClientToAppt =  clientTableView.getSelectionModel().getSelectedItem();
             clientTF.setText(addClientToAppt.getCustomerName());
             clientPhoneTF.setText(addClientToAppt.getCustomerName());
+            addClientId = addClientToAppt.getCustomerId();
         }
             
     }
