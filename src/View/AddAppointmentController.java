@@ -17,6 +17,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -88,11 +89,11 @@ public class AddAppointmentController implements Initializable {
     @FXML
     private Button resetButton;
     @FXML
-    private TextField clientPhoneTF;
+    private TextField clientIdTF;
 
     //Variables I need to pass to other class methods
     public static Customer selectedClient;    
-    private int addClientId;
+    private int clientId;
     
     //Values for comboboxes
     private final ObservableList<String>  locationList = FXCollections.observableArrayList("Phoenix", "New York", "London");
@@ -105,8 +106,9 @@ public class AddAppointmentController implements Initializable {
         //Fill Table
         clientColumn.setCellValueFactory(cellData -> cellData.getValue().customerNameProperty());
         phoneColumn.setCellValueFactory(cellData -> cellData.getValue().customerPhoneProperty());
+        customerIdColumn.setCellValueFactory(cellData -> cellData.getValue().customerIdProperty().asObject());
         clientTableView.setItems(AccessDB.addClientAppointment());
-        clientPhoneTF.setVisible(false);
+        clientIdTF.setVisible(false);
         clientTF.setDisable(true);
         //Fill Combo Boxes
         locationComboBox.setItems(locationList);
@@ -172,13 +174,14 @@ public class AddAppointmentController implements Initializable {
         String hour = String.format(Integer.toString(lt.getHour()));
         String min = Integer.toString(lt.getMinute());
         //Finally the finished product
-        String start = TimeUtil.dateToString(datePicker.getValue()).concat(" ").concat(Integer.toString(Integer.parseInt(startTF.getText().substring(0,2)) + add12));
-        String end = TimeUtil.dateToString(datePicker.getValue()).concat(" ").concat(hour).concat(":").concat(min);
+        //System.out.println(TimeUtil.dateToString(datePicker.getValue()));
+        String start = datePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).concat(" ").concat(Integer.toString(Integer.parseInt(startTF.getText().substring(0,2)) + add12).concat(":").concat(min));
+        String end = datePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).concat(" ").concat(hour).concat(":").concat(min);
         
         
         //Construct an appointment and add it to DB
-        Appointment a = new Appointment();
-        a.setCustomerId(addClientId);
+        Appointment a = new Appointment();      
+        a.setCustomerId(clientId);
         a.setUserId(LoginController.getcurrentUserId());
         a.setTitle(titleTF.getText());
         a.setDescription(descriptionTF.getText());
@@ -187,6 +190,7 @@ public class AddAppointmentController implements Initializable {
         a.setStart(start);
         a.setEnd(end);
         AccessDB.addAppointment(a);
+
         //Let User know the appointment has been added
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("INFORMATION");
@@ -287,8 +291,8 @@ public class AddAppointmentController implements Initializable {
         if (event.getClickCount() == 2) {
             Customer addClientToAppt =  clientTableView.getSelectionModel().getSelectedItem();
             clientTF.setText(addClientToAppt.getCustomerName());
-            clientPhoneTF.setText(addClientToAppt.getCustomerName());
-            addClientId = addClientToAppt.getCustomerId();
+            clientId = addClientToAppt.getCustomerId();
+            clientIdTF.setText(Integer.toString(addClientToAppt.getCustomerId()));
         }
             
     }

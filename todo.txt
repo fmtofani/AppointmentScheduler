@@ -11,8 +11,9 @@ done -- Invalid customer data
 done -- Incorrect user/pass
 
 **** Finish these classes ****
-AddAppointment.java
---
+AccessDB.java
+--weeklyAppointments
+--monthlyAppointments
 
 Appointment.java
 --forwardHandler
@@ -21,7 +22,9 @@ Appointment.java
 --weekHandler
 
 AddAppointment.java
--- see why not blank populate after editing
+-- addAppointmentHandler
+-- clearAppointmentHandler
+-- delete an edited appointment
 
 Reports.java
 -- Number of appointment types by month

@@ -385,10 +385,10 @@ public class AccessDB {
     public static void addAppointment(Appointment a) throws SQLException {
         try {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
-            statement.executeUpdate("INSERT INTO appointment VALUES (null, + '" + a.getCustomerId() + "','" + a.getUserId() + 
-                                    "','" + a.getTitle() + "','" + a.getDescription() + "','" + a.getLocation() + "', 'not needed' " + 
-                                    a.getType() + "', 'not needed '" + a.getStart() + "','" + a.getEnd() + "','" + TimeUtil.getUTCTime() +
-                                    "','" + LoginController.getCurrentUser() + "','" + TimeUtil.getUTCTime() + "','" + LoginController.getCurrentUser() + "';");
+            statement.executeUpdate("INSERT INTO appointment VALUES (null, + " + a.getCustomerId() + "," + a.getUserId() + 
+                                    ",'" + a.getTitle() + "','" + a.getDescription() + "','" + a.getLocation() + "', 'not needed', '" + 
+                                    a.getType() + "', 'not needed', '" + a.getStart() + "','" + a.getEnd() + "','" + TimeUtil.getUTCTime() +
+                                    "','" + LoginController.getCurrentUser() + "','" + TimeUtil.getUTCTime() + "','" + LoginController.getCurrentUser() + "');");
             statement.close();
         } catch (SQLException ex) {
             System.out.println("Error adding appointment \n Error: " + ex.getMessage());
@@ -564,11 +564,11 @@ public class AccessDB {
     public static ObservableList<Customer> addClientAppointment() {
         addClientAppointment.clear();
         try (Statement statement = DatabaseConnect.getDbConnection().createStatement()) {
-            ResultSet results = statement.executeQuery("SELECT customer.customerName, address.phone FROM customer, address " +
+            ResultSet results = statement.executeQuery("SELECT customer.customerName, address.phone, customerId FROM customer, address " +
                                     "WHERE customer.addressId = address.addressId;");
             while(results.next()) {
                 Customer c = new Customer();
-                 //    c.setCustomerId(results.getInt("customerId"));
+                     c.setCustomerId(results.getInt("customerId"));
                      c.setCustomerName(results.getString("customerName"));
                      c.setCustomerPhone(results.getString("phone"));
                 addClientAppointment.add(c);
