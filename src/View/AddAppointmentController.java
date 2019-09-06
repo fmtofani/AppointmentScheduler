@@ -272,6 +272,7 @@ public class AddAppointmentController implements Initializable {
         alert.setContentText("Are you sure that you want to cancel?");
         Optional<ButtonType> result = alert.showAndWait();
         if(result.get() == ButtonType.OK) {      
+            AppointmentController.isEdit = false;
             Stage stage; 
             Parent root;
             stage=(Stage) addAppointmentButton.getScene().getWindow();

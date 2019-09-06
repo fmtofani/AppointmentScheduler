@@ -96,7 +96,7 @@ public class AppointmentController implements Initializable {
         appointmentTableView.setItems(AccessDB.allAppointments());
         weekRB.setSelected(true);
         monthRB.setSelected(false);
-        }
+        isEdit = false;
     }    
 
     @FXML
@@ -144,6 +144,7 @@ public class AppointmentController implements Initializable {
        stage.setScene(scene);
        stage.show();      
     }    
+    
     @FXML
     private void exitHandler(ActionEvent event) throws IOException {
        Stage stage; 
