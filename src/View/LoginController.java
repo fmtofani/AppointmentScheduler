@@ -16,6 +16,8 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -53,13 +55,13 @@ public class LoginController implements Initializable {
     private Label userLabel;
     @FXML
     private Label headerLabel;
-
-    private String alertTitle;
-    private String alertHeader;
-    private String alertMessage;
     @FXML
     private Button loginExitButton;
 
+    //Variables to set locale language
+    private String alertTitle;
+    private String alertHeader;
+    private String alertMessage;
 
    //Reference current user throughout program
     private static String currentUser;
@@ -73,6 +75,10 @@ public class LoginController implements Initializable {
         return currentUserId;
     }
     
+    //For use throughout the program
+    public static String now;
+    public static int offset;
+    
     
     
     /**
@@ -80,6 +86,10 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        LocalDateTime ldt = LocalDateTime.now();
+        now = ldt.toString();
+        offset = Integer.parseInt(ZoneOffset.systemDefault().getRules().getOffset(LocalDateTime.now()).toString());
+        System.out.println("LocalDateTime is: " + ldt + "\n Offset is: " + offset);
         DatabaseConnect.dbConnect();
         setLang();
     }    

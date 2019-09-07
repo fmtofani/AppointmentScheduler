@@ -8,6 +8,10 @@
 
 package View;
 
+import Model.Appointment;
+import Model.Customer;
+import Model.User;
+import Model.AccessDB;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -21,6 +25,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
@@ -38,14 +45,77 @@ public class ReportsController implements Initializable {
     private Button viewReport_2Button;
     @FXML
     private Button viewReport_1Button;
+    @FXML
+    private Button forwardButton;
+    @FXML
+    private Button backButton;
+    @FXML
+    private AnchorPane reportTableView;
+    @FXML
+    private TableColumn<User, String> usernameColumn;
+    @FXML
+    private TableColumn<Appointment, String> dateColumn;
+    @FXML
+    private TableColumn<Appointment, String> timeColumn;
+    @FXML
+    private TableColumn<Customer, String> clientColumn;
+    @FXML
+    private TableColumn<Appointment, String> typeColumn;
+    @FXML
+    private Label monthLabel;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        monthLabel.setVisible(false);
+        backButton.setVisible(false);
+        forwardButton.setVisible(false);
+        //Fill the table
+        dateColumn.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
+        timeColumn.setCellValueFactory(cellData -> cellData.getValue().startProperty());
+        usernameColumn.setCellValueFactory(cellData -> cellData.getValue().userNameProperty());
+        clientColumn.setCellValueFactory(cellData -> cellData.getValue().customerNameProperty());
+        typeColumn.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
+       
     }    
+
+    @FXML
+    private void viewReport_1Handler(ActionEvent event) {
+        monthLabel.setVisible(true);
+        backButton.setVisible(true);
+        forwardButton.setVisible(true);
+        AccessDB.report1(LoginController.now);
+       
+    }
+
+    @FXML
+    private void viewReport_2Handler(ActionEvent event) {
+        monthLabel.setVisible(false);
+        backButton.setVisible(false);
+        forwardButton.setVisible(false);
+        AccessDB.report2();
+    }
+
+    @FXML
+    private void viewReport_3Handler(ActionEvent event) {
+        monthLabel.setVisible(false);
+        backButton.setVisible(false);
+        forwardButton.setVisible(false);
+        AccessDB.report3();
+    }
+
+
+    @FXML
+    private void forwardHandler(ActionEvent event) {
+        
+    }
+
+    @FXML
+    private void backHandler(ActionEvent event) {
+        
+    }
 
     @FXML
     private void exitReportsHandler(ActionEvent event) throws IOException {
@@ -65,16 +135,6 @@ public class ReportsController implements Initializable {
         }
    }
 
-    @FXML
-    private void viewReport_3Handler(ActionEvent event) {
-    }
-
-    @FXML
-    private void viewReport_2Handler(ActionEvent event) {
-    }
-
-    @FXML
-    private void viewReport_1Handler(ActionEvent event) {
-    }
     
+    //End Class
 }

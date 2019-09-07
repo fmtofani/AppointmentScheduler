@@ -1,8 +1,8 @@
-Add method to make sure getSelected() is not null
-
 Add method to make sure Users are unique
 
 Add 2 lambdas
+-- getSelected() != null
+--
 
 Exception controls
  -- Schedule appointment outside business hours
@@ -10,14 +10,19 @@ Exception controls
 done -- Invalid customer data
 done -- Incorrect user/pass
 
+LoginController
+--now()
+--offset()
+
 **** Finish these classes ****
 HomeController.java
---fix Delete
+done--fix Delete
 --add view daily appt method
 
 AccessDB.java
 --weeklyAppointments
 --monthlyAppointments
+--daily appts
 
 Appointment.java
 --forwardHandler
@@ -25,14 +30,10 @@ Appointment.java
 --monthHandler
 --weekHandler
 
-AddAppointment.java
--- clearAppointmentHandler
--- delete an edited appointment
-
 Reports.java
--- Number of appointment types by month
--- Schedule of each consultant
--- MY CHOICE
+-- Report 1
+-- Report 2
+-- Report 3
 
 Login.java
 -- Method to warn if appointment is in 15 minutes

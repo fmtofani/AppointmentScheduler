@@ -19,8 +19,8 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="cancelAddAppointmentButton" layoutX="216.0" layoutY="367.0" mnemonicParsing="false" onAction="#cancelAddAppointmentHandler" prefHeight="25.0" prefWidth="52.0" text="Cancel" />
-      <Button fx:id="addAppointmentButton" layoutX="93.0" layoutY="367.0" mnemonicParsing="false" onAction="#addAppointmentHandler" prefHeight="25.0" prefWidth="52.0" text="Add" />
+      <Button fx:id="cancelAddAppointmentButton" layoutX="250.0" layoutY="368.0" mnemonicParsing="false" onAction="#cancelAddAppointmentHandler" prefHeight="25.0" prefWidth="72.0" text="Cancel" />
+      <Button fx:id="addAppointmentButton" layoutX="93.0" layoutY="367.0" mnemonicParsing="false" onAction="#addAppointmentHandler" prefHeight="25.0" prefWidth="72.0" text="Add" />
       <Label layoutX="33.0" layoutY="69.0" text="Date" />
       <Label layoutX="32.0" layoutY="107.0" text="Start" />
       <Label layoutX="31.0" layoutY="142.0" prefHeight="17.0" prefWidth="47.0" text="Duration" />
@@ -33,9 +33,9 @@
       <TextField fx:id="descriptionTF" layoutX="93.0" layoutY="322.0" prefHeight="25.0" prefWidth="543.0" />
       <TableView fx:id="clientTableView" layoutX="284.0" layoutY="90.0" onMouseClicked="#addClientToApptHandler" prefHeight="189.0" prefWidth="204.0">
         <columns>
-          <TableColumn fx:id="clientColumn" prefWidth="56.5" text="Client Name" />
-            <TableColumn fx:id="phoneColumn" prefWidth="57.0" text="Phone" />
-            <TableColumn fx:id="customerIdColumn" prefWidth="186.5" text="Customer Id" />
+          <TableColumn fx:id="clientColumn" prefWidth="118.5" text="Client Name" />
+            <TableColumn fx:id="phoneColumn" prefWidth="94.5" text="Phone" />
+            <TableColumn fx:id="customerIdColumn" prefWidth="87.0" text="Customer Id" />
         </columns>
       </TableView>
       <TextField fx:id="searchTF" layoutX="498.0" layoutY="65.0" prefHeight="25.0" prefWidth="136.0" />
@@ -46,7 +46,7 @@
       <ComboBox fx:id="locationComboBox" layoutX="93.0" layoutY="218.0" prefWidth="150.0" />
       <ComboBox fx:id="typeComboBox" layoutX="93.0" layoutY="257.0" prefWidth="150.0" />
       <Button fx:id="searchButton" layoutX="540.0" layoutY="95.0" mnemonicParsing="false" onAction="#searchHandler" text="Search" />
-      <Button fx:id="clearButton" layoutX="154.0" layoutY="367.0" mnemonicParsing="false" onAction="#clearHandler" prefHeight="25.0" prefWidth="52.0" text="Clear" />
+      <Button fx:id="clearButton" layoutX="174.0" layoutY="367.0" mnemonicParsing="false" onAction="#clearHandler" prefHeight="25.0" prefWidth="72.0" text="Clear" />
       <ComboBox fx:id="durationComboBox" layoutX="92.0" layoutY="138.0" prefWidth="150.0" />
       <RadioButton fx:id="amRadioButton" layoutX="180.0" layoutY="107.0" mnemonicParsing="false" onAction="#amHandler" text="AM" />
       <RadioButton fx:id="pmRadioButton" layoutX="224.0" layoutY="107.0" mnemonicParsing="false" onAction="#pmHandler" text="PM" />

@@ -128,6 +128,7 @@ public class AddAppointmentController implements Initializable {
             datePicker.setValue(LocalDate.of(year, month, day));
             clientTF.setText(sel.getCustomerName());
             clientId = sel.getCustomerId();
+            titleTF.setText(sel.getType());
             descriptionTF.setText(sel.getDescription());
             locationComboBox.getSelectionModel().select(sel.getLocation());
             typeComboBox.getSelectionModel().select(sel.getType());
