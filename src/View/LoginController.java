@@ -89,7 +89,15 @@ public class LoginController implements Initializable {
         LocalDateTime ldt = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         TimeUtil.setNow(ldt.format(formatter));
- 
+        TimeUtil.setNowDate(ldt.format(formatter).substring(0, 10));
+        TimeUtil.setNowMonth(ldt.format(formatter).substring(5,7));
+        TimeUtil.setNowYear(ldt.format(formatter).substring(0,4));
+        TimeUtil.setNowTime(ldt.format(formatter).substring(11,16));
+        System.out.println("Now= " + TimeUtil.getNow());
+        System.out.println("NowDate= " + TimeUtil.getNowDate());
+        System.out.println("NowMonth= " + TimeUtil.getNowMonth());
+        System.out.println("NowYear= " + TimeUtil.getNowYear());
+        System.out.println("Time: " + TimeUtil.getNowTime());
         //get local timezone offset by breaking down the string and parsing it into a Double. 
         //There is probably an easy way to do this, however this is the only iteration I have used in the program which is odd.
         String stringOffset = ZoneOffset.systemDefault().getRules().getOffset(LocalDateTime.now()).toString();
@@ -152,7 +160,7 @@ public class LoginController implements Initializable {
             }
     }
     
-       @FXML
+    @FXML
     public void loginHandler(ActionEvent event) throws IOException {
         String user = userTextField.getText();
         String pass = passTextField.getText();

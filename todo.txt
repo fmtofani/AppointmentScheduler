@@ -2,10 +2,6 @@ Add 2 lambdas
 -- getSelected() != null
 --
 
-Exception controls
- -- Schedule appointment outside business hours
- -- Overlapping appointments
-
 LoginController
 --15 minute alert
 
@@ -19,8 +15,7 @@ AccessDB.java
 --daily appts
 
 AddAppointment
--- Verify date
--- Verify Start
+-- adjust for time offset
 
 Appointment.java
 --forwardHandler
@@ -29,10 +24,9 @@ Appointment.java
 --weekHandler
 
 Reports.java
--- figure out how to do a tableview from multiple tables
--- Report 1
+-- Report 1 Forward Back
 -- Report 2
--- Report 3
+-- Report 3 Inner Join
 -- Forward Handler
 -- Backward Handler
 

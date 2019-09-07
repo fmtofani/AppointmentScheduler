@@ -33,6 +33,39 @@ public class TimeUtil {
     public static void setNow(String s) {
         now = s;
     }
+    //Set local date
+    private static String nowDate;
+    public static String getNowDate() {
+        return nowDate;
+    }
+    public static void setNowDate(String s) {
+        nowDate = s;
+    }
+    //Set current month
+    private static String nowMonth;
+    public static String getNowMonth() {
+        return nowMonth;
+    }
+    public static void setNowMonth(String s) {
+        nowMonth = s;
+    }
+    
+    //Set current time
+    private static String nowYear;
+    public static String getNowYear() {
+        return nowYear;
+    }
+    public static void setNowYear(String s) {
+        nowYear = s;
+    }
+    //Set current time
+    private static String nowTime;
+    public static String getNowTime() {
+        return nowTime;
+    }
+    public static void setNowTime(String s) {
+        nowTime = s;
+    }
     //Set timezone offset
     private static Double offset;
     public static Double getOffset() {

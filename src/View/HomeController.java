@@ -11,6 +11,7 @@ package View;
 import Model.AccessDB;
 import Model.Appointment;
 import Util.DatabaseConnect;
+import Util.TimeUtil;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -72,7 +73,7 @@ public class HomeController implements Initializable {
         clientColumn.setCellValueFactory(cellData -> cellData.getValue().customerNameProperty());
         locationColumn.setCellValueFactory(cellData -> cellData.getValue().locationProperty());
         titleColumn.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
-        appointmentTableView.setItems(AccessDB.allAppointments());
+        appointmentTableView.setItems(AccessDB.dailyAppointments(TimeUtil.getNowDate()));
     }    
 
 

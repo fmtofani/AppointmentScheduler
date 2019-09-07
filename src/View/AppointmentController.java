@@ -10,11 +10,9 @@ package View;
 
 import Model.AccessDB;
 import Model.Appointment;
+import Util.TimeUtil;
 import java.io.IOException;
 import java.net.URL;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -93,9 +91,9 @@ public class AppointmentController implements Initializable {
         locationColumn.setCellValueFactory(cellData -> cellData.getValue().locationProperty());
         titleColumn.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
         typeColumn.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
-        appointmentTableView.setItems(AccessDB.allAppointments());
-        weekRB.setSelected(true);
-        monthRB.setSelected(false);
+        appointmentTableView.setItems(AccessDB.monthAppointments(TimeUtil.getNowMonth(), TimeUtil.getNowYear()));
+        weekRB.setSelected(false);
+        monthRB.setSelected(true);
         isEdit = false;
     }    
 
@@ -112,6 +110,8 @@ public class AppointmentController implements Initializable {
     @FXML
     private void monthHandler(ActionEvent event) {
         weekRB.setSelected(false);
+        appointmentTableView.setItems(AccessDB.monthAppointments(TimeUtil.getNowMonth(), TimeUtil.getNowYear()));
+
     }
 
     @FXML

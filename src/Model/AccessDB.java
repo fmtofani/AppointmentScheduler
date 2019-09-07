@@ -36,9 +36,9 @@ public class AccessDB {
     private static ObservableList<Appointment> monthAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> dailyAppointments = FXCollections.observableArrayList();
     private static ObservableList<Customer> addClientAppointment = FXCollections.observableArrayList();
-    private static ObservableList<Appointment> report1 = FXCollections.observableArrayList();
-    private static ObservableList<Appointment> report2 = FXCollections.observableArrayList();
-    private static ObservableList<Appointment> report3 = FXCollections.observableArrayList();
+    private static ObservableList<Report> report1 = FXCollections.observableArrayList();
+    private static ObservableList<Report> report2 = FXCollections.observableArrayList();
+    private static ObservableList<Report> report3 = FXCollections.observableArrayList();
 
     //This will be used to make sure that doubles are not added to the database. I realize that it doesn't need to be observable. It was just easy to implement.
     public static ObservableList<City> allCities() {
@@ -474,7 +474,7 @@ public class AccessDB {
     }
 
 
-    public static ObservableList<Appointment> monthAppointments(String dateMonth) {
+    public static ObservableList<Appointment> monthAppointments(String dateMonth, String dateYear) {
         monthAppointments.clear();
         try {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
@@ -484,24 +484,28 @@ public class AccessDB {
                                                        " WHERE appointment.customerId = customer.customerId AND appointment.userId = user.userId;");
             while(results.next()) {
                 Appointment a = new Appointment();
-                    String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
                     String startTime = TimeUtil.stringToString(results.getString("appointment.start"), "time");
                     String endTime = TimeUtil.stringToString(results.getString("appointment.end"), "time"); 
-                    a.setAppointmentId(results.getInt("appointment.appointmentId"));
-                    a.setCustomerId(results.getInt("appointment.customerId"));
-                    a.setCustomerName(results.getString("customer.customerName"));
-                    a.setUserId(results.getInt("appointment.userId"));
-                    a.setUserName(results.getString("user.userName"));
-                    a.setTitle(results.getString("appointment.title"));
-                    a.setDescription(results.getString("appointment.description"));
-                    a.setLocation(results.getString("appointment.location"));
-                    a.setContact(results.getString("appointment.contact"));
-                    a.setType(results.getString("appointment.type"));
-                    a.setUrl(results.getString("appointment.url"));
-                    a.setDate(date);
-                    a.setStart(startTime);
-                    a.setEnd(endTime);
-                    monthAppointments.add(a);
+                    String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
+                    String dateY = TimeUtil.stringToString(results.getString("appointment.start"), "year");
+                    String dateM = TimeUtil.stringToString(results.getString("appointment.start"), "month");
+                    if(dateM.equals(dateMonth) && dateY.equals(dateYear)) {
+                        a.setAppointmentId(results.getInt("appointment.appointmentId"));
+                        a.setCustomerId(results.getInt("appointment.customerId"));
+                        a.setCustomerName(results.getString("customer.customerName"));
+                        a.setUserId(results.getInt("appointment.userId"));
+                        a.setUserName(results.getString("user.userName"));
+                        a.setTitle(results.getString("appointment.title"));
+                        a.setDescription(results.getString("appointment.description"));
+                        a.setLocation(results.getString("appointment.location"));
+                        a.setContact(results.getString("appointment.contact"));
+                        a.setType(results.getString("appointment.type"));
+                        a.setUrl(results.getString("appointment.url"));
+                        a.setDate(date);
+                        a.setStart(startTime);
+                        a.setEnd(endTime);
+                        monthAppointments.add(a);
+                    }
             }
             statement.close();
             return monthAppointments;
@@ -521,24 +525,27 @@ public class AccessDB {
                                                        " WHERE appointment.customerId = customer.customerId AND appointment.userId = user.userId;");
             while(results.next()) {
                 Appointment a = new Appointment();
-                    String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
                     String startTime = TimeUtil.stringToString(results.getString("appointment.start"), "time");
                     String endTime = TimeUtil.stringToString(results.getString("appointment.end"), "time"); 
-                    a.setAppointmentId(results.getInt("appointment.appointmentId"));
-                    a.setCustomerId(results.getInt("appointment.customerId"));
-                    a.setCustomerName(results.getString("customer.customerName"));
-                    a.setUserId(results.getInt("appointment.userId"));
-                    a.setUserName(results.getString("user.userName"));
-                    a.setTitle(results.getString("appointment.title"));
-                    a.setDescription(results.getString("appointment.description"));
-                    a.setLocation(results.getString("appointment.location"));
-                    a.setContact(results.getString("appointment.contact"));
-                    a.setType(results.getString("appointment.type"));
-                    a.setUrl(results.getString("appointment.url"));
-                    a.setDate(date);
-                    a.setStart(startTime);
-                    a.setEnd(endTime);
-                    dailyAppointments.add(a);
+                    String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
+                    System.out.println("Date= " + date + "\n dayDate= " + dateDay);
+                    if(date.equals(dateDay)) {
+                        a.setAppointmentId(results.getInt("appointment.appointmentId"));
+                        a.setCustomerId(results.getInt("appointment.customerId"));
+                        a.setCustomerName(results.getString("customer.customerName"));
+                        a.setUserId(results.getInt("appointment.userId"));
+                        a.setUserName(results.getString("user.userName"));
+                        a.setTitle(results.getString("appointment.title"));
+                        a.setDescription(results.getString("appointment.description"));
+                        a.setLocation(results.getString("appointment.location"));
+                        a.setContact(results.getString("appointment.contact"));
+                        a.setType(results.getString("appointment.type"));
+                        a.setUrl(results.getString("appointment.url"));
+                        a.setDate(date);
+                        a.setStart(startTime);
+                        a.setEnd(endTime);
+                        dailyAppointments.add(a);
+                    }
             }
             statement.close();
             return dailyAppointments;
@@ -651,7 +658,7 @@ public class AccessDB {
     *
     */
 
-    public static ObservableList<Appointment> report1(String dateMonth) {
+    public static ObservableList<Report> report1(String dateMonth) {
         report1.clear();
         try {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
@@ -661,24 +668,14 @@ public class AccessDB {
                                                        " WHERE appointment.customerId = customer.customerId AND appointment.userId = user.userId" +
                                                        " ORDER BY user.userName, appointment.start ASC;");
             while(results.next()) {
-                Appointment a = new Appointment();
+                Report a = new Report();
                     String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
                     String startTime = TimeUtil.stringToString(results.getString("appointment.start"), "time");
-                    String endTime = TimeUtil.stringToString(results.getString("appointment.end"), "time"); 
-                    a.setAppointmentId(results.getInt("appointment.appointmentId"));
-                    a.setCustomerId(results.getInt("appointment.customerId"));
                     a.setCustomerName(results.getString("customer.customerName"));
-                    a.setUserId(results.getInt("appointment.userId"));
                     a.setUserName(results.getString("user.userName"));
-                    a.setTitle(results.getString("appointment.title"));
-                    a.setDescription(results.getString("appointment.description"));
-                    a.setLocation(results.getString("appointment.location"));
-                    a.setContact(results.getString("appointment.contact"));
                     a.setType(results.getString("appointment.type"));
-                    a.setUrl(results.getString("appointment.url"));
                     a.setDate(date);
-                    a.setStart(startTime);
-                    a.setEnd(endTime);
+                    a.setTime(startTime);
                     report1.add(a);
             }
             statement.close();
@@ -689,7 +686,7 @@ public class AccessDB {
         }
     }
     
-    public static ObservableList<Appointment> report2() {
+    public static ObservableList<Report> report2() {
         report2.clear();
         try {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
@@ -699,35 +696,25 @@ public class AccessDB {
                                                        " WHERE appointment.customerId = customer.customerId AND appointment.userId = user.userId" +
                                                        " ORDER BY appointment.type, user.userName, appointment.start ASC;");
             while(results.next()) {
-                Appointment a = new Appointment();
+                Report a = new Report();
                     String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
                     String startTime = TimeUtil.stringToString(results.getString("appointment.start"), "time");
-                    String endTime = TimeUtil.stringToString(results.getString("appointment.end"), "time"); 
-                    a.setAppointmentId(results.getInt("appointment.appointmentId"));
-                    a.setCustomerId(results.getInt("appointment.customerId"));
                     a.setCustomerName(results.getString("customer.customerName"));
-                    a.setUserId(results.getInt("appointment.userId"));
                     a.setUserName(results.getString("user.userName"));
-                    a.setTitle(results.getString("appointment.title"));
-                    a.setDescription(results.getString("appointment.description"));
-                    a.setLocation(results.getString("appointment.location"));
-                    a.setContact(results.getString("appointment.contact"));
                     a.setType(results.getString("appointment.type"));
-                    a.setUrl(results.getString("appointment.url"));
                     a.setDate(date);
-                    a.setStart(startTime);
-                    a.setEnd(endTime);
+                    a.setTime(startTime);
                     report2.add(a);
             }
             statement.close();
             return report2;
         } catch (SQLException ex) {
-            System.out.println("Error building Report 1 List \n Error: " + ex.getMessage());
+            System.out.println("Error building Report 2 List \n Error: " + ex.getMessage());
             return null;
         }
     }
     
-    public static ObservableList<Appointment> report3() {
+    public static ObservableList<Report> report3() {
         report3.clear();
         try {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
@@ -737,30 +724,20 @@ public class AccessDB {
                                                        " WHERE appointment.customerId = customer.customerId AND appointment.userId = user.userId" +   
                                                        " ORDER BY user.userName, customer.customerName, address.phone ASC;");
             while(results.next()) {
-                Appointment a = new Appointment();
+                Report a = new Report();
                     String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
                     String startTime = TimeUtil.stringToString(results.getString("appointment.start"), "time");
-                    String endTime = TimeUtil.stringToString(results.getString("appointment.end"), "time"); 
-                    a.setAppointmentId(results.getInt("appointment.appointmentId"));
-                    a.setCustomerId(results.getInt("appointment.customerId"));
                     a.setCustomerName(results.getString("customer.customerName"));
-                    a.setUserId(results.getInt("appointment.userId"));
                     a.setUserName(results.getString("user.userName"));
-                    a.setTitle(results.getString("appointment.title"));
-                    a.setDescription(results.getString("appointment.description"));
-                    a.setLocation(results.getString("appointment.location"));
-                    a.setContact(results.getString("appointment.contact"));
                     a.setType(results.getString("appointment.type"));
-                    a.setUrl(results.getString("appointment.url"));
                     a.setDate(date);
-                    a.setStart(startTime);
-                    a.setEnd(endTime);
+                    a.setTime(startTime);
                     report3.add(a);
             }
             statement.close();
             return report3;
         } catch (SQLException ex) {
-            System.out.println("Error building Report 1 List \n Error: " + ex.getMessage());
+            System.out.println("Error building Report 3 List \n Error: " + ex.getMessage());
             return null;
         }
     }
