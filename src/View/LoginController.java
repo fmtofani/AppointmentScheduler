@@ -71,7 +71,6 @@ public class LoginController implements Initializable {
     public static String getCurrentUser() {
         return currentUser;
     }
-    
     //References current userId
     private static int currentUserId;
     public static int getcurrentUserId() {
@@ -89,7 +88,7 @@ public class LoginController implements Initializable {
         //Set local time
         LocalDateTime ldt = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        TimeUtil.now = ldt.format(formatter);
+        TimeUtil.setNow(ldt.format(formatter));
  
         //get local timezone offset by breaking down the string and parsing it into a Double. 
         //There is probably an easy way to do this, however this is the only iteration I have used in the program which is odd.
@@ -99,7 +98,6 @@ public class LoginController implements Initializable {
         String str3;
         Double num;
         int length = stringOffset.length();
-        System.out.println("string length: " + stringOffset.length());
         for(int i=0; i < length + 1; i++) {
             if(stringOffset.substring(i, i+1).equals(":")) {
                 str1 = stringOffset.substring(0, i);
@@ -111,11 +109,9 @@ public class LoginController implements Initializable {
                 str2 = "5";
             }
             str3 = (str1 + "." + str2);
-            System.out.println("str 3: "+str3);
             num = Double.valueOf(str3);
-            TimeUtil.offset = num;
+            TimeUtil.setOffset(num);
         
-        System.out.println("LocalDateTime is: " + TimeUtil.now + "\n Offset is: " + TimeUtil.offset);
         //Fire up the database
         DatabaseConnect.dbConnect();
         //Set the local language

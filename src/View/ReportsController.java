@@ -28,6 +28,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -51,15 +52,15 @@ public class ReportsController implements Initializable {
     @FXML
     private Button backButton;
     @FXML
-    private AnchorPane reportTableView;
+    private TableView<Appointment> reportTableView;
     @FXML
-    private TableColumn<User, String> usernameColumn;
+    private TableColumn<Appointment, String> usernameColumn;
     @FXML
     private TableColumn<Appointment, String> dateColumn;
     @FXML
     private TableColumn<Appointment, String> timeColumn;
     @FXML
-    private TableColumn<Customer, String> clientColumn;
+    private TableColumn<Appointment, String> clientColumn;
     @FXML
     private TableColumn<Appointment, String> typeColumn;
     @FXML
@@ -87,7 +88,7 @@ public class ReportsController implements Initializable {
         monthLabel.setVisible(true);
         backButton.setVisible(true);
         forwardButton.setVisible(true);
-        AccessDB.report1(TimeUtil.now);
+        reportTableView.setItems(AccessDB.report1(TimeUtil.getNow()));
        
     }
 
@@ -96,7 +97,7 @@ public class ReportsController implements Initializable {
         monthLabel.setVisible(false);
         backButton.setVisible(false);
         forwardButton.setVisible(false);
-        AccessDB.report2();
+        reportTableView.setItems(AccessDB.report2());
     }
 
     @FXML
@@ -104,7 +105,7 @@ public class ReportsController implements Initializable {
         monthLabel.setVisible(false);
         backButton.setVisible(false);
         forwardButton.setVisible(false);
-        AccessDB.report3();
+        reportTableView.setItems(AccessDB.report3());
     }
 
 

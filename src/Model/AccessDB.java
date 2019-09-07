@@ -659,7 +659,7 @@ public class AccessDB {
                                                        " appointment.contact, appointment.type, appointment.url, appointment.start, appointment.end" +
                                                        " FROM appointment, customer, user" +
                                                        " WHERE appointment.customerId = customer.customerId AND appointment.userId = user.userId" +
-                                                       " ORDER BY user.userName, appointment.date, appointment.time ASC;");
+                                                       " ORDER BY user.userName, appointment.start ASC;");
             while(results.next()) {
                 Appointment a = new Appointment();
                     String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
@@ -697,7 +697,7 @@ public class AccessDB {
                                                        " appointment.contact, appointment.type, appointment.url, appointment.start, appointment.end" +
                                                        " FROM appointment, customer, user" +
                                                        " WHERE appointment.customerId = customer.customerId AND appointment.userId = user.userId" +
-                                                       " ORDER BY appointment.type, user.userName, appointment.date, appointment.start ASC;");
+                                                       " ORDER BY appointment.type, user.userName, appointment.start ASC;");
             while(results.next()) {
                 Appointment a = new Appointment();
                     String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
@@ -732,10 +732,10 @@ public class AccessDB {
         try {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
             ResultSet results = statement.executeQuery("SELECT appointment.appointmentId, appointment.customerId, customer.customerName, appointment.userId, user.userName, appointment.title, appointment.description, appointment.location," +
-                                                       " appointment.contact, appointment.type, appointment.url, appointment.start, appointment.end" +
-                                                       " FROM appointment, customer, user" +
-                                                       " WHERE appointment.customerId = customer.customerId AND appointment.userId = user.userId" +
-                                                       " ORDER BY user.userName, Customer.customerName, address.phone ASC;");
+                                                       " appointment.contact, appointment.type, appointment.url, appointment.start, appointment.end, address.phone" +
+                                                       " FROM appointment, customer, user, address" +
+                                                       " WHERE appointment.customerId = customer.customerId AND appointment.userId = user.userId" +   
+                                                       " ORDER BY user.userName, customer.customerName, address.phone ASC;");
             while(results.next()) {
                 Appointment a = new Appointment();
                     String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");

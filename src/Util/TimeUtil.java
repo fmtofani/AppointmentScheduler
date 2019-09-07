@@ -26,27 +26,40 @@ public class TimeUtil {
     public final int BIZ_START = 9;
     public final int BIZ_END = 17;
     //Set localdatetime
-    public static String now = "";
+    private static String now;
+    public static String getNow() {
+        return now;
+    }
+    public static void setNow(String s) {
+        now = s;
+    }
     //Set timezone offset
-    public static Double offset = 0.0;    
+    private static Double offset;
+    public static Double getOffset() {
+        return offset;
+    }
+    public static void setOffset(Double d) {
+        offset = d;
+    }
+
+
+    public static String getUTCTime() {
+        //yyyy-MM-dd HH:ii:ss
+        LocalDateTime ldt = LocalDateTime.now(Clock.systemUTC());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formatDate = ldt.format(formatter);
+        return formatDate;
+    }
 
     
 /*
  *
  *   
  *  Most of these methods are useless. I was just thinking outloud so to speak.
- *  I haven't studied java.time yet and most likely that is what will be implemented.
+ *  I haven't studied java.time when I wrote these and most likely that is what will be implemented.
  *
  *   
 */    
-
-    public static String getUTCTime() {
-        //yyyy-MM-dd HH:ii:ss
-        LocalDateTime now = LocalDateTime.now(Clock.systemUTC());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formatDate = now.format(formatter);
-        return formatDate;
-    }
         
     public static int[] dateToIntArray (String date) {
         int[] dateArray = new int[5];

@@ -31,9 +31,9 @@
             <Button fx:id="viewReport_3Button" layoutX="110.0" layoutY="147.0" mnemonicParsing="false" onAction="#viewReport_3Handler" prefHeight="25.0" prefWidth="61.0" text="View" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="reportTableView" layoutX="219.0" layoutY="98.0" prefHeight="490.0" prefWidth="568.0" style="-fx-border-color: blue; -fx-border-radius: 10;">
+      <AnchorPane layoutX="219.0" layoutY="98.0" prefHeight="490.0" prefWidth="568.0" style="-fx-border-color: blue; -fx-border-radius: 10;">
          <children>
-            <TableView layoutX="14.0" layoutY="6.0" prefHeight="471.0" prefWidth="541.0">
+            <TableView fx:id="reportTableView" layoutX="14.0" layoutY="6.0" prefHeight="471.0" prefWidth="541.0">
               <columns>
                 <TableColumn fx:id="usernameColumn" prefWidth="150.0" text="User Name" />
                 <TableColumn fx:id="dateColumn" minWidth="8.0" prefWidth="65.5" text="Date" />
