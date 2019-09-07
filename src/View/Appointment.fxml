@@ -38,9 +38,10 @@
       </AnchorPane>
       <Button fx:id="backButton" layoutX="35.0" layoutY="403.0" mnemonicParsing="false" onAction="#backHandler" prefHeight="25.0" prefWidth="59.0" text="&lt;&lt;" />
       <Button fx:id="forwardButton" layoutX="113.0" layoutY="403.0" mnemonicParsing="false" onAction="#forwardHandler" prefHeight="25.0" prefWidth="59.0" text="&gt;&gt;" />
-      <Label fx:id="calenderView" layoutX="35.0" layoutY="36.0" prefHeight="17.0" prefWidth="175.0" text="Week Of " />
+      <Label fx:id="weekOfLabel" layoutX="35.0" layoutY="36.0" prefHeight="17.0" prefWidth="59.0" text="Week Of " />
       <Label layoutX="301.0" layoutY="378.0" text="View By" />
       <RadioButton fx:id="monthRB" layoutX="258.0" layoutY="409.0" mnemonicParsing="false" onAction="#monthHandler" text="Month" />
       <RadioButton fx:id="weekRB" layoutX="332.0" layoutY="409.0" mnemonicParsing="false" onAction="#weekHandler" text="Week" />
+      <Label fx:id="fillLabel" layoutX="94.0" layoutY="36.0" prefHeight="17.0" prefWidth="84.0" text="Label" />
    </children>
 </AnchorPane>

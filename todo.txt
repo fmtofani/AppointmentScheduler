@@ -6,21 +6,14 @@ LoginController
 --15 minute alert
 
 **** Finish these classes ****
-HomeController.java
---add view daily appt method
-
 AccessDB.java
---weeklyAppointments
---monthlyAppointments
---daily appts
+--order by
 
 AddAppointment
 -- adjust for time offset
 
 Appointment.java
---forwardHandler
 --backHandler
---monthHandler
 --weekHandler
 
 Reports.java

@@ -13,6 +13,7 @@ import Model.Appointment;
 import Util.TimeUtil;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -41,8 +42,6 @@ public class AppointmentController implements Initializable {
     private Button backButton;
     @FXML
     private Button forwardButton;
-    @FXML
-    private Label calenderView;
     @FXML
     private Button exitButton;
     @FXML
@@ -77,7 +76,12 @@ public class AppointmentController implements Initializable {
     public static Appointment selectedAppointment;
     public static boolean isEdit = false;
     public static String versionAdd = "";
+    @FXML
+    private Label weekOfLabel;
+    @FXML
+    private Label fillLabel;
     
+    boolean isWeek = false;
     
     /**
      * Initializes the controller class.
@@ -94,21 +98,44 @@ public class AppointmentController implements Initializable {
         appointmentTableView.setItems(AccessDB.monthAppointments(TimeUtil.getNowMonth(), TimeUtil.getNowYear()));
         weekRB.setSelected(false);
         monthRB.setSelected(true);
+        weekOfLabel.setText("Month Of");
+        fillLabel.setText(TimeUtil.thisMonth());
         isEdit = false;
     }    
 
+    int backCounter = 1;
     @FXML
     private void backHandler(ActionEvent event) {
-    
+        LocalDate ld = LocalDate.parse(TimeUtil.getNowDate());
+        if(isWeek) {
+            appointmentTableView.setItems(AccessDB.weekAppointments(ld.minusDays(backCounter * 7)));
+        } else {
+            
+        }
+        backCounter++;
+        forwardCounter--;
     }
-
+    int forwardCounter = 1;
     @FXML
     private void forwardHandler(ActionEvent event) {
-        //Use radio controls instead of buttons
+        LocalDate ld = LocalDate.parse(TimeUtil.getNowDate());
+        if(isWeek) {
+            appointmentTableView.setItems(AccessDB.weekAppointments(ld.plusDays(forwardCounter * 7)));
+        } else {
+            appointmentTableView.setItems(AccessDB.monthAppointments(TimeUtil.getNowMonth(), TimeUtil.getNowYear()));
+           
+        }
+        forwardCounter++;
+        backCounter--;
     }
 
     @FXML
     private void monthHandler(ActionEvent event) {
+        backCounter = 1;
+        forwardCounter = 1;
+        isWeek = false;
+        weekOfLabel.setText("Month of");
+        fillLabel.setText(TimeUtil.thisMonth());
         weekRB.setSelected(false);
         appointmentTableView.setItems(AccessDB.monthAppointments(TimeUtil.getNowMonth(), TimeUtil.getNowYear()));
 
@@ -116,7 +143,13 @@ public class AppointmentController implements Initializable {
 
     @FXML
     private void weekHandler(ActionEvent event) {
+        backCounter = 1;
+        forwardCounter = 1;
+        isWeek = true;
+        weekOfLabel.setText("Week of");
+        fillLabel.setText(TimeUtil.thisWeek());
         monthRB.setSelected(false);
+        appointmentTableView.setItems(AccessDB.weekAppointments(LocalDate.now()));
     }
 
     @FXML

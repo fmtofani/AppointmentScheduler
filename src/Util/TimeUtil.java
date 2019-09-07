@@ -11,10 +11,12 @@ package Util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Clock;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import javax.swing.text.DateFormatter;
 
 
 public class TimeUtil {
@@ -74,8 +76,7 @@ public class TimeUtil {
     public static void setOffset(Double d) {
         offset = d;
     }
-
-
+    //Get UTC Time
     public static String getUTCTime() {
         //yyyy-MM-dd HH:ii:ss
         LocalDateTime ldt = LocalDateTime.now(Clock.systemUTC());
@@ -83,7 +84,18 @@ public class TimeUtil {
         String formatDate = ldt.format(formatter);
         return formatDate;
     }
-
+    //Get days remaining in week
+    public static String thisWeek() {
+        LocalDate ld = LocalDate.now().minusDays(7);
+        LocalDate ldd = ld.with(DayOfWeek.SUNDAY);
+        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("MM/dd/YYYY");
+        return formatter1.format(ldd); 
+    }
+    public static String thisMonth() {
+        LocalDate ld = LocalDate.now();
+        return ld.getMonth().name();
+        
+    }
     
 /*
  *

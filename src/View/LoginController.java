@@ -18,6 +18,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.Clock;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -93,11 +95,6 @@ public class LoginController implements Initializable {
         TimeUtil.setNowMonth(ldt.format(formatter).substring(5,7));
         TimeUtil.setNowYear(ldt.format(formatter).substring(0,4));
         TimeUtil.setNowTime(ldt.format(formatter).substring(11,16));
-        System.out.println("Now= " + TimeUtil.getNow());
-        System.out.println("NowDate= " + TimeUtil.getNowDate());
-        System.out.println("NowMonth= " + TimeUtil.getNowMonth());
-        System.out.println("NowYear= " + TimeUtil.getNowYear());
-        System.out.println("Time: " + TimeUtil.getNowTime());
         //get local timezone offset by breaking down the string and parsing it into a Double. 
         //There is probably an easy way to do this, however this is the only iteration I have used in the program which is odd.
         String stringOffset = ZoneOffset.systemDefault().getRules().getOffset(LocalDateTime.now()).toString();
