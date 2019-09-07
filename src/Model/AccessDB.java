@@ -646,7 +646,7 @@ public class AccessDB {
     /*
     *
     *
-    *********** APPOINTMENT METHODS ***********
+    *********** REPORT METHODS ***********
     *
     *
     */

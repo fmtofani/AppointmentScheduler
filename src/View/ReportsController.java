@@ -8,9 +8,7 @@
 
 package View;
 
-import Model.Appointment;
-import Model.Customer;
-import Model.User;
+import Model.Report;
 import Model.AccessDB;
 import Util.TimeUtil;
 import java.io.IOException;
@@ -29,7 +27,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
@@ -52,17 +49,17 @@ public class ReportsController implements Initializable {
     @FXML
     private Button backButton;
     @FXML
-    private TableView<Appointment> reportTableView;
+    private TableView<Report> reportTableView;
     @FXML
-    private TableColumn<Appointment, String> usernameColumn;
+    private TableColumn<Report, String> usernameColumn;
     @FXML
-    private TableColumn<Appointment, String> dateColumn;
+    private TableColumn<Report, String> dateColumn;
     @FXML
-    private TableColumn<Appointment, String> timeColumn;
+    private TableColumn<Report, String> timeColumn;
     @FXML
-    private TableColumn<Appointment, String> clientColumn;
+    private TableColumn<Report, String> clientColumn;
     @FXML
-    private TableColumn<Appointment, String> typeColumn;
+    private TableColumn<Report, String> typeColumn;
     @FXML
     private Label monthLabel;
 
@@ -80,6 +77,7 @@ public class ReportsController implements Initializable {
         usernameColumn.setCellValueFactory(cellData -> cellData.getValue().userNameProperty());
         clientColumn.setCellValueFactory(cellData -> cellData.getValue().customerNameProperty());
         typeColumn.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
+        timeColumn.setCellValueFactory(cellData -> cellData.getValue().timeProperty());
        
     }    
 

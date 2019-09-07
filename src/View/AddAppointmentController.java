@@ -184,34 +184,68 @@ public class AddAppointmentController implements Initializable {
             return 0;
     }
 
+    private void alertTime(String s) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Error Adding Appointment");
+            alert.setContentText("Please verify that timw is entered in HH:MM format");
+            alert.showAndWait();         
+    }
+        private void verifyStart(String verifyTime) {
+    //    verifyTime = startTF.getText();
+            if(verifyTime.length() > 5) {
+                alertTime(verifyTime);
+            }
+            if(verifyTime.length() < 5) {
+                alertTime(verifyTime);
+            }
+            if(verifyTime.length() == 5) {
+                if(!verifyTime.substring(2,3).equals(":")) {
+                    alertTime(verifyTime);
+                }
+            }
+        }
+
     @FXML
     private void addAppointmentHandler(ActionEvent event) throws SQLException, IOException {
+        //Verify fields have been filled out
+        if(clientTF.getText().equals("") || startTF.getText().equals("") || descriptionTF.getText().equals("") || titleTF.getText().equals("") || datePicker.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Error Adding Appointment");
+            alert.setContentText("Please verify that all fields are filled out");
+            alert.showAndWait();
+            return;               
+        }
+        //verify proper time formaat
+        verifyStart(startTF.getText());
         //Add military time
         int add12 = 0;
         if(pmRadioButton.isSelected()) add12 = 12;
         //Construct Start time
         LocalTime lt = LocalTime.of(Integer.parseInt(startTF.getText().substring(0,2)), Integer.parseInt(startTF.getText().substring(3,5)));
+/*
+ *
+ *      Satisfies Rubric F -> Verify within business hours
+ *
+ *
+*/
+        if(Integer.parseInt(startTF.getText().substring(0,2)) < 9 || Integer.parseInt(startTF.getText().substring(0,2)) > 17){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Error Adding Appointment");
+            alert.setContentText("Please enter a time between 9am and 5pm");
+            alert.showAndWait();   
+            return;
+        }
         //Construct End Time
         lt.plusMinutes(parseDuration(durationComboBox.getSelectionModel().getSelectedIndex()));
         //Parse LocalTime into String
         String hour = String.format(Integer.toString(lt.getHour()));
         String min = Integer.toString(lt.getMinute());
         //Finally the finished product
-        //System.out.println(TimeUtil.dateToString(datePicker.getValue()));
-        if(datePicker.getValue().equals("")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
-            alert.setHeaderText("Error Adding Appointment");
-            alert.setContentText("Please select a date");
-            alert.showAndWait();
-            return;               
-        }
-//Make sure date is in proper format
-//Make sure start is in proper format
         String start = datePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).concat(" ").concat(Integer.toString(Integer.parseInt(startTF.getText().substring(0,2)) + add12).concat(":").concat(min));
         String end = datePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).concat(" ").concat(hour).concat(":").concat(min);
-        
-        
         //Construct an appointment and add it to DB
         Appointment a = new Appointment();      
         a.setCustomerId(clientId);
@@ -222,15 +256,6 @@ public class AddAppointmentController implements Initializable {
         a.setType(String.valueOf(typeComboBox.getSelectionModel().getSelectedItem()));
         a.setStart(start);
         a.setEnd(end);
-        //Verify all fields have been entered
-        if(!isAppointment(a)) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
-            alert.setHeaderText("Error Adding Appointment");
-            alert.setContentText("Please verify that all fields are filled out");
-            alert.showAndWait();
-            return;               
-        }
         //Delete the old appointment if being edited
         //Had I implemented a management user I would edit the LastUpdatedBy field in the Database
         //Since only the user can edit their own appointments, I didn't deem it necessary to update the LastUpdatedBy field
@@ -238,7 +263,7 @@ public class AddAppointmentController implements Initializable {
             AccessDB.deleteAppointment(AppointmentController.selectedAppointment);
             addAppointmentButton.setText("Add");
         }
-        AppointmentController.isEdit = false;
+        AppointmentController.isEdit = false;        
         AccessDB.addAppointment(a);
         //Let User know the appointment has been added
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -254,9 +279,6 @@ public class AddAppointmentController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();        
-
-                 
-        
     }
 
     @FXML
@@ -346,21 +368,7 @@ public class AddAppointmentController implements Initializable {
         } 
     }
 
-    private boolean isAppointment(Appointment a) {
-        if(a.getCustomerName().equals("")) {
-            return false;
-        }
-        if(a.getTitle().equals("")) {
-            return false;
-        }
-        if(a.getDescription().equals("")) {
-            return false;
-        }
-        if(a.getDate().equals("")) {
-            return false;
-        }
-        return true;
-    }
+
     
 //End Class
 }
