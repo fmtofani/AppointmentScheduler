@@ -66,7 +66,8 @@ public class EditUserController implements Initializable {
             alert.setTitle("INFORMATION");
             alert.setHeaderText("Add User");
             alert.setContentText("Please enter a Username and Password");
-            alert.showAndWait();        
+            alert.showAndWait();    
+            return;
         }
                      
         u.setUserName(name);

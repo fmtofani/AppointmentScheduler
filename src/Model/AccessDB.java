@@ -257,14 +257,14 @@ public class AccessDB {
         }
     }
     
-    public static int addressIdFind(String address, String phone) {
+    public static int addressIdFind(String address, String address2, String phone) {
         //This method will check to see if any other customers are using the same addressId as it is possible to have the same address and phone number as other customers. 
         //A better field to have in the customer table would be an email address as this would more than likely be unique to each customer. This method is for customerAdd()
         try {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
-            ResultSet results = statement.executeQuery("SELECT * FROM address WHERE address='" + address + "' AND phone ='" + phone +"';");
+            ResultSet results = statement.executeQuery("SELECT * FROM address WHERE address='" + address + "' AND address2='" + address2 + "' AND phone ='" + phone +"';");
             while(results.next()) {
-                if (results.getString("address").equals("") && results.getString("phone").equals("")) {
+                if (results.getString("address").equals("") && results.getString("address2").equals("") && results.getString("phone").equals("")) {
                   return -1;
                 } else {
                     return results.getInt("addressId");
@@ -283,7 +283,7 @@ public class AccessDB {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
             int i = countryExists(c.getCustomerCountry());
             int i2 = cityExists(c.getCustomerCity());
-            int i3 = addressIdFind(c.getCustomerAddress(), c.getCustomerPhone());
+            int i3 = addressIdFind(c.getCustomerAddress(), c.getCustomerAddress2(), c.getCustomerPhone());
             
             if(i == -1) {
                 statement.executeUpdate("INSERT INTO country VALUES (null, '" + c.getCustomerCountry() + "','" + 
@@ -298,7 +298,7 @@ public class AccessDB {
             if(i3 == -1) {
                 statement.executeUpdate("INSERT INTO address VALUES (null, '" + c.getCustomerAddress() + "','" + c.getCustomerAddress2() + "','" + i2 + "','" + c.getCustomerZipcode() + "','" + c.getCustomerPhone() 
                                         + "','" + TimeUtil.getUTCTime() + "','" + LoginController.getCurrentUser() + "','" + TimeUtil.getUTCTime() + "','" + LoginController.getCurrentUser() + "');");
-                i3 = addressIdFind(c.getCustomerAddress(), c.getCustomerPhone());
+                i3 = addressIdFind(c.getCustomerAddress(), c.getCustomerAddress2(), c.getCustomerPhone());
             }
             
             statement.executeUpdate("UPDATE customer SET customerName='" + c.getCustomerName() + "',addressId='" + i3 + "',lastUpdate='"+ TimeUtil.getUTCTime() + "',lastUpdateBy='" + LoginController.getCurrentUser() + 
@@ -330,7 +330,7 @@ public class AccessDB {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
             int i = countryExists(c.getCustomerCountry());
             int i2 = cityExists(c.getCustomerCity());
-            int i3 = addressIdFind(c.getCustomerAddress(), c.getCustomerPhone());
+            int i3 = addressIdFind(c.getCustomerAddress(), c.getCustomerAddress2(), c.getCustomerPhone());
 
             if(i == -1) {
                 statement.executeUpdate("INSERT INTO country VALUES (null, '" + c.getCustomerCountry() + "','" + 
@@ -345,7 +345,7 @@ public class AccessDB {
             if(i3 == -1) {
                 statement.executeUpdate("INSERT INTO address VALUES (null, '" + c.getCustomerAddress() + "','" + c.getCustomerAddress2() + "','" + i2 + "','" + c.getCustomerZipcode() + "','" + c.getCustomerPhone() 
                                         + "','" + TimeUtil.getUTCTime() + "','" + LoginController.getCurrentUser() + "','" + TimeUtil.getUTCTime() + "','" + LoginController.getCurrentUser() + "');");
-                i3 = addressIdFind(c.getCustomerAddress(), c.getCustomerPhone());
+                i3 = addressIdFind(c.getCustomerAddress(), c.getCustomerAddress2(), c.getCustomerPhone());
             }
             
             statement.executeUpdate("INSERT INTO customer VALUES (null,'" + c.getCustomerName() + "','" + i3 + "','1','" +

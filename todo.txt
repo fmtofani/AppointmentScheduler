@@ -1,5 +1,3 @@
-Add method to make sure Users are unique
-
 Add 2 lambdas
 -- getSelected() != null
 --
@@ -16,10 +14,13 @@ HomeController.java
 --add view daily appt method
 
 AccessDB.java
---Set currentuser id to customers
 --weeklyAppointments
 --monthlyAppointments
 --daily appts
+
+AddAppointment
+-- Verify date
+-- Verify Start
 
 Appointment.java
 --forwardHandler
@@ -36,8 +37,39 @@ Reports.java
 -- Backward Handler
 
 
-SELECT appointment.appointmentId, appointment.customerId, customer.customerName, appointment.userId, user.userName, appointment.title, appointment.description, appointment.location, appointment.contact, appointment.type, appointment.url, appointment.start, appointment.end
-                                                        FROM appointment, customer, user
-                                                        WHERE appointment.customerId = customer.customerId AND appointment.userId = user.userId AND appointment.appointmentId= apptId;
 
-INSERT INTO appointment VALUES (null,26,26,'title','Description','Location', 'not needed','Type', 'not needed ',2019-11-07 08:19:00,2019-11-07 08:12:00,2019-11-07 08:19:00,'User',2019-11-07 08:19:00,'User';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

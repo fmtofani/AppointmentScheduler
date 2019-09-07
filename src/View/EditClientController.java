@@ -93,7 +93,10 @@ public class EditClientController implements Initializable {
         if(address2.equals("")) {
             address2 = "none";
         }
-
+        
+        System.out.println("Addres 2: " + address2TextField.getText());
+        
+        
         Customer c = new Customer();
         c.setCustomerId(originalId);
         c.setCustomerName(name);
@@ -140,5 +143,28 @@ public class EditClientController implements Initializable {
         }    
     }
     
+    private boolean isClient(Customer c) {
+        if(c.getCustomerAddress().equals("")) {
+            return false;
+        }
+        if(c.getCustomerCity().equals("")) {
+            return false;
+        }
+        if(c.getCustomerCountry().equals("")) {
+            return false;
+        }
+        if(c.getCustomerName().equals("")) {
+            return false;
+        }
+        if(c.getCustomerPhone().equals("")) {
+                return false;
+        }
+        if(c.getCustomerZipcode().equals("")) {
+            return false;
+        }
+        return true;
+    }
     
+
+//End class
 }

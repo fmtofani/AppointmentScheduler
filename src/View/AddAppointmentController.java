@@ -198,6 +198,16 @@ public class AddAppointmentController implements Initializable {
         String min = Integer.toString(lt.getMinute());
         //Finally the finished product
         //System.out.println(TimeUtil.dateToString(datePicker.getValue()));
+        if(datePicker.getValue().equals("")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Error Adding Appointment");
+            alert.setContentText("Please select a date");
+            alert.showAndWait();
+            return;               
+        }
+//Make sure date is in proper format
+//Make sure start is in proper format
         String start = datePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).concat(" ").concat(Integer.toString(Integer.parseInt(startTF.getText().substring(0,2)) + add12).concat(":").concat(min));
         String end = datePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).concat(" ").concat(hour).concat(":").concat(min);
         
@@ -212,6 +222,15 @@ public class AddAppointmentController implements Initializable {
         a.setType(String.valueOf(typeComboBox.getSelectionModel().getSelectedItem()));
         a.setStart(start);
         a.setEnd(end);
+        //Verify all fields have been entered
+        if(!isAppointment(a)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Error Adding Appointment");
+            alert.setContentText("Please verify that all fields are filled out");
+            alert.showAndWait();
+            return;               
+        }
         //Delete the old appointment if being edited
         //Had I implemented a management user I would edit the LastUpdatedBy field in the Database
         //Since only the user can edit their own appointments, I didn't deem it necessary to update the LastUpdatedBy field
@@ -327,6 +346,21 @@ public class AddAppointmentController implements Initializable {
         } 
     }
 
+    private boolean isAppointment(Appointment a) {
+        if(a.getCustomerName().equals("")) {
+            return false;
+        }
+        if(a.getTitle().equals("")) {
+            return false;
+        }
+        if(a.getDescription().equals("")) {
+            return false;
+        }
+        if(a.getDate().equals("")) {
+            return false;
+        }
+        return true;
+    }
     
 //End Class
 }
