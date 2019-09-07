@@ -86,38 +86,40 @@ public class LoginController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        DatabaseConnect.dbConnect();
-        setLang();
         //Set local time
         LocalDateTime ldt = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         TimeUtil.now = ldt.format(formatter);
  
-        //get local timezone offset
+        //get local timezone offset by breaking down the string and parsing it into a Double. 
+        //There is probably an easy way to do this, however this is the only iteration I have used in the program which is odd.
         String stringOffset = ZoneOffset.systemDefault().getRules().getOffset(LocalDateTime.now()).toString();
-        String str1 = "";
+        String str1="";
         String str2="";
         String str3;
         Double num;
         int length = stringOffset.length();
+        System.out.println("string length: " + stringOffset.length());
         for(int i=0; i < length + 1; i++) {
             if(stringOffset.substring(i, i+1).equals(":")) {
                 str1 = stringOffset.substring(0, i);
-                System.out.println("str 1: "+str1);
-                str2.substring(i+1, stringOffset.length());
-                System.out.println("str 2: "+str2);
+                str2 = stringOffset.substring(i+1, stringOffset.length());
+                break;
             }
-        if(str2.equals(30)) {
-            str2 = "5";
         }
-        str3 = str1 + "." + str2;
-        System.out.println("str 3: "+str3);
-        num = Double.valueOf(str3);
-        TimeUtil.offset = num;
-    }
+            if(str2.equals(30)) {
+                str2 = "5";
+            }
+            str3 = (str1 + "." + str2);
+            System.out.println("str 3: "+str3);
+            num = Double.valueOf(str3);
+            TimeUtil.offset = num;
         
-    System.out.println("LocalDateTime is: " + TimeUtil.now + "\n Offset is: " + TimeUtil.offset);
-        
+        System.out.println("LocalDateTime is: " + TimeUtil.now + "\n Offset is: " + TimeUtil.offset);
+        //Fire up the database
+        DatabaseConnect.dbConnect();
+        //Set the local language
+        setLang();
     }    
     
     //Set the language according to locale
@@ -171,9 +173,13 @@ public class LoginController implements Initializable {
         } else {
             currentUser = user;
 
-//  Alert to show and wait for 15min appointments
-        
-
+/*  Alert to show and wait for 15min appointments
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Appointment Alert");
+            alert.setHeaderText("Upcoming Appointment");
+            alert.setContentText("You have an appointment within 15 minutes"); 
+            alert.showAndWait();
+*/
         //Go to main home screen
                 Stage stage; 
                 Parent root;
