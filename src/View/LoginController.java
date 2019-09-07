@@ -11,13 +11,16 @@ package View;
 import Model.User;
 import Util.DatabaseConnect;
 import Util.LoggerUtil;
+import Util.TimeUtil;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -74,24 +77,47 @@ public class LoginController implements Initializable {
     public static int getcurrentUserId() {
         return currentUserId;
     }
-    
-    //For use throughout the program
-    public static String now;
-    public static int offset;
-    
+    //References current localdatetime and time zone offset
     
     
     /**
      * Initializes the controller class.
      */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        LocalDateTime ldt = LocalDateTime.now();
-        now = ldt.toString();
-        offset = Integer.parseInt(ZoneOffset.systemDefault().getRules().getOffset(LocalDateTime.now()).toString());
-        System.out.println("LocalDateTime is: " + ldt + "\n Offset is: " + offset);
         DatabaseConnect.dbConnect();
         setLang();
+        //Set local time
+        LocalDateTime ldt = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        TimeUtil.now = ldt.format(formatter);
+ 
+        //get local timezone offset
+        String stringOffset = ZoneOffset.systemDefault().getRules().getOffset(LocalDateTime.now()).toString();
+        String str1 = "";
+        String str2="";
+        String str3;
+        Double num;
+        int length = stringOffset.length();
+        for(int i=0; i < length + 1; i++) {
+            if(stringOffset.substring(i, i+1).equals(":")) {
+                str1 = stringOffset.substring(0, i);
+                System.out.println("str 1: "+str1);
+                str2.substring(i+1, stringOffset.length());
+                System.out.println("str 2: "+str2);
+            }
+        if(str2.equals(30)) {
+            str2 = "5";
+        }
+        str3 = str1 + "." + str2;
+        System.out.println("str 3: "+str3);
+        num = Double.valueOf(str3);
+        TimeUtil.offset = num;
+    }
+        
+    System.out.println("LocalDateTime is: " + TimeUtil.now + "\n Offset is: " + TimeUtil.offset);
+        
     }    
     
     //Set the language according to locale

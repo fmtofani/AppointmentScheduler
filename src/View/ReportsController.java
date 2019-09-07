@@ -12,6 +12,7 @@ import Model.Appointment;
 import Model.Customer;
 import Model.User;
 import Model.AccessDB;
+import Util.TimeUtil;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -86,7 +87,7 @@ public class ReportsController implements Initializable {
         monthLabel.setVisible(true);
         backButton.setVisible(true);
         forwardButton.setVisible(true);
-        AccessDB.report1(LoginController.now);
+        AccessDB.report1(TimeUtil.now);
        
     }
 

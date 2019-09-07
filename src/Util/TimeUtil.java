@@ -18,9 +18,17 @@ import java.util.Date;
 
 
 public class TimeUtil {
-   
+
     public TimeUtil() {   
     }
+
+    //Set local business hours constant
+    public final int BIZ_START = 9;
+    public final int BIZ_END = 17;
+    //Set localdatetime
+    public static String now = "";
+    //Set timezone offset
+    public static Double offset = 0.0;    
 
     
 /*
@@ -31,7 +39,6 @@ public class TimeUtil {
  *
  *   
 */    
-
 
     public static String getUTCTime() {
         //yyyy-MM-dd HH:ii:ss
