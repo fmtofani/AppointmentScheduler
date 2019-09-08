@@ -6,15 +6,9 @@ LoginController
 --15 minute alert
 
 **** Finish these classes ****
-AccessDB.java
---order by
 
 AddAppointment
 -- adjust for time offset
-
-Appointment.java
---backHandler
---weekHandler
 
 Reports.java
 -- Report 1 Forward Back

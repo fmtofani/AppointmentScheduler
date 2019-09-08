@@ -112,7 +112,8 @@ public class AppointmentController implements Initializable {
         if(isWeek) {
             appointmentTableView.setItems(AccessDB.weekAppointments(ld.minusDays(backCounter * 7)));
             fillLabel.setText(TimeUtil.thisWeek(ld.minusDays(backCounter * 7)));
-    } else {
+            System.out.println(TimeUtil.thisWeek(ld.minusDays(backCounter * 7)));
+        } else {
             appointmentTableView.setItems(AccessDB.monthAppointments(ld.minusMonths(backCounter)));            
             fillLabel.setText(TimeUtil.thisMonth(ld.minusMonths(backCounter)));
         }
@@ -126,6 +127,7 @@ public class AppointmentController implements Initializable {
         if(isWeek) {
             appointmentTableView.setItems(AccessDB.weekAppointments(ld.plusDays(forwardCounter * 7)));
             fillLabel.setText(TimeUtil.thisWeek(ld.plusDays(forwardCounter * 7)));
+           System.out.println(TimeUtil.thisWeek(ld.minusDays(forwardCounter * 7)));
        } else {
             appointmentTableView.setItems(AccessDB.monthAppointments(ld.plusMonths(forwardCounter)));
             fillLabel.setText(TimeUtil.thisMonth(ld.plusMonths(forwardCounter)));

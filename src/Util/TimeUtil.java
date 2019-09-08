@@ -86,7 +86,7 @@ public class TimeUtil {
     }
     //Get days remaining in week
     public static String thisWeek(LocalDate ld) {
-        ld = LocalDate.now().minusDays(7);
+       // ld = LocalDate.now().minusDays(7);
         LocalDate ldd = ld.with(DayOfWeek.SUNDAY);
         DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("MM/dd/YYYY");
         return formatter1.format(ldd); 

@@ -460,49 +460,6 @@ public class AccessDB {
         }
     }
 
-
-    public static ObservableList<Appointment> monthAppointments(String dateMonth, String dateYear) {
-        monthAppointments.clear();
-        try {
-            Statement statement = DatabaseConnect.getDbConnection().createStatement();
-            ResultSet results = statement.executeQuery("SELECT appointment.appointmentId, appointment.customerId, customer.customerName, appointment.userId, user.userName, appointment.title, appointment.description, appointment.location," +
-                                                       " appointment.contact, appointment.type, appointment.url, appointment.start, appointment.end" +
-                                                       " FROM appointment, customer, user" +
-                                                       " WHERE appointment.customerId = customer.customerId AND appointment.userId = user.userId "
-                                                       + "ORDER BY appointment.start ASC;");
-            while(results.next()) {
-                Appointment a = new Appointment();
-                    String startTime = TimeUtil.stringToString(results.getString("appointment.start"), "time");
-                    String endTime = TimeUtil.stringToString(results.getString("appointment.end"), "time"); 
-                    String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
-                    String dateY = TimeUtil.stringToString(results.getString("appointment.start"), "year");
-                    String dateM = TimeUtil.stringToString(results.getString("appointment.start"), "month");
-                    if(dateM.equals(dateMonth) && dateY.equals(dateYear)) {
-                        a.setAppointmentId(results.getInt("appointment.appointmentId"));
-                        a.setCustomerId(results.getInt("appointment.customerId"));
-                        a.setCustomerName(results.getString("customer.customerName"));
-                        a.setUserId(results.getInt("appointment.userId"));
-                        a.setUserName(results.getString("user.userName"));
-                        a.setTitle(results.getString("appointment.title"));
-                        a.setDescription(results.getString("appointment.description"));
-                        a.setLocation(results.getString("appointment.location"));
-                        a.setContact(results.getString("appointment.contact"));
-                        a.setType(results.getString("appointment.type"));
-                        a.setUrl(results.getString("appointment.url"));
-                        a.setDate(date);
-                        a.setStart(startTime);
-                        a.setEnd(endTime);
-                        monthAppointments.add(a);
-                    }
-            }
-            statement.close();
-            return monthAppointments;
-        } catch (SQLException ex) {
-            System.out.println("Error building Appointment List \n Error: " + ex.getMessage());
-            return null;
-        }
-    }
-
     public static ObservableList<Appointment> monthAppointments(LocalDate dateMonth) {
         monthAppointments.clear();
         try {
