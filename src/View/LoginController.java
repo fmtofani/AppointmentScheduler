@@ -8,6 +8,7 @@
 
 package View;
 
+import Model.AccessDB;
 import Model.User;
 import Util.DatabaseConnect;
 import Util.LoggerUtil;
@@ -173,22 +174,16 @@ public class LoginController implements Initializable {
             passTextField.setText("");
         } else {
             currentUser = user;
-
-/*  Alert to show and wait for 15min appointments
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Appointment Alert");
-            alert.setHeaderText("Upcoming Appointment");
-            alert.setContentText("You have an appointment within 15 minutes"); 
-            alert.showAndWait();
-*/
-        //Go to main home screen
-                Stage stage; 
-                Parent root;
-                stage=(Stage) loginButton.getScene().getWindow();
-                root = FXMLLoader.load(getClass().getResource("Home.fxml"));
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
+            //Check for approaching appointment
+            AccessDB.alertAppointment();
+            //Go to main home screen
+            Stage stage; 
+            Parent root;
+            stage=(Stage) loginButton.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("Home.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
 
         }
     }     

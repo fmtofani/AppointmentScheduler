@@ -15,10 +15,11 @@ import View.LoginController;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 /**
  *
@@ -35,6 +36,7 @@ public class AccessDB {
     private static ObservableList<Appointment> weekAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> monthAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> dailyAppointments = FXCollections.observableArrayList();
+ //   private static ObservableList<Appointment> alertAppointment = FXCollections.observableArrayList();
     private static ObservableList<Customer> addClientAppointment = FXCollections.observableArrayList();
     private static ObservableList<Report> report1 = FXCollections.observableArrayList();
     private static ObservableList<Report> report2 = FXCollections.observableArrayList();
@@ -381,6 +383,33 @@ public class AccessDB {
         }
     }
     
+    public static void alertAppointment() {
+        try {
+            Statement statement = DatabaseConnect.getDbConnection().createStatement();
+            ResultSet results = statement.executeQuery("SELECT appointment.start FROM appointment WHERE appointment.userId = " + LoginController.getcurrentUserId()+" ORDER BY appointment.start ASC;");
+            LocalDateTime now = LocalDateTime.now();
+            while(results.next()) {
+                Appointment a = new Appointment();
+                a.setStart(results.getString("appointment.start"));
+                LocalDateTime check = LocalDateTime.parse(a.getStart().substring(0, 10).concat("T").concat(a.getStart().substring(11,19)));
+                //Check for 15 minutes in advance
+                for(int i=0; i <= 15; i++) {
+                    if(now.equals(check.plusMinutes(i))) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Appointment Reminder");
+                        alert.setHeaderText("Appointment Reminder");
+                        alert.setContentText("You have an appointment within 15 minutes"); 
+                        alert.showAndWait();
+                        break;
+                    }
+                }
+             }
+            statement.close();
+        } catch (SQLException ex) {
+            System.out.println("Error building Appointment List \n Error: " + ex.getMessage());
+        }
+    }
+
     public static ObservableList<Appointment> weekAppointments(LocalDate dateWeek) {
         weekAppointments.clear();
         try {
