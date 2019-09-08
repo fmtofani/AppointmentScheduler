@@ -85,16 +85,14 @@ public class TimeUtil {
         return formatDate;
     }
     //Get days remaining in week
-    public static String thisWeek() {
-        LocalDate ld = LocalDate.now().minusDays(7);
+    public static String thisWeek(LocalDate ld) {
+        ld = LocalDate.now().minusDays(7);
         LocalDate ldd = ld.with(DayOfWeek.SUNDAY);
         DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("MM/dd/YYYY");
         return formatter1.format(ldd); 
     }
-    public static String thisMonth() {
-        LocalDate ld = LocalDate.now();
+    public static String thisMonth(LocalDate ld) {
         return ld.getMonth().name();
-        
     }
     
 /*

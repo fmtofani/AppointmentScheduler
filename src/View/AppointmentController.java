@@ -13,6 +13,7 @@ import Model.Appointment;
 import Util.TimeUtil;
 import java.io.IOException;
 import java.net.URL;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -95,11 +96,12 @@ public class AppointmentController implements Initializable {
         locationColumn.setCellValueFactory(cellData -> cellData.getValue().locationProperty());
         titleColumn.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
         typeColumn.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
-        appointmentTableView.setItems(AccessDB.monthAppointments(TimeUtil.getNowMonth(), TimeUtil.getNowYear()));
+        //appointmentTableView.setItems(AccessDB.monthAppointments(TimeUtil.getNowMonth(), TimeUtil.getNowYear()));
+        appointmentTableView.setItems(AccessDB.monthAppointments(LocalDate.now()));
         weekRB.setSelected(false);
         monthRB.setSelected(true);
         weekOfLabel.setText("Month Of");
-        fillLabel.setText(TimeUtil.thisMonth());
+        fillLabel.setText(TimeUtil.thisMonth(LocalDate.now()));
         isEdit = false;
     }    
 
@@ -109,8 +111,10 @@ public class AppointmentController implements Initializable {
         LocalDate ld = LocalDate.parse(TimeUtil.getNowDate());
         if(isWeek) {
             appointmentTableView.setItems(AccessDB.weekAppointments(ld.minusDays(backCounter * 7)));
-        } else {
-            
+            fillLabel.setText(TimeUtil.thisWeek(ld.minusDays(backCounter * 7)));
+    } else {
+            appointmentTableView.setItems(AccessDB.monthAppointments(ld.minusMonths(backCounter)));            
+            fillLabel.setText(TimeUtil.thisMonth(ld.minusMonths(backCounter)));
         }
         backCounter++;
         forwardCounter--;
@@ -121,9 +125,10 @@ public class AppointmentController implements Initializable {
         LocalDate ld = LocalDate.parse(TimeUtil.getNowDate());
         if(isWeek) {
             appointmentTableView.setItems(AccessDB.weekAppointments(ld.plusDays(forwardCounter * 7)));
-        } else {
-            appointmentTableView.setItems(AccessDB.monthAppointments(TimeUtil.getNowMonth(), TimeUtil.getNowYear()));
-           
+            fillLabel.setText(TimeUtil.thisWeek(ld.plusDays(forwardCounter * 7)));
+       } else {
+            appointmentTableView.setItems(AccessDB.monthAppointments(ld.plusMonths(forwardCounter)));
+            fillLabel.setText(TimeUtil.thisMonth(ld.plusMonths(forwardCounter)));
         }
         forwardCounter++;
         backCounter--;
@@ -131,13 +136,14 @@ public class AppointmentController implements Initializable {
 
     @FXML
     private void monthHandler(ActionEvent event) {
+        LocalDate ld = LocalDate.now();
         backCounter = 1;
         forwardCounter = 1;
         isWeek = false;
         weekOfLabel.setText("Month of");
-        fillLabel.setText(TimeUtil.thisMonth());
+        fillLabel.setText(TimeUtil.thisMonth(LocalDate.now()));
         weekRB.setSelected(false);
-        appointmentTableView.setItems(AccessDB.monthAppointments(TimeUtil.getNowMonth(), TimeUtil.getNowYear()));
+        appointmentTableView.setItems(AccessDB.monthAppointments(ld));
 
     }
 
@@ -147,9 +153,11 @@ public class AppointmentController implements Initializable {
         forwardCounter = 1;
         isWeek = true;
         weekOfLabel.setText("Week of");
-        fillLabel.setText(TimeUtil.thisWeek());
+        fillLabel.setText(TimeUtil.thisWeek(LocalDate.now()));
         monthRB.setSelected(false);
-        appointmentTableView.setItems(AccessDB.weekAppointments(LocalDate.now()));
+        LocalDate ld = LocalDate.now().minusDays(7);
+        LocalDate ldd = ld.with(DayOfWeek.SUNDAY);
+        appointmentTableView.setItems(AccessDB.weekAppointments(ldd));
     }
 
     @FXML
