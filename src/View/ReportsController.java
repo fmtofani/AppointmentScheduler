@@ -13,6 +13,7 @@ import Model.AccessDB;
 import Util.TimeUtil;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -62,6 +63,10 @@ public class ReportsController implements Initializable {
     private TableColumn<Report, String> typeColumn;
     @FXML
     private Label monthLabel;
+    @FXML
+    private Label fillLabel;
+    @FXML
+    private Label monthOfLabel;
 
     /**
      * Initializes the controller class.
@@ -70,6 +75,8 @@ public class ReportsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         monthLabel.setVisible(false);
         backButton.setVisible(false);
+        monthOfLabel.setVisible(false);
+        fillLabel.setVisible(false);
         forwardButton.setVisible(false);
         //Fill the table
         dateColumn.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
@@ -86,7 +93,10 @@ public class ReportsController implements Initializable {
         monthLabel.setVisible(true);
         backButton.setVisible(true);
         forwardButton.setVisible(true);
-        reportTableView.setItems(AccessDB.report1(TimeUtil.getNow()));
+        monthOfLabel.setVisible(true);
+        fillLabel.setVisible(true);
+        fillLabel.setText(TimeUtil.thisMonth(LocalDate.now()));
+        reportTableView.setItems(AccessDB.report1(LocalDate.now()));
        
     }
 
@@ -106,15 +116,24 @@ public class ReportsController implements Initializable {
         reportTableView.setItems(AccessDB.report3());
     }
 
-
+    int forwardCounter = 1;
     @FXML
     private void forwardHandler(ActionEvent event) {
-        
-    }
-
+        LocalDate ld = LocalDate.parse(TimeUtil.getNowDate());
+        reportTableView.setItems(AccessDB.report1(ld.plusMonths(forwardCounter)));
+        fillLabel.setText(TimeUtil.thisMonth(ld.plusMonths(forwardCounter)));
+        forwardCounter++;
+        backCounter--;
+    } 
+    
+    int backCounter = 1;
     @FXML
     private void backHandler(ActionEvent event) {
-        
+        LocalDate ld = LocalDate.parse(TimeUtil.getNowDate());
+        reportTableView.setItems(AccessDB.report1(ld.minusMonths(backCounter)));            
+        fillLabel.setText(TimeUtil.thisMonth(ld.minusMonths(backCounter)));
+        backCounter++;
+        forwardCounter--;
     }
 
     @FXML

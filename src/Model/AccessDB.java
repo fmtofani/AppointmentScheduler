@@ -673,7 +673,7 @@ public class AccessDB {
     *
     */
 
-    public static ObservableList<Report> report1(String dateMonth) {
+    public static ObservableList<Report> report1(LocalDate dateMonth) {
         report1.clear();
         try {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
@@ -682,16 +682,21 @@ public class AccessDB {
                                                        " FROM appointment, customer, user" +
                                                        " WHERE appointment.customerId = customer.customerId AND appointment.userId = user.userId" +
                                                        " ORDER BY user.userName, appointment.start ASC;");
+           
             while(results.next()) {
                 Report a = new Report();
-                    String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
-                    String startTime = TimeUtil.stringToString(results.getString("appointment.start"), "time");
+                String startTime = TimeUtil.stringToString(results.getString("appointment.start"), "time");
+                String endTime = TimeUtil.stringToString(results.getString("appointment.end"), "time"); 
+                String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
+                LocalDate ld = LocalDate.parse(date);
+                if(ld.getMonth() == dateMonth.getMonth()) {
                     a.setCustomerName(results.getString("customer.customerName"));
                     a.setUserName(results.getString("user.userName"));
                     a.setType(results.getString("appointment.type"));
                     a.setDate(date);
                     a.setTime(startTime);
                     report1.add(a);
+                    }
             }
             statement.close();
             return report1;
@@ -733,11 +738,11 @@ public class AccessDB {
         report3.clear();
         try {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
-            ResultSet results = statement.executeQuery("SELECT appointment.appointmentId, appointment.customerId, customer.customerName, appointment.userId, user.userName, appointment.title, appointment.description, appointment.location," +
-                                                       " appointment.contact, appointment.type, appointment.url, appointment.start, appointment.end, address.phone" +
-                                                       " FROM appointment, customer, user, address" +
-                                                       " WHERE appointment.customerId = customer.customerId AND appointment.userId = user.userId" +   
-                                                       " ORDER BY user.userName, customer.customerName, address.phone ASC;");
+            ResultSet results = statement.executeQuery("SELECT customer.customerName, user.userName, appointment.type, appointment.start" +
+                                                       " FROM ((appointment " +
+                                                       "INNER JOIN customer ON appointment.customerId = customer.customerId)" +
+                                                       "INNER JOIN user ON appointment.userId = user.userId)" +
+                                                       " ORDER BY user.userName, customer.customerName ASC;");
             while(results.next()) {
                 Report a = new Report();
                     String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
@@ -756,8 +761,6 @@ public class AccessDB {
             return null;
         }
     }
-
-
 
     
 //End Class

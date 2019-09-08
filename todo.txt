@@ -2,20 +2,8 @@ Add 2 lambdas
 -- getSelected() != null
 --
 
-LoginController
---15 minute alert
-
-**** Finish these classes ****
-
 AddAppointment
 -- adjust for time offset
-
-Reports.java
--- Report 1 Forward Back
--- Report 2
--- Report 3 Inner Join
--- Forward Handler
--- Backward Handler
 
 
 
