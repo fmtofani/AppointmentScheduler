@@ -106,13 +106,13 @@ public class AppointmentController implements Initializable {
     }    
 
     int backCounter = 1;
+    int forwardCounter = 1;
     @FXML
     private void backHandler(ActionEvent event) {
         LocalDate ld = LocalDate.parse(TimeUtil.getNowDate());
         if(isWeek) {
             appointmentTableView.setItems(AccessDB.weekAppointments(ld.minusDays(backCounter * 7)));
             fillLabel.setText(TimeUtil.thisWeek(ld.minusDays(backCounter * 7)));
-            System.out.println(TimeUtil.thisWeek(ld.minusDays(backCounter * 7)));
         } else {
             appointmentTableView.setItems(AccessDB.monthAppointments(ld.minusMonths(backCounter)));            
             fillLabel.setText(TimeUtil.thisMonth(ld.minusMonths(backCounter)));
@@ -120,14 +120,12 @@ public class AppointmentController implements Initializable {
         backCounter++;
         forwardCounter--;
     }
-    int forwardCounter = 1;
     @FXML
     private void forwardHandler(ActionEvent event) {
         LocalDate ld = LocalDate.parse(TimeUtil.getNowDate());
         if(isWeek) {
             appointmentTableView.setItems(AccessDB.weekAppointments(ld.plusDays(forwardCounter * 7)));
             fillLabel.setText(TimeUtil.thisWeek(ld.plusDays(forwardCounter * 7)));
-           System.out.println(TimeUtil.thisWeek(ld.minusDays(forwardCounter * 7)));
        } else {
             appointmentTableView.setItems(AccessDB.monthAppointments(ld.plusMonths(forwardCounter)));
             fillLabel.setText(TimeUtil.thisMonth(ld.plusMonths(forwardCounter)));
@@ -157,7 +155,7 @@ public class AppointmentController implements Initializable {
         weekOfLabel.setText("Week of");
         fillLabel.setText(TimeUtil.thisWeek(LocalDate.now()));
         monthRB.setSelected(false);
-        LocalDate ld = LocalDate.now().minusDays(7);
+        LocalDate ld = LocalDate.parse(TimeUtil.getNowDate());//.minusDays(7);
         LocalDate ldd = ld.with(DayOfWeek.SUNDAY);
         appointmentTableView.setItems(AccessDB.weekAppointments(ldd));
     }

@@ -14,6 +14,7 @@ import java.time.Clock;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -67,14 +68,17 @@ public class TimeUtil {
     public static void setNowTime(String s) {
         nowTime = s;
     }
-    //Set timezone offset
-    private static Double offset;
-    public static Double getOffset() {
+
+
+    //LocalDateTime ldt = LocalDateTime.parse(datePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+
+
+    public static int getOffset() {
+        Integer offset2  = ZonedDateTime.now().getOffset().getTotalSeconds();
+        int offset = (offset2/60);
         return offset;
     }
-    public static void setOffset(Double d) {
-        offset = d;
-    }
+    
     //Get UTC Time
     public static String getUTCTime() {
         //yyyy-MM-dd HH:ii:ss
@@ -85,10 +89,9 @@ public class TimeUtil {
     }
     //Get days remaining in week
     public static String thisWeek(LocalDate ld) {
-       // ld = LocalDate.now().minusDays(7);
-        LocalDate ldd = ld.with(DayOfWeek.SUNDAY);
+        ld = ld.with(DayOfWeek.SUNDAY);
         DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("MM/dd/YYYY");
-        return formatter1.format(ldd); 
+        return formatter1.format(ld); 
     }
     public static String thisMonth(LocalDate ld) {
         return ld.getMonth().name();

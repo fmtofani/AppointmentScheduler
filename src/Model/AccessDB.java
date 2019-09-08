@@ -17,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -388,6 +389,7 @@ public class AccessDB {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
             ResultSet results = statement.executeQuery("SELECT appointment.start FROM appointment WHERE appointment.userId = " + LoginController.getcurrentUserId()+" ORDER BY appointment.start ASC;");
             LocalDateTime now = LocalDateTime.now();
+            now = now.minusMinutes(TimeUtil.getOffset());
             while(results.next()) {
                 Appointment a = new Appointment();
                 a.setStart(results.getString("appointment.start"));
@@ -422,11 +424,15 @@ public class AccessDB {
             while(results.next()) {
                 Appointment a = new Appointment();
                     String startTime = TimeUtil.stringToString(results.getString("appointment.start"), "time");
+                    LocalTime ltStart = LocalTime.parse(startTime).minusMinutes(TimeUtil.getOffset());
+                    startTime = ltStart.toString();
                     String endTime = TimeUtil.stringToString(results.getString("appointment.end"), "time"); 
+                    LocalTime ltEnd = LocalTime.parse(endTime).minusMinutes(TimeUtil.getOffset());
+                    endTime = ltEnd.toString();
                     String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
                     LocalDate ld = LocalDate.parse(date);
                     if(ld.equals(dateWeek) ||  ld.equals(dateWeek.plusDays(1)) || ld.equals(dateWeek.plusDays(2)) ||  ld.equals(dateWeek.plusDays(3)) ||  ld.equals(dateWeek.plusDays(4)) ||  ld.equals(dateWeek.plusDays(5)) ||  ld.equals(dateWeek.plusDays(6))) {
-                        a.setAppointmentId(results.getInt("appointment.appointmentId"));
+System.out.println("accessdb date: " + ld);                        a.setAppointmentId(results.getInt("appointment.appointmentId"));
                         a.setCustomerId(results.getInt("appointment.customerId"));
                         a.setCustomerName(results.getString("customer.customerName"));
                         a.setUserId(results.getInt("appointment.userId"));
@@ -464,7 +470,11 @@ public class AccessDB {
                 Appointment a = new Appointment();
                     String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
                     String startTime = TimeUtil.stringToString(results.getString("appointment.start"), "time");
+                    LocalTime ltStart = LocalTime.parse(startTime).minusMinutes(TimeUtil.getOffset());
+                    startTime = ltStart.toString();
                     String endTime = TimeUtil.stringToString(results.getString("appointment.end"), "time"); 
+                    LocalTime ltEnd = LocalTime.parse(endTime).minusMinutes(TimeUtil.getOffset());
+                    endTime = ltEnd.toString();
                     a.setAppointmentId(results.getInt("appointment.appointmentId"));
                     a.setCustomerId(results.getInt("appointment.customerId"));
                     a.setCustomerName(results.getString("customer.customerName"));
@@ -501,7 +511,11 @@ public class AccessDB {
             while(results.next()) {
                 Appointment a = new Appointment();
                     String startTime = TimeUtil.stringToString(results.getString("appointment.start"), "time");
+                    LocalTime ltStart = LocalTime.parse(startTime).minusMinutes(TimeUtil.getOffset());
+                    startTime = ltStart.toString();
                     String endTime = TimeUtil.stringToString(results.getString("appointment.end"), "time"); 
+                    LocalTime ltEnd = LocalTime.parse(endTime).minusMinutes(TimeUtil.getOffset());
+                    endTime = ltEnd.toString();
                     String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
                     LocalDate ld = LocalDate.parse(date);
                     if(ld.getMonth() == dateMonth.getMonth()) {
@@ -542,7 +556,11 @@ public class AccessDB {
             while(results.next()) {
                 Appointment a = new Appointment();
                     String startTime = TimeUtil.stringToString(results.getString("appointment.start"), "time");
+                    LocalTime ltStart = LocalTime.parse(startTime).minusMinutes(TimeUtil.getOffset());
+                    startTime = ltStart.toString();
                     String endTime = TimeUtil.stringToString(results.getString("appointment.end"), "time"); 
+                    LocalTime ltEnd = LocalTime.parse(endTime).minusMinutes(TimeUtil.getOffset());
+                    endTime = ltEnd.toString();
                     String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
                     if(date.equals(dateDay)) {
                         a.setAppointmentId(results.getInt("appointment.appointmentId"));
@@ -584,7 +602,11 @@ public class AccessDB {
                 Appointment a = new Appointment();
                     String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
                     String startTime = TimeUtil.stringToString(results.getString("appointment.start"), "time");
+                    LocalTime ltStart = LocalTime.parse(startTime).minusMinutes(TimeUtil.getOffset());
+                    startTime = ltStart.toString();
                     String endTime = TimeUtil.stringToString(results.getString("appointment.end"), "time"); 
+                    LocalTime ltEnd = LocalTime.parse(endTime).minusMinutes(TimeUtil.getOffset());
+                    endTime = ltEnd.toString();
                     a.setAppointmentId(results.getInt("appointment.appointmentId"));
                     a.setCustomerId(results.getInt("appointment.customerId"));
                     a.setCustomerName(results.getString("customer.customerName"));
@@ -686,7 +708,8 @@ public class AccessDB {
             while(results.next()) {
                 Report a = new Report();
                 String startTime = TimeUtil.stringToString(results.getString("appointment.start"), "time");
-                String endTime = TimeUtil.stringToString(results.getString("appointment.end"), "time"); 
+                LocalTime ltStart = LocalTime.parse(startTime).minusMinutes(TimeUtil.getOffset());
+                startTime = ltStart.toString();
                 String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
                 LocalDate ld = LocalDate.parse(date);
                 if(ld.getMonth() == dateMonth.getMonth()) {
@@ -719,6 +742,8 @@ public class AccessDB {
                 Report a = new Report();
                     String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
                     String startTime = TimeUtil.stringToString(results.getString("appointment.start"), "time");
+                    LocalTime ltStart = LocalTime.parse(startTime).minusMinutes(TimeUtil.getOffset());
+                    startTime = ltStart.toString();
                     a.setCustomerName(results.getString("customer.customerName"));
                     a.setUserName(results.getString("user.userName"));
                     a.setType(results.getString("appointment.type"));
@@ -747,6 +772,8 @@ public class AccessDB {
                 Report a = new Report();
                     String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");
                     String startTime = TimeUtil.stringToString(results.getString("appointment.start"), "time");
+                    LocalTime ltStart = LocalTime.parse(startTime).minusMinutes(TimeUtil.getOffset());
+                    startTime = ltStart.toString();
                     a.setCustomerName(results.getString("customer.customerName"));
                     a.setUserName(results.getString("user.userName"));
                     a.setType(results.getString("appointment.type"));

@@ -96,28 +96,7 @@ public class LoginController implements Initializable {
         TimeUtil.setNowMonth(ldt.format(formatter).substring(5,7));
         TimeUtil.setNowYear(ldt.format(formatter).substring(0,4));
         TimeUtil.setNowTime(ldt.format(formatter).substring(11,16));
-        //get local timezone offset by breaking down the string and parsing it into a Double. 
-        //There is probably an easy way to do this, however this is the only iteration I have used in the program which is odd.
-        String stringOffset = ZoneOffset.systemDefault().getRules().getOffset(LocalDateTime.now()).toString();
-        String str1="";
-        String str2="";
-        String str3;
-        Double num;
-        int length = stringOffset.length();
-        for(int i=0; i < length + 1; i++) {
-            if(stringOffset.substring(i, i+1).equals(":")) {
-                str1 = stringOffset.substring(0, i);
-                str2 = stringOffset.substring(i+1, stringOffset.length());
-                break;
-            }
-        }
-            if(str2.equals(30)) {
-                str2 = "5";
-            }
-            str3 = (str1 + "." + str2);
-            num = Double.valueOf(str3);
-            TimeUtil.setOffset(num);
-        
+  
         //Fire up the database
         DatabaseConnect.dbConnect();
         //Set the local language

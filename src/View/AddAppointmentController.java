@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -117,6 +118,7 @@ public class AddAppointmentController implements Initializable {
         typeComboBox.setItems(typeList);
         durationComboBox.setItems(durationList); 
         amRadioButton.setSelected(true);
+        isPM = false;
         if(AppointmentController.versionAdd.equals("edit")) {      
             addAppointmentButton.setText("Modify");
             //change this after mod
@@ -133,7 +135,7 @@ public class AddAppointmentController implements Initializable {
             descriptionTF.setText(sel.getDescription());
             locationComboBox.getSelectionModel().select(sel.getLocation());
             typeComboBox.getSelectionModel().select(sel.getType());
-            durationComboBox.getSelectionModel().select("2");
+            durationComboBox.getSelectionModel().select("30 minutes");
             //change military time to am/pm
             String hour = String.format("%02d", Integer.parseInt(sel.getStart().substring(0,2)));
             String min = String.format("%02d", Integer.parseInt(sel.getStart().substring(3,5)));
@@ -184,20 +186,25 @@ public class AddAppointmentController implements Initializable {
         }
             return 0;
     }
-
+    boolean badTime = false;
+    
     private void alertTime(String s) {
+            badTime = true;
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
             alert.setHeaderText("Error Adding Appointment");
-            alert.setContentText("Please verify that timw is entered in HH:MM format");
-            alert.showAndWait();         
+            alert.setContentText("Please verify that time is entered in HH:MM format");
+            alert.showAndWait();
     }
         private void verifyStart(String verifyTime) {
     //    verifyTime = startTF.getText();
-            if(verifyTime.length() > 5) {
+            if(verifyTime.length() == 4 && isPM) {
+                return;
+            }
+            if(verifyTime.length() == 5 && isPM && startTF.getText().substring(0,2).equals("12") && verifyTime.substring(2,3).equals(":")) {
                 alertTime(verifyTime);
             }
-            if(verifyTime.length() < 5) {
+            if(verifyTime.length() > 5 || verifyTime.length() < 5) {
                 alertTime(verifyTime);
             }
             if(verifyTime.length() == 5) {
@@ -218,13 +225,13 @@ public class AddAppointmentController implements Initializable {
             alert.showAndWait();
             return;               
         }
+        badTime = false;
         //verify proper time formaat
         verifyStart(startTF.getText());
+        if(badTime) return;
         //Add military time
         int add12 = 0;
         if(pmRadioButton.isSelected()) add12 = 12;
-        //Construct Start time
-        LocalTime lt = LocalTime.of(Integer.parseInt(startTF.getText().substring(0,2)), Integer.parseInt(startTF.getText().substring(3,5)));
 /*
  *
  *      Satisfies Rubric F -> Verify within business hours
@@ -239,14 +246,26 @@ public class AddAppointmentController implements Initializable {
             alert.showAndWait();   
             return;
         }
+
+/*
+ *
+ *      Satisfies Rubric E -> Adjust for timezone
+ *
+ *
+*/
+        
+        //Construct Start time
+        LocalTime lt = LocalTime.of(Integer.parseInt(startTF.getText().substring(0,2)), Integer.parseInt(startTF.getText().substring(3,5)));
+        lt = lt.plusHours(add12);
+        LocalDate ld = LocalDate.parse(datePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        LocalDateTime ldt = LocalDateTime.of(ld, lt);
+        ldt = ldt.plusHours(add12);
+        ldt = ldt.plusMinutes(TimeUtil.getOffset());
+        String start = ldt.toString();
         //Construct End Time
-        lt.plusMinutes(parseDuration(durationComboBox.getSelectionModel().getSelectedIndex()));
-        //Parse LocalTime into String
-        String hour = String.format(Integer.toString(lt.getHour()));
-        String min = Integer.toString(lt.getMinute());
-        //Finally the finished product
-        String start = datePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).concat(" ").concat(Integer.toString(Integer.parseInt(startTF.getText().substring(0,2)) + add12).concat(":").concat(min));
-        String end = datePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).concat(" ").concat(hour).concat(":").concat(min);
+        ldt = ldt.plusMinutes(parseDuration(durationComboBox.getSelectionModel().getSelectedIndex()));
+        String end = ldt.toString();
+        System.out.println("offset= " + TimeUtil.getOffset());
         //Construct an appointment and add it to DB
         Appointment a = new Appointment();      
         a.setCustomerId(clientId);
@@ -265,6 +284,7 @@ public class AddAppointmentController implements Initializable {
             addAppointmentButton.setText("Add");
         }
         AppointmentController.isEdit = false;        
+        AppointmentController.versionAdd = "";
         AccessDB.addAppointment(a);
         //Let User know the appointment has been added
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -282,14 +302,17 @@ public class AddAppointmentController implements Initializable {
         stage.show();        
     }
 
+    boolean isPM = false;
     @FXML
     private void amHandler(ActionEvent event) {
         pmRadioButton.setSelected(false);
+        isPM = false;
     }
 
     @FXML
     private void pmHandler(ActionEvent event) {
         amRadioButton.setSelected(false);
+        isPM = true;
     }
      
 //The purpose of this method is to add the selected client to the appointment client field

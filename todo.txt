@@ -5,8 +5,11 @@ Add 2 lambdas
 AddAppointment
 -- adjust for time offset
 
+getselected() checker
 
 
+pm button before xx:xx watch for 12
+error continuing after bad time entry
 
 
 
