@@ -55,15 +55,12 @@ public class UserController implements Initializable {
     @FXML
     private Button deleteUserButton;
 
-    /* 
-       This variable stores the selected user so it can be modified in other classes. 
-       If there is a safer way to do this, please let me know. No need to explain. Just state that there is please. 
-       I know I could make a class with setters and getters but that seems like a lot of work for what this does.
-    */
-    public static User selectedUser;
-
     
-    
+    private static User selectedUser;
+    public static User getSelectedUser() {
+        return selectedUser;
+    }
+        
     /**
      * Initializes the controller class.
      */

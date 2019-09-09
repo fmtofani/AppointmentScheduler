@@ -35,11 +35,11 @@
          <children>
             <TableView fx:id="reportTableView" layoutX="14.0" layoutY="6.0" prefHeight="471.0" prefWidth="541.0">
               <columns>
-                <TableColumn fx:id="usernameColumn" prefWidth="150.0" text="User Name" />
-                <TableColumn fx:id="dateColumn" minWidth="8.0" prefWidth="65.5" text="Date" />
-                  <TableColumn fx:id="timeColumn" prefWidth="54.5" text="Time" />
-                  <TableColumn fx:id="clientColumn" prefWidth="126.0" text="Client" />
-                  <TableColumn fx:id="typeColumn" prefWidth="141.5" text="Type" />
+                <TableColumn fx:id="usernameColumn" prefWidth="138.5" text="User Name" />
+                <TableColumn fx:id="dateColumn" minWidth="8.0" prefWidth="106.0" text="Date" />
+                  <TableColumn fx:id="timeColumn" prefWidth="58.0" text="Time" />
+                  <TableColumn fx:id="clientColumn" prefWidth="132.5" text="Client" />
+                  <TableColumn fx:id="typeColumn" prefWidth="102.5" text="Type" />
               </columns>
             </TableView>
          </children>

@@ -79,8 +79,6 @@ public class LoginController implements Initializable {
     public static int getcurrentUserId() {
         return currentUserId;
     }
-    //References current localdatetime and time zone offset
-    
     
     /**
      * Initializes the controller class.

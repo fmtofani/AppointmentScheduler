@@ -73,14 +73,30 @@ public class AppointmentController implements Initializable {
     private TableColumn<Appointment, String> typeColumn;
     @FXML
     private TableView<Appointment> appointmentTableView;
-
-    public static Appointment selectedAppointment;
-    public static boolean isEdit = false;
-    public static String versionAdd = "";
     @FXML
     private Label weekOfLabel;
     @FXML
     private Label fillLabel;
+ 
+    private static Appointment selectedAppointment;
+    public static Appointment getSelectedAppointment() {
+        return selectedAppointment;
+    }
+    
+    private static boolean isEdit = false;
+    public static boolean getIsEdit() {
+        return isEdit;
+    }
+    public static void setIsEdit(boolean b) {
+        isEdit = b;
+    }
+    private static String versionAdd = "";
+    public static String getVersionAdd() {
+        return versionAdd;
+    }
+    public static void setVersionAdd(String s) {
+        versionAdd = s;
+    }
     
     boolean isWeek = false;
     

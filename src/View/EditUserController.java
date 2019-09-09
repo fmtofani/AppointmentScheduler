@@ -51,15 +51,15 @@ public class EditUserController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        editUserNameTextField.setText(UserController.selectedUser.getUserName());
-        editPasswordTextField.setText(UserController.selectedUser.getPassword());
+        editUserNameTextField.setText(UserController.getSelectedUser().getUserName());
+        editPasswordTextField.setText(UserController.getSelectedUser().getPassword());
     }    
 
     @FXML
     private void modifyUserHandler(ActionEvent event) throws IOException {
         String name = editUserNameTextField.getText();
         String password = editPasswordTextField.getText();
-        User u = UserController.selectedUser;
+        User u = UserController.getSelectedUser();
        
         if (name.equals("") || password.equals("")) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

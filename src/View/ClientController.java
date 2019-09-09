@@ -59,7 +59,10 @@ public class ClientController implements Initializable {
     @FXML
     private TableView<Customer> clientTableView;
     
-    public static Customer selectedCustomer;
+    private static Customer selectedCustomer;
+    public static Customer getSelectedCustomer() {
+        return selectedCustomer;
+    }
 
     /**
      * Initializes the controller class.

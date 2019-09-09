@@ -59,7 +59,7 @@ public class EditClientController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Customer sel = ClientController.selectedCustomer;
+        Customer sel = ClientController.getSelectedCustomer();
         if (sel.getCustomerAddress2().equals("none")) address2TextField.setText("");
         nameTextField.setText(sel.getCustomerName());
         addressTextField.setText(sel.getCustomerAddress());

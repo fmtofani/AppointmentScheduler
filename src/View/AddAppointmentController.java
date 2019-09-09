@@ -95,7 +95,10 @@ public class AddAppointmentController implements Initializable {
     private Button clearButton;
 
     //Variables I need to pass to other class methods
-    public static Customer selectedClient;    
+    private static Customer selectedClient;
+    public static Customer getSelectedClient() {
+            return selectedClient;
+    }
     private int clientId;
     
     //Values for comboboxes
@@ -119,10 +122,10 @@ public class AddAppointmentController implements Initializable {
         durationComboBox.setItems(durationList); 
         amRadioButton.setSelected(true);
         isPM = false;
-        if(AppointmentController.versionAdd.equals("edit")) {      
+        if(AppointmentController.getVersionAdd().equals("edit")) {      
             addAppointmentButton.setText("Modify");
             //change this after mod
-            Appointment sel = AppointmentController.selectedAppointment;
+            Appointment sel = AppointmentController.getSelectedAppointment();
             //break down date to parse to datepicker
             String str = sel.getDate();
             int year = Integer.parseInt(str.substring(0,4));
@@ -279,12 +282,12 @@ public class AddAppointmentController implements Initializable {
         //Delete the old appointment if being edited
         //Had I implemented a management user I would edit the LastUpdatedBy field in the Database
         //Since only the user can edit their own appointments, I didn't deem it necessary to update the LastUpdatedBy field
-        if(AppointmentController.isEdit) {
-            AccessDB.deleteAppointment(AppointmentController.selectedAppointment);
+        if(AppointmentController.getIsEdit()) {
+            AccessDB.deleteAppointment(AppointmentController.getSelectedAppointment());
             addAppointmentButton.setText("Add");
         }
-        AppointmentController.isEdit = false;        
-        AppointmentController.versionAdd = "";
+        AppointmentController.setIsEdit(false);        
+        AppointmentController.setVersionAdd("");
         AccessDB.addAppointment(a);
         //Let User know the appointment has been added
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -338,7 +341,7 @@ public class AddAppointmentController implements Initializable {
         alert.setContentText("Are you sure that you want to cancel?");
         Optional<ButtonType> result = alert.showAndWait();
         if(result.get() == ButtonType.OK) {      
-            AppointmentController.isEdit = false;
+            AppointmentController.setIsEdit(false);
             Stage stage; 
             Parent root;
             stage=(Stage) addAppointmentButton.getScene().getWindow();

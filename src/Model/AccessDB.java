@@ -590,7 +590,7 @@ System.out.println("accessdb date: " + ld);                        a.setAppointm
 
     public static ObservableList<Appointment> selectedAppointment() {
         selectedAppointment.clear();
-        int apptId = AppointmentController.selectedAppointment.getAppointmentId();
+        int apptId = AppointmentController.getSelectedAppointment().getAppointmentId();
         try {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
             ResultSet results = statement.executeQuery("SELECT appointment.appointmentId, appointment.customerId, customer.customerName, appointment.userId, user.userName, appointment.title, appointment.description, appointment.location," +
