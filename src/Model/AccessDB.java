@@ -9,9 +9,11 @@
 package Model;
 
 import Util.DatabaseConnect;
+import Util.MyCounter;
 import Util.TimeUtil;
 import View.AppointmentController;
 import View.LoginController;
+import View.ReportsController;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -697,13 +699,19 @@ System.out.println("accessdb date: " + ld);                        a.setAppointm
 
     public static ObservableList<Report> report1(LocalDate dateMonth) {
         report1.clear();
+        ReportsController.setCounterStatus(0);
+        ReportsController.setCounterInformation(0);
+        ReportsController.setCounterDecision(0);
+        ReportsController.setCounterProblem(0);
+        ReportsController.setCounterInnovation(0);
+        ReportsController.setCounterTeam(0);
         try {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
             ResultSet results = statement.executeQuery("SELECT appointment.appointmentId, appointment.customerId, customer.customerName, appointment.userId, user.userName, appointment.title, appointment.description, appointment.location," +
                                                        " appointment.contact, appointment.type, appointment.url, appointment.start, appointment.end" +
                                                        " FROM appointment, customer, user" +
                                                        " WHERE appointment.customerId = customer.customerId AND appointment.userId = user.userId" +
-                                                       " ORDER BY user.userName, appointment.start ASC;");
+                                                       " ORDER BY appointment.type, user.userName ASC;");
            
             while(results.next()) {
                 Report a = new Report();
@@ -718,6 +726,14 @@ System.out.println("accessdb date: " + ld);                        a.setAppointm
                     a.setType(results.getString("appointment.type"));
                     a.setDate(date);
                     a.setTime(startTime);
+                    //This lambda was added for efficiency
+                    MyCounter count = (s1, s2) -> s1.equals(s2);
+                    if(count.counter(a.getType(), "Status")) ReportsController.addCounterStatus(1);
+                    if(count.counter(a.getType(), "Information")) ReportsController.addCounterInformation(1);
+                    if(count.counter(a.getType(), "Decision")) ReportsController.addCounterDecision(1);
+                    if(count.counter(a.getType(), "Problem")) ReportsController.addCounterProblem(1);
+                    if(count.counter(a.getType(), "Innovation")) ReportsController.addCounterInnovation(1);
+                    if(count.counter(a.getType(), "Team")) ReportsController.addCounterTeam(1);
                     report1.add(a);
                     }
             }
@@ -737,7 +753,7 @@ System.out.println("accessdb date: " + ld);                        a.setAppointm
                                                        " appointment.contact, appointment.type, appointment.url, appointment.start, appointment.end" +
                                                        " FROM appointment, customer, user" +
                                                        " WHERE appointment.customerId = customer.customerId AND appointment.userId = user.userId" +
-                                                       " ORDER BY appointment.type, user.userName, appointment.start ASC;");
+                                                       " ORDER BY user.userName, appointment.start, appointment.start ASC;");
             while(results.next()) {
                 Report a = new Report();
                     String date = TimeUtil.stringToString(results.getString("appointment.start"), "date");

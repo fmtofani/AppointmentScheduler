@@ -9,6 +9,6 @@ package Util;
  *
  * @author micha
  */
-public interface Alert {
-    
+public interface MyCounter {
+    public boolean counter(String s1, String s2);
 }

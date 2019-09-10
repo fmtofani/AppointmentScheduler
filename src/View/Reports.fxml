@@ -5,6 +5,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ReportsController">
@@ -17,13 +19,13 @@
       </Label>
       <Label layoutX="16.0" layoutY="167.0" prefHeight="27.0" prefWidth="121.0" text="Appointments by" />
       <Label layoutX="14.0" layoutY="109.0" prefHeight="27.0" prefWidth="127.0" text="Appointments by" />
-      <Label layoutX="16.0" layoutY="227.0" prefHeight="27.0" prefWidth="93.0" text="Clients by" />
-      <Button fx:id="exitReportsButton" layoutX="119.0" layoutY="335.0" mnemonicParsing="false" onAction="#exitReportsHandler" prefHeight="25.0" prefWidth="61.0" text="Exit" />
+      <Label layoutX="16.0" layoutY="227.0" prefHeight="27.0" prefWidth="93.0" text="Each User's" />
+      <Button fx:id="exitReportsButton" layoutX="712.0" layoutY="553.0" mnemonicParsing="false" onAction="#exitReportsHandler" prefHeight="25.0" prefWidth="61.0" text="Exit" />
       <Button fx:id="forwardButton" layoutX="721.0" layoutY="57.0" mnemonicParsing="false" onAction="#forwardHandler" prefHeight="25.0" prefWidth="42.0" text="&gt;&gt;" />
       <Button fx:id="backButton" layoutX="662.0" layoutY="57.0" mnemonicParsing="false" onAction="#backHandler" prefHeight="25.0" prefWidth="42.0" text="&lt;&lt;" />
-      <Label layoutX="14.0" layoutY="131.0" prefHeight="27.0" prefWidth="93.0" text="User Name" />
-      <Label layoutX="17.0" layoutY="192.0" prefHeight="27.0" prefWidth="93.0" text="Type" />
-      <Label layoutX="16.0" layoutY="254.0" prefHeight="27.0" prefWidth="93.0" text="User Name" />
+      <Label layoutX="14.0" layoutY="131.0" prefHeight="27.0" prefWidth="93.0" text="Type" />
+      <Label layoutX="17.0" layoutY="192.0" prefHeight="27.0" prefWidth="93.0" text="User" />
+      <Label layoutX="16.0" layoutY="254.0" prefHeight="27.0" prefWidth="93.0" text="Client List" />
       <AnchorPane layoutX="7.0" layoutY="95.0" prefHeight="205.0" prefWidth="200.0" style="-fx-border-color: blue; -fx-border-radius: 10;">
          <children>
             <Button fx:id="viewReport_1Button" layoutX="110.0" layoutY="25.0" mnemonicParsing="false" onAction="#viewReport_1Handler" prefHeight="25.0" prefWidth="61.0" text="View" />
@@ -31,9 +33,9 @@
             <Button fx:id="viewReport_3Button" layoutX="110.0" layoutY="147.0" mnemonicParsing="false" onAction="#viewReport_3Handler" prefHeight="25.0" prefWidth="61.0" text="View" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="219.0" layoutY="98.0" prefHeight="490.0" prefWidth="568.0" style="-fx-border-color: blue; -fx-border-radius: 10;">
+      <AnchorPane layoutX="219.0" layoutY="98.0" prefHeight="444.0" prefWidth="568.0" style="-fx-border-color: blue; -fx-border-radius: 10;">
          <children>
-            <TableView fx:id="reportTableView" layoutX="14.0" layoutY="6.0" prefHeight="471.0" prefWidth="541.0">
+            <TableView fx:id="reportTableView" layoutX="14.0" layoutY="6.0" prefHeight="426.0" prefWidth="541.0">
               <columns>
                 <TableColumn fx:id="usernameColumn" prefWidth="138.5" text="User Name" />
                 <TableColumn fx:id="dateColumn" minWidth="8.0" prefWidth="106.0" text="Date" />
@@ -44,8 +46,33 @@
             </TableView>
          </children>
       </AnchorPane>
-      <Label fx:id="monthLabel" layoutX="671.0" layoutY="34.0" text="Change Month" />
-      <Label fx:id="fillLabel" layoutX="297.0" layoutY="74.0" prefHeight="17.0" prefWidth="106.0" />
       <Label fx:id="monthOfLabel" layoutX="235.0" layoutY="74.0" text="Month of" />
+      <Label fx:id="monthLabel" layoutX="298.0" layoutY="74.0" text="Change Month" />
+      <Label fx:id="apptLabel" layoutX="48.0" layoutY="312.0" text="Types of Appointments" />
+      <HBox layoutX="37.0" layoutY="329.0" prefHeight="112.0" prefWidth="146.0">
+         <children>
+            <VBox alignment="TOP_RIGHT" prefHeight="192.0" prefWidth="62.0">
+               <children>
+                  <Label fx:id="numStatus" prefHeight="17.0" prefWidth="28.0" text="num" />
+                  <Label fx:id="numInformation" prefHeight="17.0" prefWidth="27.0" text="num" />
+                  <Label fx:id="numTeam" prefHeight="17.0" prefWidth="28.0" text="num" />
+                  <Label fx:id="numInnovatoin" prefHeight="17.0" prefWidth="28.0" text="num" />
+                  <Label fx:id="numProblem" prefHeight="17.0" prefWidth="27.0" text="num" />
+                  <Label fx:id="numDecision" prefHeight="17.0" prefWidth="28.0" text="num" />
+               </children>
+            </VBox>
+            <VBox prefHeight="192.0" prefWidth="71.0">
+               <children>
+                  <Label fx:id="statusLabel" prefHeight="17.0" prefWidth="50.0" text="Status" />
+                  <Label fx:id="informationLabel" prefHeight="17.0" prefWidth="80.0" text="Information" />
+                  <Label fx:id="teamLabel" prefHeight="17.0" prefWidth="50.0" text="Team" />
+                  <Label fx:id="innovationLabel" prefHeight="17.0" prefWidth="80.0" text="Innovation" />
+                  <Label fx:id="problemLabel" prefHeight="17.0" prefWidth="50.0" text="Problem" />
+                  <Label fx:id="decisionLabel" prefHeight="17.0" prefWidth="50.0" text="Decision" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <Label fx:id="fillLabel" layoutX="50.0" layoutY="49.0" />
    </children>
 </AnchorPane>
