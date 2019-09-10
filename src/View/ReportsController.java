@@ -245,7 +245,7 @@ public class ReportsController implements Initializable {
 
     int forwardCounter = 1;
     @FXML
-    private void forwardHandler(ActionEvent event) {
+    private void forwardHandler(ActionEvent event) {       
         LocalDate ld = LocalDate.parse(TimeUtil.getNowDate());
         reportTableView.setItems(AccessDB.report1(ld.plusMonths(forwardCounter)));
         fillLabel.setText(TimeUtil.thisMonth(ld.plusMonths(forwardCounter)));

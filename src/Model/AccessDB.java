@@ -704,7 +704,7 @@ System.out.println("accessdb date: " + ld);                        a.setAppointm
         ReportsController.setCounterDecision(0);
         ReportsController.setCounterProblem(0);
         ReportsController.setCounterInnovation(0);
-        ReportsController.setCounterTeam(0);
+        ReportsController.setCounterTeam(0); 
         try {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
             ResultSet results = statement.executeQuery("SELECT appointment.appointmentId, appointment.customerId, customer.customerName, appointment.userId, user.userName, appointment.title, appointment.description, appointment.location," +

@@ -23,7 +23,7 @@ public class InvalidCredentialsException extends Exception {
 
 }
 
-
+Add a listener on numTypes to update when forward/back pressed
 getselected() checker
 
 
