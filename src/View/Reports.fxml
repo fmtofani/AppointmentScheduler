@@ -12,7 +12,7 @@
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ReportsController">
    <children>
       <Label layoutX="7.0" layoutY="6.0" text="Acme Appointment Scheduler" />
-      <Label layoutX="369.0" layoutY="44.0" text="Reports">
+      <Label layoutX="378.0" layoutY="36.0" prefHeight="27.0" prefWidth="62.0" text="Reports">
          <font>
             <Font size="18.0" />
          </font>
@@ -54,25 +54,24 @@
             <VBox alignment="TOP_RIGHT" prefHeight="192.0" prefWidth="62.0">
                <children>
                   <Label fx:id="numStatus" prefHeight="17.0" prefWidth="28.0" text="num" />
-                  <Label fx:id="numInformation" prefHeight="17.0" prefWidth="27.0" text="num" />
+                  <Label fx:id="numInformation" prefHeight="17.0" prefWidth="28.0" text="num" />
                   <Label fx:id="numTeam" prefHeight="17.0" prefWidth="28.0" text="num" />
                   <Label fx:id="numInnovatoin" prefHeight="17.0" prefWidth="28.0" text="num" />
-                  <Label fx:id="numProblem" prefHeight="17.0" prefWidth="27.0" text="num" />
+                  <Label fx:id="numProblem" prefHeight="17.0" prefWidth="28.0" text="num" />
                   <Label fx:id="numDecision" prefHeight="17.0" prefWidth="28.0" text="num" />
                </children>
             </VBox>
             <VBox prefHeight="192.0" prefWidth="71.0">
                <children>
-                  <Label fx:id="statusLabel" prefHeight="17.0" prefWidth="50.0" text="Status" />
+                  <Label fx:id="statusLabel" prefHeight="17.0" prefWidth="60.0" text="Status" />
                   <Label fx:id="informationLabel" prefHeight="17.0" prefWidth="80.0" text="Information" />
-                  <Label fx:id="teamLabel" prefHeight="17.0" prefWidth="50.0" text="Team" />
-                  <Label fx:id="innovationLabel" prefHeight="17.0" prefWidth="80.0" text="Innovation" />
-                  <Label fx:id="problemLabel" prefHeight="17.0" prefWidth="50.0" text="Problem" />
-                  <Label fx:id="decisionLabel" prefHeight="17.0" prefWidth="50.0" text="Decision" />
+                  <Label fx:id="teamLabel" prefHeight="17.0" prefWidth="60.0" text="Team" />
+                  <Label fx:id="innovationLabel" prefHeight="17.0" prefWidth="60.0" text="Innovation" />
+                  <Label fx:id="problemLabel" prefHeight="17.0" prefWidth="60.0" text="Problem" />
+                  <Label fx:id="decisionLabel" prefHeight="17.0" prefWidth="60.0" text="Decision" />
                </children>
             </VBox>
          </children>
       </HBox>
-      <Label fx:id="fillLabel" layoutX="50.0" layoutY="49.0" />
    </children>
 </AnchorPane>

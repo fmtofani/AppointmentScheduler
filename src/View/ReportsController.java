@@ -214,7 +214,7 @@ public class ReportsController implements Initializable {
         numProblem.setVisible(true);
         decisionLabel.setVisible(true);
         numDecision.setVisible(true);
-        fillLabel.setText(TimeUtil.thisMonth(LocalDate.now()));
+        monthLabel.setText(TimeUtil.thisMonth(LocalDate.now()));
         reportTableView.setItems(AccessDB.report1(LocalDate.now()));
         numDecision.setText(Integer.toString(counterDecision));
         numStatus.setText(Integer.toString(counterStatus));
@@ -230,16 +230,42 @@ public class ReportsController implements Initializable {
     @FXML
     private void viewReport_2Handler(ActionEvent event) {
         monthLabel.setVisible(false);
+        monthOfLabel.setVisible(false);
         backButton.setVisible(false);
         forwardButton.setVisible(false);
+        statusLabel.setVisible(false);
+        numStatus.setVisible(false);
+        informationLabel.setVisible(false);
+        numInformation.setVisible(false);
+        teamLabel.setVisible(false);
+        numTeam.setVisible(false);
+        innovationLabel.setVisible(false);
+        numInnovatoin.setVisible(false);
+        problemLabel.setVisible(false);
+        numProblem.setVisible(false);
+        decisionLabel.setVisible(false);
+        apptLabel.setVisible(false);
         reportTableView.setItems(AccessDB.report2());
     }
 
     @FXML
     private void viewReport_3Handler(ActionEvent event) {
         monthLabel.setVisible(false);
+        monthOfLabel.setVisible(false);
         backButton.setVisible(false);
         forwardButton.setVisible(false);
+        statusLabel.setVisible(false);
+        numStatus.setVisible(false);
+        informationLabel.setVisible(false);
+        numInformation.setVisible(false);
+        teamLabel.setVisible(false);
+        numTeam.setVisible(false);
+        innovationLabel.setVisible(false);
+        numInnovatoin.setVisible(false);
+        problemLabel.setVisible(false);
+        numProblem.setVisible(false);
+        decisionLabel.setVisible(false);
+        apptLabel.setVisible(false);
         reportTableView.setItems(AccessDB.report3());
     }
 
@@ -248,7 +274,14 @@ public class ReportsController implements Initializable {
     private void forwardHandler(ActionEvent event) {       
         LocalDate ld = LocalDate.parse(TimeUtil.getNowDate());
         reportTableView.setItems(AccessDB.report1(ld.plusMonths(forwardCounter)));
-        fillLabel.setText(TimeUtil.thisMonth(ld.plusMonths(forwardCounter)));
+        numDecision.setText(Integer.toString(counterDecision));
+        numStatus.setText(Integer.toString(counterStatus));
+        numInformation.setText(Integer.toString(counterInformation));
+        numTeam.setText(Integer.toString(counterTeam));
+        numInnovatoin.setText(Integer.toString(counterInnovation));
+        numProblem.setText(Integer.toString(counterProblem));
+        numDecision.setText(Integer.toString(counterDecision));
+        monthLabel.setText(TimeUtil.thisMonth(ld.plusMonths(forwardCounter)));
         forwardCounter++;
         backCounter--;
     } 
@@ -258,7 +291,14 @@ public class ReportsController implements Initializable {
     private void backHandler(ActionEvent event) {
         LocalDate ld = LocalDate.parse(TimeUtil.getNowDate());
         reportTableView.setItems(AccessDB.report1(ld.minusMonths(backCounter)));            
-        fillLabel.setText(TimeUtil.thisMonth(ld.minusMonths(backCounter)));
+        numDecision.setText(Integer.toString(counterDecision));
+        numStatus.setText(Integer.toString(counterStatus));
+        numInformation.setText(Integer.toString(counterInformation));
+        numTeam.setText(Integer.toString(counterTeam));
+        numInnovatoin.setText(Integer.toString(counterInnovation));
+        numProblem.setText(Integer.toString(counterProblem));
+        numDecision.setText(Integer.toString(counterDecision));
+        monthLabel.setText(TimeUtil.thisMonth(ld.minusMonths(backCounter)));
         backCounter++;
         forwardCounter--;
     }
