@@ -178,12 +178,20 @@ public class AppointmentController implements Initializable {
 
     @FXML
     private void deleteHandler(ActionEvent event) {
+        if(appointmentTableView.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert (Alert.AlertType.ERROR);
+            alert.setTitle("SELECTION ERROR");
+            alert.setHeaderText("Selection Error");
+            alert.setContentText("Please select an appointment to delete");
+            alert.showAndWait();
+            return;
+        }
         selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
-        Alert alert = new Alert (Alert.AlertType.CONFIRMATION);
-        alert.setTitle("CONFIRMATION");
-        alert.setHeaderText("DELETE APPOINTMENT");
-        alert.setContentText("Are you sure that you want to delete this appointment? ");
-        Optional<ButtonType> result = alert.showAndWait();
+            Alert alert = new Alert (Alert.AlertType.CONFIRMATION);
+            alert.setTitle("CONFIRMATION");
+            alert.setHeaderText("DELETE APPOINTMENT");
+            alert.setContentText("Are you sure that you want to delete this appointment? ");
+            Optional<ButtonType> result = alert.showAndWait();
         if(result.get() == ButtonType.OK) {
               AccessDB.deleteAppointment(selectedAppointment);
               appointmentTableView.setItems(AccessDB.allAppointments());
@@ -192,6 +200,14 @@ public class AppointmentController implements Initializable {
 
     @FXML
     private void detailsHandler(ActionEvent event) throws IOException {
+        if(appointmentTableView.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert (Alert.AlertType.ERROR);
+            alert.setTitle("SELECTION ERROR");
+            alert.setHeaderText("Selection Error");
+            alert.setContentText("Please select an appointment to delete");
+            alert.showAndWait();
+            return;
+        }
        selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
        Stage stage; 
        Parent root;
@@ -227,6 +243,14 @@ public class AppointmentController implements Initializable {
 
     @FXML
     private void editHandler(ActionEvent event) throws IOException {
+        if(appointmentTableView.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert (Alert.AlertType.ERROR);
+            alert.setTitle("SELECTION ERROR");
+            alert.setHeaderText("Selection Error");
+            alert.setContentText("Please select an appointment to edit");            
+            alert.showAndWait();
+            return;
+        }
        selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
        versionAdd = "edit";
        isEdit = true;

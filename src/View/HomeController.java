@@ -110,6 +110,22 @@ public class HomeController implements Initializable {
 
     @FXML
     private void deleteAppointmentHandler(ActionEvent event) {
+        if(appointmentTableView.getItems().isEmpty()) {
+            Alert alert = new Alert (Alert.AlertType.ERROR);
+            alert.setTitle("DELETE ERROR");
+            alert.setHeaderText("Deletion Error");
+            alert.setContentText("There are no appointments for today to delete");
+            alert.showAndWait();
+            return;
+        }
+        if(appointmentTableView.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert (Alert.AlertType.ERROR);
+            alert.setTitle("SELECTION ERROR");
+            alert.setHeaderText("Selection Error");
+            alert.setContentText("Please select an appointment to delete");
+            alert.showAndWait();
+            return;
+        }
         selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
         Alert alert = new Alert (Alert.AlertType.CONFIRMATION);
         alert.setTitle("CONFIRMATION");

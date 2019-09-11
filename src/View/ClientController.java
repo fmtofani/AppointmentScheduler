@@ -100,6 +100,14 @@ public class ClientController implements Initializable {
 
     @FXML
     private void modifyClientHandler(ActionEvent event) throws IOException {
+        if(clientTableView.getSelectionModel().isEmpty()) {
+        Alert alert = new Alert (Alert.AlertType.ERROR);
+        alert.setTitle("SELECTION ERROR");
+        alert.setHeaderText("Selection Error");
+        alert.setContentText("Please select a customer to modify");   
+        alert.showAndWait();
+        return;
+        }        
         selectedCustomer = clientTableView.getSelectionModel().getSelectedItem();
         Stage stage; 
         Parent root;
@@ -112,6 +120,14 @@ public class ClientController implements Initializable {
 
     @FXML
     private void deleteClientHandler(ActionEvent event) {
+        if(clientTableView.getSelectionModel().isEmpty()) {
+        Alert alert = new Alert (Alert.AlertType.ERROR);
+        alert.setTitle("SELECTION ERROR");
+        alert.setHeaderText("Selection Error");
+        alert.setContentText("Please select a customer to delete");  
+        alert.showAndWait();
+        return;
+        }
         selectedCustomer = clientTableView.getSelectionModel().getSelectedItem();
         Alert alert = new Alert (Alert.AlertType.CONFIRMATION);
         alert.setTitle("CONFIRMATION");

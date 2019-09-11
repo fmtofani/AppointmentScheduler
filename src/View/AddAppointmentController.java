@@ -220,6 +220,14 @@ public class AddAppointmentController implements Initializable {
     @FXML
     private void addAppointmentHandler(ActionEvent event) throws SQLException, IOException {
         //Verify fields have been filled out
+        if(clientTableView.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert (Alert.AlertType.ERROR);
+            alert.setTitle("SELECTION ERROR");
+            alert.setHeaderText("Selection Error");
+            alert.setContentText("Please select a Client to Add to Appointment");
+            alert.showAndWait();
+            return;
+        }                
         if(clientTF.getText().equals("") || startTF.getText().equals("") || descriptionTF.getText().equals("") || titleTF.getText().equals("") || datePicker.getValue() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");

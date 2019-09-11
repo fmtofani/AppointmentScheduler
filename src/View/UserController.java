@@ -105,6 +105,14 @@ public class UserController implements Initializable {
     
     @FXML
     private void modifyUserHandler(ActionEvent event) throws IOException {
+        if(userTableView.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert (Alert.AlertType.ERROR);
+            alert.setTitle("SELECTION ERROR");
+            alert.setHeaderText("Selection Error");
+            alert.setContentText("Please select a User to modify");
+            alert.showAndWait();
+            return;
+        }        
         selectedUser = userTableView.getSelectionModel().getSelectedItem();
         
         Stage stage; 
@@ -119,6 +127,14 @@ public class UserController implements Initializable {
 
     @FXML
     private void deleteUserHandler(ActionEvent event) {
+        if(userTableView.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert (Alert.AlertType.ERROR);
+            alert.setTitle("SELECTION ERROR");
+            alert.setHeaderText("Selection Error");
+            alert.setContentText("Please select a User to delete");
+            alert.showAndWait();
+            return;
+        }        
         selectedUser = userTableView.getSelectionModel().getSelectedItem();
         Alert alert = new Alert (Alert.AlertType.CONFIRMATION);
         alert.setTitle("CONFIRMATION");
