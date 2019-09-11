@@ -11,6 +11,7 @@ package View;
 import Model.AccessDB;
 import Model.Appointment;
 import Model.Customer;
+import Util.InvalidTimeException;
 import Util.TimeUtil;
 import java.io.IOException;
 import java.net.URL;
@@ -217,8 +218,30 @@ public class AddAppointmentController implements Initializable {
             }
         }
 
+        
+/*
+    *
+    *
+    *  Custom Exception Control to verify business hours
+    *
+    *
+*/        
+        
+    private boolean businessHours(int num) throws InvalidTimeException {
+        try {
+            if(num == 9 || num == 17) {
+                return true;
+            } else {
+                throw new InvalidTimeException("The selected hours are not during business hours");
+            }
+        } catch(InvalidTimeException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            return false;
+        }
+    }        
+    
     @FXML
-    private void addAppointmentHandler(ActionEvent event) throws SQLException, IOException {
+    private void addAppointmentHandler(ActionEvent event) throws SQLException, IOException, InvalidTimeException {
         //Verify fields have been filled out
         if(clientTableView.getSelectionModel().isEmpty()) {
             Alert alert = new Alert (Alert.AlertType.ERROR);
@@ -249,7 +272,8 @@ public class AddAppointmentController implements Initializable {
  *
  *
 */
-        if(Integer.parseInt(startTF.getText().substring(0,2)) < 9 || Integer.parseInt(startTF.getText().substring(0,2)) > 17){
+
+        if (businessHours(Integer.parseInt(startTF.getText().substring(0,2)))) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
             alert.setHeaderText("Error Adding Appointment");

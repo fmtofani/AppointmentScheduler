@@ -12,6 +12,7 @@ import Model.AccessDB;
 import Model.User;
 import Util.DatabaseConnect;
 import Util.LoggerUtil;
+import Util.LoginFailException;
 import Util.TimeUtil;
 import java.io.IOException;
 import java.net.URL;
@@ -113,7 +114,14 @@ public class LoginController implements Initializable {
         alertMessage = rb.getString("errMessage");
     }            
 
-    private static Boolean attemptLogin(String user, String pass) throws IOException {
+/*
+    *
+    *
+    *  Implementing a custom exception to verify login
+    * 
+    *
+*/
+    private static Boolean attemptLogin(String user, String pass) throws LoginFailException, IOException {
             try {
                 Statement statement = DatabaseConnect.getDbConnection().createStatement();
                 ResultSet results = statement.executeQuery("SELECT * FROM user WHERE userName='" + user + "' AND password='" + pass + "'");
@@ -127,19 +135,19 @@ public class LoginController implements Initializable {
                 } else {
                     //Log failure    
                     LoggerUtil.addEntry(user, false);
-                    return false;
+                    throw new LoginFailException("Login Credentials Invalid");
                 }
-            } catch (SQLException ex) {
+            } catch (LoginFailException | SQLException ex) {
                 System.out.println("There has been an SQL error \n Error: " + ex.getMessage());
                 return false;
             }
     }
-    
+      
     @FXML
-    public void loginHandler(ActionEvent event) throws IOException {
+    public void loginHandler(ActionEvent event) throws IOException, LoginFailException {
         String user = userTextField.getText();
         String pass = passTextField.getText();
-
+     
         if(attemptLogin(user, pass) == false) {
             //Show Error in Locale Language
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -149,9 +157,8 @@ public class LoginController implements Initializable {
             alert.showAndWait();
             //Clear password and keep username for another attempt
             passTextField.setText("");
-        } else {
+        } else {             //Check for approaching appointment
             currentUser = user;
-            //Check for approaching appointment
             AccessDB.alertAppointment();
             //Go to main home screen
             Stage stage; 
@@ -161,7 +168,6 @@ public class LoginController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-
         }
     }     
 

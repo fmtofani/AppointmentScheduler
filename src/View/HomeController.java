@@ -69,6 +69,14 @@ public class HomeController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+/*
+    *
+    *
+    * Use of lambdas to efficently set the columns in the tableview object
+    *
+    *
+*/
         timeColumn.setCellValueFactory(cellData -> cellData.getValue().startProperty());
         clientColumn.setCellValueFactory(cellData -> cellData.getValue().customerNameProperty());
         locationColumn.setCellValueFactory(cellData -> cellData.getValue().locationProperty());
