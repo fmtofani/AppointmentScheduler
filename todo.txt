@@ -1,4 +1,3 @@
-Add 2 lambdas
 -- getSelected() != null
 --
 /**
@@ -23,8 +22,7 @@ public class InvalidCredentialsException extends Exception {
 
 }
 
-Add a listener on numTypes to update when forward/back pressed
-getselected() checker
+
 
 
 // REQUIREMENT G - Use lambdas to efficiently set column cell values

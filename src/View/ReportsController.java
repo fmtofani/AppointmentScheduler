@@ -64,8 +64,6 @@ public class ReportsController implements Initializable {
     @FXML
     private Label monthLabel;
     @FXML
-    private Label fillLabel;
-    @FXML
     private Label monthOfLabel;
     @FXML
     private Label apptLabel;
@@ -169,7 +167,6 @@ public class ReportsController implements Initializable {
         monthLabel.setVisible(false);
         backButton.setVisible(false);
         monthOfLabel.setVisible(false);
-        fillLabel.setVisible(false);
         forwardButton.setVisible(false);
         statusLabel.setVisible(false);
         numStatus.setVisible(false);
@@ -201,7 +198,6 @@ public class ReportsController implements Initializable {
         backButton.setVisible(true);
         forwardButton.setVisible(true);
         monthOfLabel.setVisible(true);
-        fillLabel.setVisible(true);
         statusLabel.setVisible(true);
         numStatus.setVisible(true);
         informationLabel.setVisible(true);
