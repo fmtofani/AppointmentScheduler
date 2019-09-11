@@ -229,7 +229,7 @@ public class AddAppointmentController implements Initializable {
         
     private boolean businessHours(int num) throws InvalidTimeException {
         try {
-            if(num == 9 || num == 17) {
+            if(num < 9 || num > 17) {
                 return true;
             } else {
                 throw new InvalidTimeException("The selected hours are not during business hours");
@@ -243,7 +243,7 @@ public class AddAppointmentController implements Initializable {
     @FXML
     private void addAppointmentHandler(ActionEvent event) throws SQLException, IOException, InvalidTimeException {
         //Verify fields have been filled out
-        if(clientTableView.getSelectionModel().isEmpty()) {
+        if(clientTableView.getSelectionModel().isEmpty() && !AppointmentController.getVersionAdd().equals("edit")) {
             Alert alert = new Alert (Alert.AlertType.ERROR);
             alert.setTitle("SELECTION ERROR");
             alert.setHeaderText("Selection Error");

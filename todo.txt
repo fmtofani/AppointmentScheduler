@@ -1,16 +1,8 @@
-// REQUIREMENT G - Use lambdas to efficiently set column cell values
 
 
 
-
-•   scheduling an appointment outside business hours
-•   entering an incorrect username and password
-
-
-
-
-
-
+if isedit on adding selected user
+added not biz hours
 
 
 
