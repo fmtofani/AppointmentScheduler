@@ -386,12 +386,35 @@ public class AccessDB {
         }
     }
     
+    public static boolean overlap(LocalTime lt) {
+        try {
+            Statement statement = DatabaseConnect.getDbConnection().createStatement();
+            ResultSet results = statement.executeQuery("SELECT appointment.end FROM appointment WHERE appointment.userId = " + LoginController.getcurrentUserId() + " ;");
+            while(results.next()) {
+                Appointment a = new Appointment();
+                a.setEnd(results.getString("appointment.end"));
+                LocalTime time = LocalTime.of(Integer.parseInt(TimeUtil.stringToString(a.getEnd(), "hour")), Integer.parseInt(TimeUtil.stringToString(a.getEnd(), "min")));
+                if(time.equals(lt)) {
+                    statement.close();
+                    return true;
+                } else{
+                    statement.close();
+                    return false;
+                }  
+            }
+        } catch (SQLException ex) {
+                System.out.println("Error checking for appointment overlap \n Error: " + ex.getMessage());
+                return false;
+        }
+        return false;
+    }
+                   
     public static void alertAppointment() {
         try {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
             ResultSet results = statement.executeQuery("SELECT appointment.start FROM appointment WHERE appointment.userId = " + LoginController.getcurrentUserId()+" ORDER BY appointment.start ASC;");
             LocalDateTime now = LocalDateTime.now();
-            now = now.minusMinutes(TimeUtil.getOffset());
+            now = now.plusMinutes(TimeUtil.getOffset());
             while(results.next()) {
                 Appointment a = new Appointment();
                 a.setStart(results.getString("appointment.start"));

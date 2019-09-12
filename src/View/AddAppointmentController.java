@@ -12,6 +12,7 @@ import Model.AccessDB;
 import Model.Appointment;
 import Model.Customer;
 import Util.InvalidTimeException;
+import Util.OverlappingAppointmentException;
 import Util.TimeUtil;
 import java.io.IOException;
 import java.net.URL;
@@ -240,8 +241,21 @@ public class AddAppointmentController implements Initializable {
         }
     }        
     
+    private boolean overlappingAppointment(LocalTime lt) throws OverlappingAppointmentException, SQLException {
+        try {
+            if (AccessDB.overlap(lt)) {
+                return true;
+            } else {
+                throw new OverlappingAppointmentException("This appointment conflicts with another appointment");
+            }
+        } catch(OverlappingAppointmentException ex) {
+            System.out.println("\"Error: " + ex.getMessage());
+            return false;
+        }
+    }
+    
     @FXML
-    private void addAppointmentHandler(ActionEvent event) throws SQLException, IOException, InvalidTimeException {
+    private void addAppointmentHandler(ActionEvent event) throws SQLException, IOException, InvalidTimeException, OverlappingAppointmentException {
         //Verify fields have been filled out
         if(clientTableView.getSelectionModel().isEmpty() && !AppointmentController.getVersionAdd().equals("edit")) {
             Alert alert = new Alert (Alert.AlertType.ERROR);
@@ -282,6 +296,28 @@ public class AddAppointmentController implements Initializable {
             return;
         }
 
+/*
+ *
+ *      Satisfies Rubric F -> Verify Overlapping Appointment
+ *
+ *
+*/
+        int hour = Integer.parseInt(startTF.getText().substring(0,2));
+        if(isPM) {
+            hour += 12;
+        }
+        int min = Integer.parseInt(startTF.getText().substring(3,5));
+        LocalTime time = LocalTime.of(hour, min);
+        time.plusMinutes(TimeUtil.getOffset());
+        if(overlappingAppointment(time)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Error Adding Appointment");
+            alert.setContentText("This appointment conflicts with an already scheduled appointment");
+            alert.showAndWait();   
+            return;
+        }
+        
 /*
  *
  *      Satisfies Rubric E -> Adjust for timezone
