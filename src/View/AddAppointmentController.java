@@ -201,24 +201,22 @@ public class AddAppointmentController implements Initializable {
             alert.setContentText("Please verify that time is entered in HH:MM format");
             alert.showAndWait();
     }
-        private void verifyStart(String verifyTime) {
-    //    verifyTime = startTF.getText();
-            if(verifyTime.length() == 4 && isPM) {
+        private void verifyStart(String vt) {
+            if(vt.length() != 5) {
+                alertTime(vt);
                 return;
             }
-            if(verifyTime.length() == 5 && isPM && startTF.getText().substring(0,2).equals("12") && verifyTime.substring(2,3).equals(":")) {
-                alertTime(verifyTime);
+            if(!vt.substring(2,3).equals(":")) {
+                alertTime(vt);
+                return;
             }
-            if(verifyTime.length() > 5 || verifyTime.length() < 5) {
-                alertTime(verifyTime);
-            }
-            if(verifyTime.length() == 5) {
-                if(!verifyTime.substring(2,3).equals(":")) {
-                    alertTime(verifyTime);
-                }
+            int hour = Integer.parseInt(vt.substring(0,2));
+            int min = Integer.parseInt(vt.substring(3,5));
+            if(hour < 1 || hour > 12 || min < 0 || min >59) {
+                alertTime(vt);
+                return;
             }
         }
-
         
 /*
     *
@@ -230,7 +228,10 @@ public class AddAppointmentController implements Initializable {
         
     private boolean businessHours(int num) throws InvalidTimeException {
         try {
-            if(num < 9 || num > 17) {
+            if (isPM) {
+                num += 12;
+            }
+            if(num > 8 || num < 18) {
                 return true;
             } else {
                 throw new InvalidTimeException("The selected hours are not during business hours");
@@ -241,16 +242,16 @@ public class AddAppointmentController implements Initializable {
         }
     }        
     
-    private boolean overlappingAppointment(LocalTime lt) throws OverlappingAppointmentException, SQLException {
+    private boolean overlappingAppointment(String start, String end) throws OverlappingAppointmentException, SQLException {
         try {
-            if (AccessDB.overlap(lt)) {
-                return true;
+            if (!AccessDB.overlap(start, end)) {
+                return false;
             } else {
                 throw new OverlappingAppointmentException("This appointment conflicts with another appointment");
             }
         } catch(OverlappingAppointmentException ex) {
             System.out.println("\"Error: " + ex.getMessage());
-            return false;
+            return true;
         }
     }
     
@@ -280,6 +281,7 @@ public class AddAppointmentController implements Initializable {
         //Add military time
         int add12 = 0;
         if(pmRadioButton.isSelected()) add12 = 12;
+        
 /*
  *
  *      Satisfies Rubric F -> Verify within business hours
@@ -287,7 +289,7 @@ public class AddAppointmentController implements Initializable {
  *
 */
 
-        if (businessHours(Integer.parseInt(startTF.getText().substring(0,2)))) {
+        if (!businessHours(Integer.parseInt(startTF.getText().substring(0,2)))) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
             alert.setHeaderText("Error Adding Appointment");
@@ -296,28 +298,6 @@ public class AddAppointmentController implements Initializable {
             return;
         }
 
-/*
- *
- *      Satisfies Rubric F -> Verify Overlapping Appointment
- *
- *
-*/
-        int hour = Integer.parseInt(startTF.getText().substring(0,2));
-        if(isPM) {
-            hour += 12;
-        }
-        int min = Integer.parseInt(startTF.getText().substring(3,5));
-        LocalTime time = LocalTime.of(hour, min);
-        time.plusMinutes(TimeUtil.getOffset());
-        if(overlappingAppointment(time)) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
-            alert.setHeaderText("Error Adding Appointment");
-            alert.setContentText("This appointment conflicts with an already scheduled appointment");
-            alert.showAndWait();   
-            return;
-        }
-        
 /*
  *
  *      Satisfies Rubric E -> Adjust for timezone
@@ -336,7 +316,24 @@ public class AddAppointmentController implements Initializable {
         //Construct End Time
         ldt = ldt.plusMinutes(parseDuration(durationComboBox.getSelectionModel().getSelectedIndex()));
         String end = ldt.toString();
-        System.out.println("offset= " + TimeUtil.getOffset());
+        
+
+/*
+ *
+ *      Satisfies Rubric F -> Verify Overlapping Appointment
+ *
+ *
+*/
+
+        if(overlappingAppointment(start, end)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Error Adding Appointment");
+            alert.setContentText("This appointment conflicts with an already scheduled appointment");
+            alert.showAndWait();   
+            return;
+        }
+        
         //Construct an appointment and add it to DB
         Appointment a = new Appointment();      
         a.setCustomerId(clientId);

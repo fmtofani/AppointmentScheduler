@@ -385,26 +385,18 @@ public class AccessDB {
             System.out.println("Error adding appointment \n Error: " + ex.getMessage());
         }
     }
-    
-    public static boolean overlap(LocalTime lt) {
+    ;lm
+    public static boolean overlap(String start, String end) {
         try {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
-            ResultSet results = statement.executeQuery("SELECT appointment.end FROM appointment WHERE appointment.userId = " + LoginController.getcurrentUserId() + " ;");
-            while(results.next()) {
-                Appointment a = new Appointment();
-                a.setEnd(results.getString("appointment.end"));
-                LocalTime time = LocalTime.of(Integer.parseInt(TimeUtil.stringToString(a.getEnd(), "hour")), Integer.parseInt(TimeUtil.stringToString(a.getEnd(), "min")));
-                if(time.equals(lt)) {
-                    statement.close();
-                    return true;
-                } else{
-                    statement.close();
-                    return false;
-                }  
+            ResultSet results = statement.executeQuery("SELECT * FROM appointment WHERE appointment.userId = " + LoginController.getcurrentUserId() + " AND ");
+            if(results.next()) {
+                statement.close();
+                return true;
             }
         } catch (SQLException ex) {
                 System.out.println("Error checking for appointment overlap \n Error: " + ex.getMessage());
-                return false;
+                return true;
         }
         return false;
     }
