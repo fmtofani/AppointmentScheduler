@@ -385,11 +385,11 @@ public class AccessDB {
             System.out.println("Error adding appointment \n Error: " + ex.getMessage());
         }
     }
-    ;lm
+    
     public static boolean overlap(String start, String end) {
         try {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
-            ResultSet results = statement.executeQuery("SELECT * FROM appointment WHERE appointment.userId = " + LoginController.getcurrentUserId() + " AND ");
+            ResultSet results = statement.executeQuery("SELECT * FROM appointment WHERE appointment.userId = " + LoginController.getCurrentUser() + " AND appointment.start BETWEEN '" + start + "' AND '" + end + "';");
             if(results.next()) {
                 statement.close();
                 return true;
