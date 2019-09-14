@@ -307,7 +307,6 @@ public class AddAppointmentController implements Initializable {
         
         //Construct Start time
         LocalTime lt = LocalTime.of(Integer.parseInt(startTF.getText().substring(0,2)), Integer.parseInt(startTF.getText().substring(3,5)));
-        lt = lt.plusHours(add12);
         LocalDate ld = LocalDate.parse(datePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         LocalDateTime ldt = LocalDateTime.of(ld, lt);
         ldt = ldt.plusHours(add12);
@@ -324,7 +323,7 @@ public class AddAppointmentController implements Initializable {
  *
  *
 */
-
+System.out.println("Start= " + start + " \n End= " + end);
         if(overlappingAppointment(start, end)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
@@ -337,7 +336,7 @@ public class AddAppointmentController implements Initializable {
         //Construct an appointment and add it to DB
         Appointment a = new Appointment();      
         a.setCustomerId(clientId);
-        a.setUserId(LoginController.getcurrentUserId());
+        a.setUserId(LoginController.getCurrentUserId());
         a.setTitle(titleTF.getText());
         a.setDescription(descriptionTF.getText());
         a.setLocation(String.valueOf(locationComboBox.getSelectionModel().getSelectedItem()));

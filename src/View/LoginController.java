@@ -75,9 +75,9 @@ public class LoginController implements Initializable {
     public static String getCurrentUser() {
         return currentUser;
     }
-    //References current userId
+   //References current userId
     private static int currentUserId;
-    public static int getcurrentUserId() {
+    public static int getCurrentUserId() {
         return currentUserId;
     }
     

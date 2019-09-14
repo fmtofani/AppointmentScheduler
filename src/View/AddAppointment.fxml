@@ -19,18 +19,31 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="cancelAddAppointmentButton" layoutX="250.0" layoutY="368.0" mnemonicParsing="false" onAction="#cancelAddAppointmentHandler" prefHeight="25.0" prefWidth="72.0" text="Cancel" />
+      <DatePicker fx:id="datePicker" layoutX="93.0" layoutY="65.0" />
+      <TextField fx:id="startTF" layoutX="93.0" layoutY="103.0" prefHeight="25.0" prefWidth="81.0" />
+      <RadioButton fx:id="amRadioButton" layoutX="180.0" layoutY="107.0" mnemonicParsing="false" onAction="#amHandler" text="AM" />
+      <RadioButton fx:id="pmRadioButton" layoutX="224.0" layoutY="107.0" mnemonicParsing="false" onAction="#pmHandler" text="PM" />
+      <ComboBox fx:id="durationComboBox" layoutX="92.0" layoutY="138.0" prefWidth="150.0" />
+      <ComboBox fx:id="locationComboBox" layoutX="93.0" layoutY="218.0" prefWidth="150.0" />
+      <ComboBox fx:id="typeComboBox" layoutX="93.0" layoutY="257.0" prefWidth="150.0" />
+      <TextField fx:id="titleTF" layoutX="93.0" layoutY="292.0" prefHeight="25.0" prefWidth="543.0" />
+      <TextField fx:id="descriptionTF" layoutX="93.0" layoutY="322.0" prefHeight="25.0" prefWidth="543.0" />
       <Button fx:id="addAppointmentButton" layoutX="93.0" layoutY="367.0" mnemonicParsing="false" onAction="#addAppointmentHandler" prefHeight="25.0" prefWidth="72.0" text="Add" />
+      <TextField fx:id="searchTF" layoutX="498.0" layoutY="65.0" prefHeight="25.0" prefWidth="136.0" />
+      <Button fx:id="searchButton" layoutX="540.0" layoutY="95.0" mnemonicParsing="false" onAction="#searchHandler" text="Search" />
+      <Button fx:id="resetButton" layoutX="540.0" layoutY="130.0" mnemonicParsing="false" onAction="#resetHandler" prefHeight="25.0" prefWidth="52.0" text="Reset" />
+      <Button fx:id="addClient" layoutX="530.0" layoutY="164.0" mnemonicParsing="false" onAction="#addClientHandler" text="Add Client" />
+      <Button fx:id="clearButton" layoutX="174.0" layoutY="367.0" mnemonicParsing="false" onAction="#clearHandler" prefHeight="25.0" prefWidth="72.0" text="Clear" />
+      <Button fx:id="cancelAddAppointmentButton" layoutX="250.0" layoutY="368.0" mnemonicParsing="false" onAction="#cancelAddAppointmentHandler" prefHeight="25.0" prefWidth="72.0" text="Cancel" />
+      <Button fx:id="exitButton" layoutX="530.0" layoutY="380.0" mnemonicParsing="false" onAction="#exitHandler" prefHeight="25.0" prefWidth="72.0" text="Exit" />
       <Label layoutX="33.0" layoutY="69.0" text="Date" />
       <Label layoutX="32.0" layoutY="107.0" text="Start" />
       <Label layoutX="31.0" layoutY="142.0" prefHeight="17.0" prefWidth="47.0" text="Duration" />
       <Label layoutX="30.0" layoutY="180.0" text="Client" />
-      <TextField fx:id="startTF" layoutX="93.0" layoutY="103.0" prefHeight="25.0" prefWidth="81.0" />
       <TextField fx:id="clientTF" layoutX="93.0" layoutY="176.0" />
       <Label layoutX="32.0" layoutY="222.0" text="Location" />
       <Label layoutX="32.0" layoutY="261.0" text="Type" />
       <Label layoutX="34.0" layoutY="296.0" text="Title" />
-      <TextField fx:id="descriptionTF" layoutX="93.0" layoutY="322.0" prefHeight="25.0" prefWidth="543.0" />
       <TableView fx:id="clientTableView" layoutX="284.0" layoutY="90.0" onMouseClicked="#addClientToApptHandler" prefHeight="189.0" prefWidth="204.0">
         <columns>
           <TableColumn fx:id="clientColumn" prefWidth="118.5" text="Client Name" />
@@ -38,22 +51,9 @@
             <TableColumn fx:id="customerIdColumn" prefWidth="87.0" text="Customer Id" />
         </columns>
       </TableView>
-      <TextField fx:id="searchTF" layoutX="498.0" layoutY="65.0" prefHeight="25.0" prefWidth="136.0" />
       <Label layoutX="526.0" layoutY="42.0" prefHeight="17.0" prefWidth="81.0" text="Search Clients" />
-      <Button fx:id="addClient" layoutX="530.0" layoutY="164.0" mnemonicParsing="false" onAction="#addClientHandler" text="Add Client" />
-      <Button fx:id="exitButton" layoutX="530.0" layoutY="380.0" mnemonicParsing="false" onAction="#exitHandler" prefHeight="25.0" prefWidth="72.0" text="Exit" />
-      <DatePicker fx:id="datePicker" layoutX="93.0" layoutY="65.0" />
-      <ComboBox fx:id="locationComboBox" layoutX="93.0" layoutY="218.0" prefWidth="150.0" />
-      <ComboBox fx:id="typeComboBox" layoutX="93.0" layoutY="257.0" prefWidth="150.0" />
-      <Button fx:id="searchButton" layoutX="540.0" layoutY="95.0" mnemonicParsing="false" onAction="#searchHandler" text="Search" />
-      <Button fx:id="clearButton" layoutX="174.0" layoutY="367.0" mnemonicParsing="false" onAction="#clearHandler" prefHeight="25.0" prefWidth="72.0" text="Clear" />
-      <ComboBox fx:id="durationComboBox" layoutX="92.0" layoutY="138.0" prefWidth="150.0" />
-      <RadioButton fx:id="amRadioButton" layoutX="180.0" layoutY="107.0" mnemonicParsing="false" onAction="#amHandler" text="AM" />
-      <RadioButton fx:id="pmRadioButton" layoutX="224.0" layoutY="107.0" mnemonicParsing="false" onAction="#pmHandler" text="PM" />
-      <Button fx:id="resetButton" layoutX="540.0" layoutY="130.0" mnemonicParsing="false" onAction="#resetHandler" prefHeight="25.0" prefWidth="52.0" text="Reset" />
       <Label layoutX="333.0" layoutY="61.0" prefHeight="17.0" prefWidth="111.0" text="Double-Click to Add " />
       <TextField fx:id="clientIdTF" layoutX="13.0" layoutY="30.0" prefHeight="25.0" prefWidth="13.0" />
       <Label layoutX="27.0" layoutY="326.0" text="Description" />
-      <TextField fx:id="titleTF" layoutX="93.0" layoutY="292.0" prefHeight="25.0" prefWidth="543.0" />
    </children>
 </AnchorPane>

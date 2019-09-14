@@ -20,6 +20,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -389,8 +391,12 @@ public class AccessDB {
     public static boolean overlap(String start, String end) {
         try {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
-            ResultSet results = statement.executeQuery("SELECT * FROM appointment WHERE appointment.userId = " + LoginController.getCurrentUser() + " AND appointment.start BETWEEN '" + start + "' AND '" + end + "';");
+            ResultSet results = statement.executeQuery("SELECT * FROM appointment WHERE appointment.userId = " + LoginController.getCurrentUserId()+ 
+                                                       " AND DATE(appointment.start) BETWEEN DATE('" + start + "') AND DATE('" + end + "');");
+System.out.println("SELECT * FROM appointment WHERE appointment.userId = " + LoginController.getCurrentUserId()+ 
+                                                       " AND DATE(appointment.start) BETWEEN DATE('" + start + "') AND DATE('" + end + "');");
             if(results.next()) {
+                System.out.println("Date= " + results.getString("appointment.start"));
                 statement.close();
                 return true;
             }
@@ -404,16 +410,17 @@ public class AccessDB {
     public static void alertAppointment() {
         try {
             Statement statement = DatabaseConnect.getDbConnection().createStatement();
-            ResultSet results = statement.executeQuery("SELECT appointment.start FROM appointment WHERE appointment.userId = " + LoginController.getcurrentUserId()+" ORDER BY appointment.start ASC;");
+            ResultSet results = statement.executeQuery("SELECT appointment.start FROM appointment WHERE appointment.userId = " + LoginController.getCurrentUserId()+" ORDER BY appointment.start ASC;");
             LocalDateTime now = LocalDateTime.now();
             now = now.plusMinutes(TimeUtil.getOffset());
+            now = now.truncatedTo(ChronoUnit.MINUTES);            
             while(results.next()) {
                 Appointment a = new Appointment();
                 a.setStart(results.getString("appointment.start"));
                 LocalDateTime check = LocalDateTime.parse(a.getStart().substring(0, 10).concat("T").concat(a.getStart().substring(11,19)));
                 //Check for 15 minutes in advance
                 for(int i=0; i <= 15; i++) {
-                    if(now.equals(check.plusMinutes(i))) {
+                    if(now.plusMinutes(i).equals(check)) {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Appointment Reminder");
                         alert.setHeaderText("Appointment Reminder");
